@@ -83,20 +83,32 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 /* ─────────────────────────────────────────
    3. LIGHTBOX
    - Cliquer sur une photo l'affiche en grand
-   - Flèches gauche/droite pour naviguer
+   - Flèches gauche/droite uniquement dans le même groupe
    - Touche Échap ou clic dehors pour fermer
 ───────────────────────────────────────── */
-const galleryImages = Array.from(
-    document.querySelectorAll('.galerie-item img, .salle-gallery img, .couch-photo-wrap img')
-).map(i => i.src);
 
-let currentIndex = 0;
+// Sélecteurs CSS par groupe de photos
+const groupSelectors = {
+    salle:     '.salle-gallery img',
+    couchages: '.couch-photo-wrap img',
+    galerie:   '.galerie-item img'
+};
 
-function openLightbox(src) {
+let currentImages = [];
+let currentIndex  = 0;
+
+function openLightbox(src, group) {
+    // Récupère uniquement les images du bon groupe
+    const selector = groupSelectors[group] || '.galerie-item img, .salle-gallery img, .couch-photo-wrap img';
+    currentImages = Array.from(document.querySelectorAll(selector)).map(i => i.src);
+
+    // Trouve l'index de l'image cliquée (src peut être absolue ou relative)
+    currentIndex = currentImages.findIndex(s => s === src || s.endsWith(src.replace(/^.*\//, '/')));
+    if (currentIndex === -1) currentIndex = 0;
+
     document.getElementById('lightbox').classList.add('open');
     document.getElementById('lightbox-img').src = src;
-    currentIndex = galleryImages.indexOf(src);
-    document.body.style.overflow = 'hidden'; // bloque le scroll en arrière-plan
+    document.body.style.overflow = 'hidden';
 }
 
 function closeLightbox() {
@@ -105,8 +117,8 @@ function closeLightbox() {
 }
 
 function moveLightbox(dir) {
-    currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
-    document.getElementById('lightbox-img').src = galleryImages[currentIndex];
+    currentIndex = (currentIndex + dir + currentImages.length) % currentImages.length;
+    document.getElementById('lightbox-img').src = currentImages[currentIndex];
 }
 
 // Navigation clavier

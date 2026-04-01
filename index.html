@@ -108,9 +108,9 @@
             <p>Personnes Assises — Capacité Maximale</p>
         </div>
         <div class="salle-gallery">
-            <img src="images/image 3.jpeg" alt="Salle décorée pour un mariage" onclick="openLightbox(this.src)">
-            <img src="images/IMG_8591.jpeg" alt="Salle avec lanternes pour mariage" onclick="openLightbox(this.src)">
-            <img src="images/IMG_8614.jpeg" alt="Salle pour baptême avec bar" onclick="openLightbox(this.src)">
+            <img src="images/image 3.jpeg" alt="Salle décorée pour un mariage" onclick="openLightbox(this.src, 'salle')">
+            <img src="images/IMG_8591.jpeg" alt="Salle avec lanternes pour mariage" onclick="openLightbox(this.src, 'salle')">
+            <img src="images/IMG_8614.jpeg" alt="Salle pour baptême avec bar" onclick="openLightbox(this.src, 'salle')">
         </div>
         <div class="equip-grid">
             <div class="equip-card">
@@ -163,15 +163,15 @@
         <div class="divider"><span>✦</span></div>
         <div class="couch-photos">
             <div class="couch-photo-wrap">
-                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="Dortoir lits superposés" onclick="openLightbox(this.src)">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="Dortoir lits superposés" onclick="openLightbox(this.src, 'couchages')">
                 <div class="label">Dortoir</div>
             </div>
             <div class="couch-photo-wrap">
-                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Chambre mansardée" onclick="openLightbox(this.src)">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Chambre mansardée" onclick="openLightbox(this.src, 'couchages')">
                 <div class="label">Chambre Mansardée</div>
             </div>
             <div class="couch-photo-wrap">
-                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Chambre fleurie" onclick="openLightbox(this.src)">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Chambre fleurie" onclick="openLightbox(this.src, 'couchages')">
                 <div class="label">Chambre Gîte</div>
             </div>
         </div>
@@ -331,52 +331,52 @@
         <div class="section-subtitle">Chaque événement, un souvenir unique</div>
         <div class="divider"><span>✦</span></div>
         <div class="galerie-grid">
-            <div class="galerie-item wide" onclick="openLightbox('images/image 3.jpeg')">
+            <div class="galerie-item wide" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/image 3.jpeg" alt="Salle mariage décorée">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/IMG_8591.jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/IMG_8591.jpeg" alt="Salle lanternes roses">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/IMG_8614.jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/IMG_8614.jpeg" alt="Baptême Alexia et Benjamin">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/image 4.jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/image 4.jpeg" alt="Vue château de Mesnil-Glaise">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/image 2.png')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/image 2.png" alt="Brasero en soirée">
             </div>
-            <div class="galerie-item wide tall" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (4).jpeg')">
+            <div class="galerie-item wide tall" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (4).jpeg" alt="Vin d'honneur soirée guirlandes">
             </div>
-            <div class="galerie-item tall" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45.jpeg')">
+            <div class="galerie-item tall" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45.jpeg" alt="Buffet champêtre rustique">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (1).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (1).jpeg" alt="Plateau fromages normands">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (3).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (3).jpeg" alt="Brasero flammes">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (14).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (14).jpeg" alt="Tiramisu">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (16).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (16).jpeg" alt="Omelette norvégienne flambée">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (18).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (18).jpeg" alt="Plateau affineur fromages entiers">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (7).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (7).jpeg" alt="Chambre dortoir">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (12).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (12).jpeg" alt="Chambre mansardée">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (21).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (21).jpeg" alt="Gîte cuisine">
             </div>
-            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (15).jpeg')">
+            <div class="galerie-item" onclick="openLightbox(this.querySelector('img').src, 'galerie')">
                 <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (15).jpeg" alt="Salle de bain PMR">
             </div>
         </div>
