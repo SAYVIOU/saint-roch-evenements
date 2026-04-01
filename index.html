@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saint-Roch-Événements — Écouchés-les-Vallées</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- API YouTube IFrame — doit être chargée AVANT script.js -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#accueil" class="nav-logo">
+            <img src="images/logo-sre-transparent.png" alt="SRE" style="width:34px; height:34px; object-fit:contain; opacity:0.9;">
+            <div>Saint-Roch-Événements<span>Écouchés-les-Vallées</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#lieu">Le Lieu</a></li>
+            <li><a href="#salle">La Salle</a></li>
+            <li><a href="#couchages">Couchages</a></li>
+            <li><a href="#traiteur">Traiteur</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<!-- HERO avec vidéo drone -->
+<section id="accueil" style="padding:0;">
+    <div id="hero">
+        <div id="hero-yt-wrap">
+            <!-- La div est remplacée dynamiquement par le lecteur YouTube via l'API IFrame -->
+            <div id="hero-yt"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo-circle">
+                <img src="images/logo-sre-transparent.png" alt="Saint-Roch-Événements">
+            </div>
+            <div class="hero-brand">Saint-Roch-Événements</div>
+            <div class="hero-location">— Écouchés-les-Vallées —</div>
+            <div class="hero-ornament"></div>
+            <div class="hero-slogan">Célébrez, Mangez, Dormez,</div>
+            <div class="hero-slogan-sub">Tout Simplement !</div>
+            <div class="hero-services">
+                <a href="#salle" class="hero-svc">
+                    <div class="hero-svc-icon">🎉</div>
+                    <div class="hero-svc-label">Salle des Fêtes</div>
+                    <div class="hero-svc-desc">130 personnes · Bar · Sono</div>
+                </a>
+                <div class="hero-sep"></div>
+                <a href="#traiteur" class="hero-svc">
+                    <div class="hero-svc-icon">🍽️</div>
+                    <div class="hero-svc-label">Service Traiteur</div>
+                    <div class="hero-svc-desc">6 formules · Terroir normand</div>
+                </a>
+                <div class="hero-sep"></div>
+                <a href="#couchages" class="hero-svc">
+                    <div class="hero-svc-icon">🛏️</div>
+                    <div class="hero-svc-label">Gîte &amp; Dortoirs</div>
+                    <div class="hero-svc-desc">23 couchages · 3 espaces</div>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-hint">Découvrir</div>
+    </div>
+</section>
+
+<!-- ÉVÉNEMENTS BAND -->
+<div class="event-band">
+    <p><strong>Événements à venir</strong> — Consultez notre agenda et réservez votre date dès maintenant &nbsp;·&nbsp; <a href="#contact" style="text-decoration:underline; color: var(--brown-dark);">Nous contacter</a></p>
+</div>
+
+<!-- LE LIEU -->
+<section id="lieu">
+    <div class="container">
+        <h2 class="section-title">Le Lieu</h2>
+        <div class="section-subtitle">Une Parenthèse Bucolique au Bord de l'Orne</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="lieu-grid">
+            <div class="lieu-text">
+                <p>Imaginez un lieu où le temps s'arrête pour laisser place à vos plus beaux moments de partage.</p>
+                <p>Nichée en pleine campagne normande, notre propriété est un lieu plein de charme où la nature est reine. C'est ici, au bord des méandres de l'Orne, que vos invités et vous pourrez partager des moments inoubliables.</p>
+                <p>Dès votre arrivée, vous serez captivé par la vue imprenable sur le Château de Mesnil-Glaise. Ce cadre d'exception est l'écrin parfait pour toutes vos célébrations et vos plus beaux souvenirs.</p>
+                <p>Notre salle de réception, avec sa cuisine professionnelle, a été conçue pour accueillir vos convives dans une ambiance chaleureuse et authentique, au cœur du terroir normand.</p>
+                <p class="lieu-address">📍 5 route de Mesnil Glaise, 61150 Écouché-les-Vallées</p>
+            </div>
+            <div class="lieu-photo">
+                <img src="images/image 4.jpeg" alt="Vue sur le Château de Mesnil-Glaise depuis l'Orne">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SALLE DE RÉCEPTION & ÉQUIPEMENTS -->
+<section id="salle">
+    <div class="container">
+        <h2 class="section-title">Salle de Réception &amp; Équipements</h2>
+        <div class="section-subtitle">Un cadre polyvalent offrant multiples possibilités</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="cap-banner">
+            <div class="num">130</div>
+            <p>Personnes Assises — Capacité Maximale</p>
+        </div>
+        <div class="salle-gallery">
+            <img src="images/image 3.jpeg" alt="Salle décorée pour un mariage" onclick="openLightbox(this.src)">
+            <img src="images/IMG_8591.jpeg" alt="Salle avec lanternes pour mariage" onclick="openLightbox(this.src)">
+            <img src="images/IMG_8614.jpeg" alt="Salle pour baptême avec bar" onclick="openLightbox(this.src)">
+        </div>
+        <div class="equip-grid">
+            <div class="equip-card">
+                <h3>🍳 Espace Cuisine</h3>
+                <ul>
+                    <li>Cuisine professionnelle équipée (pour votre traiteur ou vous-même)</li>
+                    <li>Percolateur à café</li>
+                    <li>Fontaine à eau chaude</li>
+                    <li>Casseroles et équipements de cuisson</li>
+                </ul>
+            </div>
+            <div class="equip-card">
+                <h3>🍷 Bar</h3>
+                <ul>
+                    <li>Bar intégré à la salle</li>
+                    <li>Machine à glaçons</li>
+                    <li>Lave-verres</li>
+                    <li>Réfrigérateur</li>
+                </ul>
+            </div>
+            <div class="equip-card">
+                <h3>🍽️ Art de Table</h3>
+                <ul>
+                    <li>Tables rondes et/ou rectangulaires (libre agencement)</li>
+                    <li>Chaises</li>
+                    <li>Vaisselle complète (assiettes, verres, couverts)</li>
+                    <li>Mange-debout</li>
+                </ul>
+            </div>
+            <div class="equip-card">
+                <h3>🎵 Sono &amp; Vidéo</h3>
+                <ul>
+                    <li>Sono avec micros</li>
+                    <li>Table de mixage</li>
+                    <li>Vidéoprojecteur</li>
+                </ul>
+            </div>
+        </div>
+        <div class="options-note">
+            <p><strong>Options de Locations Complémentaires :</strong> nappes, housses de chaises et serviettes en tissu — tarif sur demande.</p>
+        </div>
+    </div>
+</section>
+
+<!-- COUCHAGES -->
+<section id="couchages">
+    <div class="container">
+        <h2 class="section-title">Couchages</h2>
+        <div class="section-subtitle">Gîte &amp; Dortoirs — Repos Simple &amp; Convivial</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="couch-photos">
+            <div class="couch-photo-wrap">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="Dortoir lits superposés" onclick="openLightbox(this.src)">
+                <div class="label">Dortoir</div>
+            </div>
+            <div class="couch-photo-wrap">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Chambre mansardée" onclick="openLightbox(this.src)">
+                <div class="label">Chambre Mansardée</div>
+            </div>
+            <div class="couch-photo-wrap">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Chambre fleurie" onclick="openLightbox(this.src)">
+                <div class="label">Chambre Gîte</div>
+            </div>
+        </div>
+        <div class="couch-total">
+            <div class="big">23</div>
+            <p>Couchages au total — 3 espaces distincts</p>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICE TRAITEUR -->
+<section id="traiteur">
+    <div class="container">
+        <h2 class="section-title">Service Traiteur</h2>
+        <div class="section-subtitle">Découvrez un éventail de formules où la richesse de notre terroir est à l'honneur</div>
+        <div class="divider"><span>✦</span></div>
+        <p class="traiteur-intro">Une envie particulière ou un régime spécial ? Nous adaptons nos formules pour créer un moment qui vous ressemble.</p>
+
+        <div class="traiteur-grid">
+            <div class="tr-card tr-clickable" onclick="openModal('modal-vin')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (17).jpeg" alt="Vin d'Honneur">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>Vin d'Honneur</h3>
+                    <div class="price">9€/pers</div>
+                </div>
+                <div class="tr-body">
+                    <p class="desc">Verrines, canapés &amp; toasts avec planches de charcuterie et Terrine du Saint Roch.</p>
+                    <ul>
+                        <li>2 verrines au choix parmi 4</li>
+                        <li>2 canapés ou toasts au choix parmi 4</li>
+                        <li>Planches de charcuterie à partager</li>
+                        <li>Terrine du Saint Roch et pain de 3 livres</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tr-card tr-clickable" onclick="openModal('modal-champetre')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45.jpeg" alt="Buffet Champêtre">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>Buffet Champêtre</h3>
+                    <div class="price">18€/pers</div>
+                </div>
+                <div class="tr-body">
+                    <p class="desc">4 entrées, viandes froides, sauces maison et 3 fromages normands.</p>
+                    <ul>
+                        <li>4 entrées au choix parmi 6</li>
+                        <li>Viande froide (rôti de porc &amp; rosbeef)</li>
+                        <li>Sauces mayonnaise &amp; cocktail maison, chips</li>
+                        <li>3 fromages normands au choix parmi 6</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tr-card tr-clickable" onclick="openModal('modal-tradition')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (6).jpeg" alt="Buffet Tradition">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>Buffet Tradition</h3>
+                    <div class="price">23€/pers</div>
+                </div>
+                <div class="tr-body">
+                    <p class="desc">La formule complète : 4 entrées + 1 plat chaud + 2 accompagnements + 3 fromages.</p>
+                    <ul>
+                        <li>4 entrées au choix parmi 6</li>
+                        <li>Poulet Vallée d'Auge, Bœuf Braisé au Calvados ou Épaule de Cochon Rôtie au Miel</li>
+                        <li>2 accompagnements au choix parmi 4</li>
+                        <li>3 fromages au choix parmi 6</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tr-card tr-clickable" onclick="openModal('modal-brasero')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (3).jpeg" alt="Le Brasero">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>Le Brasero</h3>
+                    <div class="price">25€/pers</div>
+                </div>
+                <div class="tr-body">
+                    <p class="desc">Un moment convivial autour du feu animé par notre Chef.</p>
+                    <ul>
+                        <li>Côte de Bœuf, Poitrine de Porc, Poulet Cajun, Saucisses artisanales</li>
+                        <li>Smash Potatoes &amp; légumes de saison à la plancha</li>
+                        <li>3 sauces maison : Truffe, Ranch, Barbecue Jack Daniel's</li>
+                        <li>+ 2 entrées en option (supplément 4€/pers)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tr-card tr-clickable" onclick="openModal('modal-brunch')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (2).jpeg" alt="Brunch Authentique">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>Brunch Authentique</h3>
+                    <div class="price">20€/pers</div>
+                </div>
+                <div class="tr-body">
+                    <p class="desc">Viennoiseries dorées, mets salés et gourmandises sucrées — mis en place par nos soins.</p>
+                    <ul>
+                        <li>Boissons chaudes &amp; fraîches</li>
+                        <li>Croissants, pains au chocolat, pain frais</li>
+                        <li>Saumon, quiches, fromages affinés, charcuterie</li>
+                        <li>Fruits de saison &amp; céréales variées</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tr-card tr-clickable" onclick="openModal('modal-affineur')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (18).jpeg" alt="Plateau d'Affineur">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>Plateau d'Affineur</h3>
+                    <div class="price" style="font-size:1.2rem;">Sur devis</div>
+                </div>
+                <div class="tr-body">
+                    <p class="desc">Sélection de fromages phares de Normandie et du terroir, présentés avec leurs accompagnements.</p>
+                    <ul>
+                        <li>Fromages normands affinés sélectionnés</li>
+                        <li>Présentation soignée avec accompagnements</li>
+                        <li>Un moment riche en saveurs du terroir</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tr-small-grid">
+            <div class="tr-small">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (8).jpeg" alt="Dessert mousse chocolat">
+                <div class="tr-small-body">
+                    <h4>Desserts au Choix</h4>
+                    <div class="price">3,50€/pers</div>
+                    <p>Tarte aux Pommes, Teurgoule, Tiramisu, Fondant au Chocolat ou Omelette Norvégienne Flambée au Calvados.</p>
+                </div>
+            </div>
+            <div class="tr-small">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (16).jpeg" alt="Omelette norvégienne">
+                <div class="tr-small-body">
+                    <h4>Soupe à l'Oignon Traditionnelle</h4>
+                    <div class="price">3€/pers</div>
+                    <p>Authentique soupe à l'oignon avec toast au fromage gratiné — prête à réchauffer.</p>
+                </div>
+            </div>
+            <div class="tr-small">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (4).jpeg" alt="Vin d'honneur soirée">
+                <div class="tr-small-body">
+                    <h4>Formule Personnalisée</h4>
+                    <div class="price">Sur devis</div>
+                    <p>Régime spécial ou envie particulière ? Nous adaptons nos formules pour un moment unique.</p>
+                </div>
+            </div>
+        </div>
+        <div class="tr-note">"Une envie particulière ou un régime spécial ? Nous adaptons nos formules pour créer un moment qui vous ressemble."</div>
+    </div>
+</section>
+
+<!-- GALERIE PHOTOS -->
+<section id="galerie">
+    <div class="container">
+        <h2 class="section-title">Galerie</h2>
+        <div class="section-subtitle">Chaque événement, un souvenir unique</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="galerie-grid">
+            <div class="galerie-item wide" onclick="openLightbox('images/image 3.jpeg')">
+                <img src="images/image 3.jpeg" alt="Salle mariage décorée">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/IMG_8591.jpeg')">
+                <img src="images/IMG_8591.jpeg" alt="Salle lanternes roses">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/IMG_8614.jpeg')">
+                <img src="images/IMG_8614.jpeg" alt="Baptême Alexia et Benjamin">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/image 4.jpeg')">
+                <img src="images/image 4.jpeg" alt="Vue château de Mesnil-Glaise">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/image 2.png')">
+                <img src="images/image 2.png" alt="Brasero en soirée">
+            </div>
+            <div class="galerie-item wide tall" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (4).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (4).jpeg" alt="Vin d'honneur soirée guirlandes">
+            </div>
+            <div class="galerie-item tall" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45.jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45.jpeg" alt="Buffet champêtre rustique">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (1).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (1).jpeg" alt="Plateau fromages normands">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (3).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (3).jpeg" alt="Brasero flammes">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (14).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (14).jpeg" alt="Tiramisu">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (16).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (16).jpeg" alt="Omelette norvégienne flambée">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (18).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (18).jpeg" alt="Plateau affineur fromages entiers">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (7).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (7).jpeg" alt="Chambre dortoir">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (12).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (12).jpeg" alt="Chambre mansardée">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (21).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (21).jpeg" alt="Gîte cuisine">
+            </div>
+            <div class="galerie-item" onclick="openLightbox('images/WhatsApp Image 2026-03-31 at 21.49.45 (15).jpeg')">
+                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (15).jpeg" alt="Salle de bain PMR">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+    <span id="lightbox-close" onclick="closeLightbox()">×</span>
+    <span id="lightbox-prev" onclick="event.stopPropagation(); moveLightbox(-1)">‹</span>
+    <img id="lightbox-img" src="" alt="">
+    <span id="lightbox-next" onclick="event.stopPropagation(); moveLightbox(1)">›</span>
+</div>
+
+<!-- TARIFS -->
+<section id="tarifs">
+    <div class="container">
+        <h2 class="section-title">Tarifs</h2>
+        <div class="section-subtitle">Location de la salle — Formules claires et sans surprise</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="tarif-grid">
+            <div class="tarif-card">
+                <h3>Location à la Journée</h3>
+                <div class="tarif-price">400 <span>€</span></div>
+                <div class="tagline">Entrée 9h · Sortie 4h du matin</div>
+                <ul class="tarif-details">
+                    <li>Accès dès 9h00</li>
+                    <li>Sortie à 4h00 du matin</li>
+                    <li>Tous les équipements inclus</li>
+                    <li>Jusqu'à 130 personnes</li>
+                </ul>
+            </div>
+            <div class="tarif-card star">
+                <h3>Location 2 Jours</h3>
+                <div class="tarif-price">750 <span>€</span></div>
+                <div class="tagline">La formule la plus populaire</div>
+                <ul class="tarif-details">
+                    <li>Accès dès 9h00 le 1er jour</li>
+                    <li>Deux journées complètes</li>
+                    <li>Tous les équipements inclus</li>
+                    <li>Jusqu'à 130 personnes</li>
+                    <li>Idéal pour les fêtes en deux temps</li>
+                </ul>
+            </div>
+            <div class="tarif-card">
+                <h3>Week-end avec Couchages</h3>
+                <div class="tarif-price">1 300 <span>€</span></div>
+                <div class="tagline">Salle + 23 couchages · Sortie dim. 20h</div>
+                <ul class="tarif-details">
+                    <li>Salle + gîte &amp; dortoirs inclus</li>
+                    <li>Sortie dimanche à 20h00</li>
+                    <li>23 couchages — 3 espaces distincts</li>
+                    <li>Tous les équipements inclus</li>
+                    <li>Idéal pour les grands événements</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tarif-info-grid">
+            <div class="tib">
+                <h4>Réservation</h4>
+                <ul>
+                    <li>30% d'arrhes à la signature</li>
+                    <li>Solde 15 jours avant l'événement</li>
+                    <li>Caution de 1 000€ à la remise des clés</li>
+                    <li>Caution restituée après état des lieux</li>
+                </ul>
+            </div>
+            <div class="tib">
+                <h4>Annulation</h4>
+                <ul>
+                    <li>Plus de 6 mois avant : 50% des arrhes remboursés</li>
+                    <li>Moins de 6 mois avant : arrhes conservées</li>
+                    <li>Force majeure propriétaire : remboursement intégral</li>
+                </ul>
+            </div>
+            <div class="tib">
+                <h4>Assurance Obligatoire</h4>
+                <p>Le locataire doit fournir une attestation d'assurance responsabilité civile avant l'entrée dans les lieux.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section id="temoignages">
+    <div class="container">
+        <h2 class="section-title">Témoignages</h2>
+        <div class="section-subtitle">Ce que disent nos clients</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="temo-grid">
+            <div class="temo-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Un cadre absolument magnifique pour notre mariage. La salle est superbe, le service traiteur délicieux et l'équipe aux petits soins. Nos invités en parlent encore !"</div>
+                <div class="author">— Marie &amp; Thomas, Mariage 2024</div>
+            </div>
+            <div class="temo-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Nous avons organisé le baptême de notre fils ici. Le lieu est magnifique, la cuisine très pratique, et les couchages ont permis à toute la famille de rester sur place."</div>
+                <div class="author">— Famille Leclerc, Baptême 2024</div>
+            </div>
+            <div class="temo-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">"Le Brasero était une expérience incroyable ! La vue sur la campagne normande, le bord de l'Orne... un endroit unique et hors du temps. On reviendra !"</div>
+                <div class="author">— Sophie &amp; Pierre, Anniversaire 2025</div>
+            </div>
+        </div>
+        <div class="temo-cta">
+            <p>Votre avis nous tient à cœur — partagez votre expérience !</p>
+            <a href="https://www.facebook.com/saint.roch.evenements" target="_blank" class="btn btn-outline">Laisser un avis sur Facebook</a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+        <h2 class="section-title">Contact &amp; Réservation</h2>
+        <div class="section-subtitle">Parlons de votre projet — nous répondons sous 24h</div>
+        <div class="divider"><span>✦</span></div>
+        <div class="contact-layout">
+            <div class="contact-info">
+                <h3>Nous Trouver</h3>
+                <div class="citem">
+                    <div class="cicon">📍</div>
+                    <div class="ctext">
+                        <div class="label">Adresse</div>
+                        <div class="value">5 route de Mesnil Glaise<br>61150 Écouché-les-Vallées</div>
+                    </div>
+                </div>
+                <div class="citem">
+                    <div class="cicon">📞</div>
+                    <div class="ctext">
+                        <div class="label">Téléphone</div>
+                        <div class="value"><a href="tel:0768371664">07 68 37 16 64</a></div>
+                    </div>
+                </div>
+                <div class="citem">
+                    <div class="cicon">✉️</div>
+                    <div class="ctext">
+                        <div class="label">Email</div>
+                        <div class="value"><a href="mailto:contact@saint-roch-evenements.fr">contact@saint-roch-evenements.fr</a></div>
+                    </div>
+                </div>
+                <div class="citem">
+                    <div class="cicon">🌐</div>
+                    <div class="ctext">
+                        <div class="label">Site Internet</div>
+                        <div class="value">saint-roch-evenements.fr</div>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/saint.roch.evenements" target="_blank" class="social-link">f &nbsp;@saint.roch.evenements</a>
+                    <a href="https://www.instagram.com/saint.roch.evenements" target="_blank" class="social-link">📷 &nbsp;Instagram</a>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Demande de Réservation</h3>
+                <p class="form-desc">Complétez ce formulaire et nous vous répondrons dans les 24h pour discuter de votre projet.</p>
+                <form action="mailto:contact@saint-roch-evenements.fr" method="post" enctype="text/plain">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nom">Nom *</label>
+                            <input type="text" id="nom" name="nom" required placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom *</label>
+                            <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tel">Téléphone *</label>
+                            <input type="tel" id="tel" name="telephone" required placeholder="06 XX XX XX XX">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.fr">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Date souhaitée</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="formule">Formule souhaitée</label>
+                            <select id="formule" name="formule">
+                                <option value="">-- Choisir --</option>
+                                <option value="1jour">Location 1 jour — 400€</option>
+                                <option value="2jours">Location 2 jours — 750€</option>
+                                <option value="weekend">Week-end avec couchages — 1 300€</option>
+                                <option value="traiteur">+ Service Traiteur</option>
+                                <option value="autre">Autre / À préciser</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="invites">Nombre d'invités estimé (max 130)</label>
+                        <input type="number" id="invites" name="invites" min="1" max="130" placeholder="Ex : 80">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Votre message</label>
+                        <textarea id="message" name="message" placeholder="Décrivez votre événement, vos besoins..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CARTE -->
+<div class="map-wrap">
+    <p>📍 5 route de Mesnil Glaise, 61150 Écouché-les-Vallées</p>
+    <a href="https://maps.google.com/?q=5+route+de+Mesnil+Glaise+61150+Ecouche-les-Vallees" target="_blank">Ouvrir dans Google Maps →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.8rem;">
+                    <img src="images/logo-batiment.png" alt="Saint-Roch" style="width:60px; height:60px; object-fit:contain; opacity:0.85; border-radius:50%;">
+                    <img src="images/logo-sre-transparent.png" alt="SRE" style="width:50px; height:50px; object-fit:contain; opacity:0.85;">
+                </div>
+                <h3>Saint-Roch-Événements</h3>
+                <div class="sub">— Écouchés-les-Vallées —</div>
+                <p>Célébrez, Mangez, Dormez, Tout Simplement !<br>Une propriété normande d'exception au bord de l'Orne, pour tous vos événements.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="#lieu">Le Lieu</a></li>
+                    <li><a href="#salle">Salle de Réception</a></li>
+                    <li><a href="#couchages">Couchages</a></li>
+                    <li><a href="#traiteur">Service Traiteur</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#tarifs">Tarifs</a></li>
+                    <li><a href="#contact">Contact &amp; Réservation</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>📞 <a href="tel:0768371664" style="color:rgba(245,237,217,0.6);">07 68 37 16 64</a></p>
+                <p>✉️ <a href="mailto:contact@saint-roch-evenements.fr" style="color:rgba(245,237,217,0.6);">contact@saint-roch-evenements.fr</a></p>
+                <p>📍 5 route de Mesnil Glaise<br>&nbsp;&nbsp;&nbsp;&nbsp;61150 Écouché-les-Vallées</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Saint-Roch-Événements — Mme Delphine Biot — SIRET 84327136200017</p>
+            <p>saint-roch-evenements.fr</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     MODALES TRAITEUR
+═══════════════════════════════════════════════ -->
+
+<!-- MODALE : Vin d'Honneur -->
+<div class="tr-modal" id="modal-vin" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (17).jpeg" alt="Vin d'Honneur">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Vin d'Honneur</h2>
+                <div class="tr-modal-price">9 € / personne</div>
+            </div>
+            <p class="tr-modal-desc">Accueillez vos invités avec élégance grâce à notre formule Vin d'Honneur. Verrines gourmandes, canapés raffinés et planches généreuses — la promesse d'un cocktail réussi avant votre grande fête.</p>
+            <ul class="tr-modal-list">
+                <li>2 verrines au choix parmi 4 (chèvre-miel, saumon-aneth, ratatouille, mousse de poivron)</li>
+                <li>2 canapés ou toasts au choix parmi 4</li>
+                <li>Planches de charcuterie normande à partager</li>
+                <li>Terrine du Saint Roch maison, pain de 3 livres</li>
+                <li>Service à la française ou en plateaux circulants</li>
+            </ul>
+            <div class="tr-modal-note">💡 Idéal pour un cocktail d'1h à 1h30 avant un repas assis ou dansant.</div>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE : Buffet Champêtre -->
+<div class="tr-modal" id="modal-champetre" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45.jpeg" alt="Buffet Champêtre">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Buffet Champêtre</h2>
+                <div class="tr-modal-price">18 € / personne</div>
+            </div>
+            <p class="tr-modal-desc">Une table généreuse aux saveurs du terroir normand. Ce buffet froid met à l'honneur les viandes rôties, les fromages de caractère et les sauces maison pour un repas convivial en toute liberté.</p>
+            <ul class="tr-modal-list">
+                <li>4 entrées au choix parmi 6 (crudités, taboulé, museau vinaigrette, œufs mimosa…)</li>
+                <li>Viandes froides : rôti de porc &amp; rosbeef tranché à la demande</li>
+                <li>Sauces mayonnaise &amp; cocktail maison, chips croustillantes</li>
+                <li>3 fromages normands au choix parmi 6 (Camembert, Livarot, Pont-l'Évêque…)</li>
+                <li>Pain de campagne et baguettes artisanales</li>
+            </ul>
+            <div class="tr-modal-note">💡 Formule idéale pour les repas décontractés : anniversaires, réunions de famille, fêtes champêtres.</div>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE : Buffet Tradition -->
+<div class="tr-modal" id="modal-tradition" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (6).jpeg" alt="Buffet Tradition">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Buffet Tradition</h2>
+                <div class="tr-modal-price">23 € / personne</div>
+            </div>
+            <p class="tr-modal-desc">La formule complète pour vos grandes occasions. Un plat chaud signature inspiré des recettes normandes, accompagné d'entrées variées et d'un plateau de fromages — un vrai repas de fête.</p>
+            <ul class="tr-modal-list">
+                <li>4 entrées au choix parmi 6</li>
+                <li><strong>Plat chaud au choix :</strong> Poulet Vallée d'Auge, Bœuf Braisé au Calvados ou Épaule de Cochon Rôtie au Miel</li>
+                <li>2 accompagnements au choix parmi 4 (gratin dauphinois, haricots verts, pommes sautées, riz créole)</li>
+                <li>3 fromages affinés au choix parmi 6</li>
+                <li>Pain, beurre demi-sel normand</li>
+            </ul>
+            <div class="tr-modal-note">💡 Formule recommandée pour les mariages, communions et grandes réceptions assises.</div>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE : Le Brasero -->
+<div class="tr-modal" id="modal-brasero" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (3).jpeg" alt="Le Brasero">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Le Brasero</h2>
+                <div class="tr-modal-price">25 € / personne</div>
+            </div>
+            <p class="tr-modal-desc">Autour des braises, notre Chef vous prépare une grillade généreuse en plein air. Un moment festif et chaleureux qui rassemble petits et grands dans la bonne humeur.</p>
+            <ul class="tr-modal-list">
+                <li>Côte de Bœuf, Poitrine de Porc fumée, Poulet Cajun, Saucisses artisanales</li>
+                <li>Smash Potatoes maison &amp; légumes de saison à la plancha</li>
+                <li>3 sauces maison : Truffe noire, Ranch, Barbecue Jack Daniel's</li>
+                <li>Pain boulanger &amp; beurre demi-sel</li>
+                <li>+ 2 entrées en option — supplément 4 € / pers</li>
+            </ul>
+            <div class="tr-modal-note">🔥 Notre Chef anime le brasero en direct — spectacle garanti pour vos invités !</div>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE : Brunch Authentique -->
+<div class="tr-modal" id="modal-brunch" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (2).jpeg" alt="Brunch Authentique">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Brunch Authentique</h2>
+                <div class="tr-modal-price">20 € / personne</div>
+            </div>
+            <p class="tr-modal-desc">Réveillez vos convives en douceur avec notre brunch du terroir. Viennoiseries encore chaudes, mets salés savoureux et gourmandises sucrées — tout est préparé et mis en place par notre équipe.</p>
+            <ul class="tr-modal-list">
+                <li>Boissons chaudes (café, thé, chocolat) &amp; jus de fruits frais</li>
+                <li>Croissants, pains au chocolat, pain frais artisanal, beurre et confitures maison</li>
+                <li>Saumon fumé, quiches du jour, fromages affinés, plateau de charcuterie</li>
+                <li>Fruits de saison frais, yaourts, céréales variées</li>
+                <li>Tout le service et la mise en place inclus</li>
+            </ul>
+            <div class="tr-modal-note">☕ Parfait pour un lendemain de mariage ou un week-end entre amis avec couchages.</div>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE : Plateau d'Affineur -->
+<div class="tr-modal" id="modal-affineur" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (18).jpeg" alt="Plateau d'Affineur">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Plateau d'Affineur</h2>
+                <div class="tr-modal-price">Sur devis</div>
+            </div>
+            <p class="tr-modal-desc">Une sélection de fromages phares de Normandie et du terroir, affinés à la perfection et présentés avec soin pour un moment riche en saveurs. Idéal en complément de toutes nos formules.</p>
+            <ul class="tr-modal-list">
+                <li>Fromages normands affinés sélectionnés à la saison (Camembert AOP, Livarot, Neufchâtel…)</li>
+                <li>Fromages de terroir d'exception selon arrivages</li>
+                <li>Présentation soignée sur ardoise avec accompagnements (noix, raisins, confitures)</li>
+                <li>Pain de campagne et crackers assortis</li>
+                <li>Conseil et accord mets / fromages sur demande</li>
+            </ul>
+            <div class="tr-modal-note">🧀 Tarif personnalisé selon la sélection et le nombre de convives — contactez-nous pour un devis.</div>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Demander un devis</a>
+        </div>
+    </div>
+</div>
+
+<script src="script.js?v=2"></script>
+
+</body>
+</html>

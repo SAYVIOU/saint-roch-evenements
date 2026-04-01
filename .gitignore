@@ -1,0 +1,17 @@
+# Fichiers système macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Environnements Python (utilisés pour le logo)
+/tmp/
+
+# Fichiers VS Code
+.vscode/
+*.code-workspace
+
+# Fichiers temporaires
+*.tmp
+*.log

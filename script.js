@@ -1,0 +1,143 @@
+/* ============================================================
+   SAINT-ROCH-ÉVÉNEMENTS — script.js
+   ============================================================
+   Ce fichier gère tous les comportements interactifs du site.
+
+   SOMMAIRE :
+   1. VIDÉO HERO  — lecteur YouTube en arrière-plan (API IFrame)
+   2. NAVIGATION  — barre qui change de couleur au scroll + menu mobile
+   3. LIGHTBOX    — affichage des photos en grand (galerie + clic)
+   4. MODALES     — détails des formules traiteur
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   1. VIDÉO HERO — YouTube IFrame API
+   • window.onYouTubeIframeAPIReady doit être
+     défini AVANT l'injection du script YouTube
+   • onReady force mute() + playVideo() pour
+     contourner les restrictions d'autoplay
+───────────────────────────────────────── */
+
+// 1a — Callback global appelé par YouTube quand l'API est prête
+window.onYouTubeIframeAPIReady = function () {
+    new YT.Player('hero-yt', {
+        videoId: 'HPoDR_BGSrw',
+        playerVars: {
+            autoplay:       1,
+            mute:           1,
+            loop:           1,
+            playlist:       'HPoDR_BGSrw',
+            controls:       0,
+            showinfo:       0,
+            rel:            0,
+            iv_load_policy: 3,
+            modestbranding: 1,
+            disablekb:      1,
+            playsinline:    1,
+            enablejsapi:    1
+        },
+        events: {
+            onReady: function (e) {
+                e.target.mute();
+                e.target.playVideo();
+            }
+        }
+    });
+};
+
+// Note : le script YouTube IFrame API est chargé dans le <head> de index.html
+
+
+/* ─────────────────────────────────────────
+   2. NAVIGATION
+   - Fond qui s'assombrit quand on scrolle
+   - Bouton hamburger pour mobile
+───────────────────────────────────────── */
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Menu mobile : ouverture / fermeture
+document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Fermer le menu en cliquant sur un lien
+document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+    });
+});
+
+
+/* ─────────────────────────────────────────
+   3. LIGHTBOX
+   - Cliquer sur une photo l'affiche en grand
+   - Flèches gauche/droite pour naviguer
+   - Touche Échap ou clic dehors pour fermer
+───────────────────────────────────────── */
+const galleryImages = Array.from(
+    document.querySelectorAll('.galerie-item img, .salle-gallery img, .couch-photo-wrap img')
+).map(i => i.src);
+
+let currentIndex = 0;
+
+function openLightbox(src) {
+    document.getElementById('lightbox').classList.add('open');
+    document.getElementById('lightbox-img').src = src;
+    currentIndex = galleryImages.indexOf(src);
+    document.body.style.overflow = 'hidden'; // bloque le scroll en arrière-plan
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function moveLightbox(dir) {
+    currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+    document.getElementById('lightbox-img').src = galleryImages[currentIndex];
+}
+
+// Navigation clavier
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        closeLightbox();
+        closeModal();
+    }
+    if (e.key === 'ArrowRight') moveLightbox(1);
+    if (e.key === 'ArrowLeft')  moveLightbox(-1);
+});
+
+
+/* ─────────────────────────────────────────
+   4. MODALES TRAITEUR
+   - openModal(id) : ouvre la modale ciblée
+   - closeModal()  : ferme toutes les modales
+   - Clic en dehors de la boîte → ferme
+   - Touche Échap → ferme (géré ci-dessus)
+───────────────────────────────────────── */
+function openModal(id) {
+    closeModal(); // ferme toute modale déjà ouverte
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.querySelectorAll('.tr-modal.open').forEach(m => {
+        m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+}
+
+// Ferme si on clique sur l'overlay (fond sombre), pas sur la boîte
+function closeModalOutside(event) {
+    if (event.target.classList.contains('tr-modal')) {
+        closeModal();
+    }
+}
