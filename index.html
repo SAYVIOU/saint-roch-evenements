@@ -25,6 +25,7 @@
             <li><a href="#traiteur">Traiteur</a></li>
             <li><a href="#galerie">Galerie</a></li>
             <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#disponibilites">Agenda</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -535,6 +536,30 @@
     </div>
 </section>
 
+<!-- DISPONIBILITÉS -->
+<section id="disponibilites">
+    <div class="container">
+        <h2 class="section-title">Disponibilités</h2>
+        <div class="section-subtitle">Consultez les dates disponibles avant de réserver</div>
+        <div class="divider"><span>✦</span></div>
+
+        <div class="dispo-wrap">
+            <div class="dispo-nav">
+                <button class="dispo-btn-nav" id="dispoPrev">‹</button>
+                <div class="dispo-months" id="dispoMonths"></div>
+                <button class="dispo-btn-nav" id="dispoNext">›</button>
+            </div>
+            <div class="dispo-legend">
+                <span class="leg-item"><span class="leg-dot leg-free"></span> Disponible</span>
+                <span class="leg-item"><span class="leg-dot leg-option"></span> En option</span>
+                <span class="leg-item"><span class="leg-dot leg-taken"></span> Réservé</span>
+            </div>
+        </div>
+
+        <p class="dispo-note">Pour vérifier la disponibilité d'une date précise ou faire une demande, <a href="#contact">contactez-nous</a>.</p>
+    </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
     <div class="container">
@@ -845,7 +870,7 @@
     </div>
 </div>
 
-<script src="script.js?v=3"></script>
+<script src="script.js?v=4"></script>
 
 </body>
 </html>

@@ -387,6 +387,50 @@
         .temo-cta { text-align: center; margin-top: 2.5rem; }
         .temo-cta p { color: rgba(245,237,217,0.75); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; margin-bottom: 1rem; }
 
+        /* ═══════════ DISPONIBILITÉS ═══════════ */
+        #disponibilites { background: var(--white); }
+        .dispo-wrap { max-width: 860px; margin: 0 auto; }
+        .dispo-nav { display: flex; align-items: flex-start; gap: 1rem; }
+        .dispo-btn-nav {
+            background: none; border: 1px solid var(--sage);
+            color: var(--sage-dark); border-radius: 4px;
+            width: 36px; height: 36px; font-size: 1.3rem; cursor: pointer;
+            flex-shrink: 0; margin-top: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dispo-btn-nav:hover { background: var(--sage); color: var(--beige); }
+        .dispo-months { display: flex; gap: 1.5rem; flex: 1; justify-content: center; flex-wrap: wrap; }
+        .dispo-month { flex: 1; min-width: 220px; max-width: 260px; }
+        .dispo-month-title {
+            text-align: center; font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem; font-weight: 600; color: var(--brown);
+            text-transform: capitalize; margin-bottom: 0.6rem; letter-spacing: 0.05em;
+        }
+        .dispo-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+        .dispo-dow {
+            text-align: center; font-size: 0.65rem; font-weight: 700;
+            color: var(--text-light); text-transform: uppercase;
+            padding: 4px 0; letter-spacing: 0.05em;
+        }
+        .dispo-day {
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 0.78rem; border-radius: 4px; cursor: default; color: var(--text);
+        }
+        .dispo-day.empty { background: none; }
+        .dispo-day.today { font-weight: 700; outline: 2px solid var(--sage); outline-offset: -2px; }
+        .dispo-day.past { color: #ccc; }
+        .dispo-day.free { background: rgba(107,127,89,0.12); color: var(--sage-dark); }
+        .dispo-day.option { background: rgba(210,170,80,0.25); color: #8a6a00; }
+        .dispo-day.taken { background: rgba(160,60,40,0.18); color: #8c2a1a; font-weight: 600; }
+        .dispo-legend { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
+        .leg-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--text-light); }
+        .leg-dot { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+        .leg-free   { background: rgba(107,127,89,0.25); }
+        .leg-option { background: rgba(210,170,80,0.35); }
+        .leg-taken  { background: rgba(160,60,40,0.25); }
+        .dispo-note { text-align: center; margin-top: 1.8rem; font-size: 0.88rem; color: var(--text-light); }
+        .dispo-note a { color: var(--sage-dark); }
+
         /* ═══════════ CONTACT ═══════════ */
         .contact-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: start; }
         .contact-info h3 { font-size: 1.45rem; color: var(--brown); margin-bottom: 1.5rem; }

@@ -209,3 +209,109 @@ function closeModalOutside(event) {
         closeModal();
     }
 }
+
+
+/* ─────────────────────────────────────────
+   5. CALENDRIER DES DISPONIBILITÉS
+   ─────────────────────────────────────────
+   Pour mettre à jour les dates :
+   - "taken"  = date réservée (rouge)
+   - "option" = date en option (jaune)
+   Format : 'AAAA-MM-JJ'
+───────────────────────────────────────── */
+(function () {
+    // ── MODIFIER CES LISTES POUR METTRE À JOUR LES DATES ──────────────
+    const taken = [
+        '2026-04-12',
+        '2026-04-13',
+        '2026-05-02',
+        '2026-05-30',
+        '2026-05-31',
+        '2026-06-20',
+    ];
+    const option = [
+        '2026-04-26',
+        '2026-06-06',
+    ];
+    // ──────────────────────────────────────────────────────────────────
+
+    const takenSet  = new Set(taken);
+    const optionSet = new Set(option);
+
+    const today    = new Date();
+    const todayStr = today.toISOString().slice(0, 10);
+
+    let offset = 0; // décalage en mois par rapport à aujourd'hui
+
+    const JOURS = ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'];
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function renderMonth(year, month) {
+        // month : 0-11
+        const firstDay = new Date(year, month, 1);
+        const lastDay  = new Date(year, month + 1, 0);
+        const daysInMonth = lastDay.getDate();
+
+        // Lundi = 0, Dimanche = 6
+        let startDow = firstDay.getDay() - 1;
+        if (startDow < 0) startDow = 6;
+
+        const title = firstDay.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+
+        let html = `<div class="dispo-month">
+            <div class="dispo-month-title">${title}</div>
+            <div class="dispo-grid">`;
+
+        // En-têtes jours
+        JOURS.forEach(j => { html += `<div class="dispo-dow">${j}</div>`; });
+
+        // Cases vides avant le 1er
+        for (let i = 0; i < startDow; i++) {
+            html += `<div class="dispo-day empty"></div>`;
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = `${year}-${pad(month + 1)}-${pad(d)}`;
+            let cls = 'dispo-day';
+
+            if (dateStr < todayStr) {
+                cls += ' past';
+            } else if (takenSet.has(dateStr)) {
+                cls += ' taken';
+            } else if (optionSet.has(dateStr)) {
+                cls += ' option';
+            } else {
+                cls += ' free';
+            }
+            if (dateStr === todayStr) cls += ' today';
+
+            html += `<div class="${cls}">${d}</div>`;
+        }
+
+        html += `</div></div>`;
+        return html;
+    }
+
+    function render() {
+        const container = document.getElementById('dispoMonths');
+        if (!container) return;
+
+        let html = '';
+        for (let i = 0; i < 3; i++) {
+            const d = new Date(today.getFullYear(), today.getMonth() + offset + i, 1);
+            html += renderMonth(d.getFullYear(), d.getMonth());
+        }
+        container.innerHTML = html;
+    }
+
+    render();
+
+    document.getElementById('dispoPrev').addEventListener('click', () => {
+        if (offset > 0) { offset--; render(); }
+    });
+    document.getElementById('dispoNext').addEventListener('click', () => {
+        offset++;
+        render();
+    });
+})();
