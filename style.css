@@ -374,7 +374,7 @@
         @media (max-width: 600px) {
 
             /* ── NAVBAR ── */
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(61,40,16,0.97); padding: 1rem; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: auto; width: 220px; background: rgba(61,40,16,0.97); padding: 1rem; border-radius: 0 0 8px 0; box-shadow: 4px 4px 20px rgba(0,0,0,0.3); }
             .nav-links.open { display: flex; }
             .nav-toggle { display: flex; }
             /* Réduit le nom dans la nav pour qu'il ne couvre pas le burger */
@@ -390,10 +390,10 @@
             .hero-ornament { margin-bottom: 0.8rem; }
             .hero-slogan { font-size: 1.15rem; }
             .hero-slogan-sub { font-size: 0.82rem; margin-bottom: 1.8rem; }
-            /* 3 icônes côte à côte en ligne compacte */
-            .hero-services { flex-wrap: nowrap; gap: 0; justify-content: space-around; width: 100%; padding: 0 0.5rem; }
+            /* 3 icônes côte à côte avec espacement visible */
+            .hero-services { flex-wrap: nowrap; gap: 0.6rem; justify-content: center; width: 100%; padding: 0 0.8rem; }
             .hero-sep { display: none; }
-            .hero-svc { padding: 0.7rem 0.5rem; flex: 1; }
+            .hero-svc { padding: 0.8rem 0.6rem; flex: 1; border: 1px solid rgba(245,237,217,0.25); border-radius: 8px; background: rgba(245,237,217,0.06); }
             .hero-svc-icon { width: 44px; height: 44px; font-size: 1.1rem; }
             .hero-svc-label { font-size: 0.58rem; }
             .hero-svc-desc { font-size: 0.65rem; }
