@@ -117,7 +117,7 @@ function updateLightbox() {
     document.getElementById('lightbox-img').alt  = item.alt;
     document.getElementById('lightbox-caption').textContent = item.alt;
     document.getElementById('lightbox-counter').textContent =
-        currentImages.length > 1 ? `${currentIndex + 1} \u2F ${currentImages.length}` : '';
+        currentImages.length > 1 ? `${currentIndex + 1} / ${currentImages.length}` : '';
 }
 
 function closeLightbox() {
