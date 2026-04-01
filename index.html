@@ -547,7 +547,20 @@
             <div class="contact-form">
                 <h3>Demande de Réservation</h3>
                 <p class="form-desc">Complétez ce formulaire et nous vous répondrons dans les 24h pour discuter de votre projet.</p>
-                <form action="mailto:contact@saint-roch-evenements.fr" method="post" enctype="text/plain">
+
+                <!-- Message succès (affiché après envoi réussi) -->
+                <div id="form-merci" style="display:none; background:#f0f5ec; border:1px solid #8B9D7A; border-radius:6px; padding:1.2rem 1.5rem; margin-bottom:1.2rem;">
+                    <strong style="color:#5C3D1E;">✅ Demande envoyée !</strong>
+                    <p style="margin:0.4rem 0 0; font-size:0.88rem; color:#6b5a42;">Merci, nous vous répondrons dans les 24h.</p>
+                </div>
+
+                <!-- Message erreur -->
+                <div id="form-erreur" style="display:none; background:#fdf0f0; border:1px solid #c0706a; border-radius:6px; padding:1.2rem 1.5rem; margin-bottom:1.2rem;">
+                    <strong style="color:#8b2020;">❌ Erreur d'envoi</strong>
+                    <p style="margin:0.4rem 0 0; font-size:0.88rem; color:#6b5a42;">Une erreur s'est produite. Contactez-nous directement par téléphone ou email.</p>
+                </div>
+
+                <form id="reservation-form" action="send.php" method="POST">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nom">Nom *</label>

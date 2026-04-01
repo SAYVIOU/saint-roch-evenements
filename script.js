@@ -57,6 +57,46 @@ window.scrollTo(0, 0);
 
 
 /* ─────────────────────────────────────────
+   FORMULAIRE DE RÉSERVATION
+   - Sur OVH : envoi réel via send.php
+   - Sur GitHub Pages : message d'info
+   - Affiche confirmation ou erreur selon ?merci=1 / ?erreur=...
+───────────────────────────────────────── */
+(function () {
+    const params = new URLSearchParams(window.location.search);
+
+    // Après redirection de send.php → affiche le bon message
+    if (params.get('merci') === '1') {
+        const el = document.getElementById('form-merci');
+        if (el) {
+            el.style.display = 'block';
+            document.getElementById('reservation-form').style.display = 'none';
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+        // Nettoie l'URL
+        history.replaceState(null, '', window.location.pathname + '#contact');
+    }
+    if (params.get('erreur')) {
+        const el = document.getElementById('form-erreur');
+        if (el) {
+            el.style.display = 'block';
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+        history.replaceState(null, '', window.location.pathname + '#contact');
+    }
+
+    // Sur GitHub Pages : le PHP ne tourne pas → on bloque l'envoi et on informe
+    const form = document.getElementById('reservation-form');
+    if (form && window.location.hostname.includes('github.io')) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Le formulaire sera actif une fois le site hébergé sur OVH.\n\nEn attendant, contactez-nous directement :\n📞 07 68 37 16 64\n✉️ contact@saint-roch-evenements.fr');
+        });
+    }
+})();
+
+
+/* ─────────────────────────────────────────
    2. NAVIGATION
    - Fond qui s'assombrit quand on scrolle
    - Bouton hamburger pour mobile
