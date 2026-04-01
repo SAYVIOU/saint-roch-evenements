@@ -385,10 +385,16 @@
 
 <!-- Lightbox -->
 <div id="lightbox" onclick="closeLightbox()">
-    <span id="lightbox-close" onclick="closeLightbox()">×</span>
-    <span id="lightbox-prev" onclick="event.stopPropagation(); moveLightbox(-1)">‹</span>
-    <img id="lightbox-img" src="" alt="">
-    <span id="lightbox-next" onclick="event.stopPropagation(); moveLightbox(1)">›</span>
+    <button id="lightbox-close" onclick="closeLightbox()" aria-label="Fermer">✕</button>
+    <button id="lightbox-prev" onclick="event.stopPropagation(); moveLightbox(-1)" aria-label="Précédent">‹</button>
+    <div id="lightbox-box" onclick="event.stopPropagation()">
+        <img id="lightbox-img" src="" alt="">
+        <div id="lightbox-footer">
+            <div id="lightbox-caption"></div>
+            <div id="lightbox-counter"></div>
+        </div>
+    </div>
+    <button id="lightbox-next" onclick="event.stopPropagation(); moveLightbox(1)" aria-label="Suivant">›</button>
 </div>
 
 <!-- TARIFS -->
@@ -781,7 +787,7 @@
     </div>
 </div>
 
-<script src="script.js?v=2"></script>
+<script src="script.js?v=3"></script>
 
 </body>
 </html>

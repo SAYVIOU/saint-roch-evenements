@@ -94,21 +94,30 @@ const groupSelectors = {
     galerie:   '.galerie-item img'
 };
 
+// Chaque entrée = { src, alt }
 let currentImages = [];
 let currentIndex  = 0;
 
 function openLightbox(src, group) {
-    // Récupère uniquement les images du bon groupe
     const selector = groupSelectors[group] || '.galerie-item img, .salle-gallery img, .couch-photo-wrap img';
-    currentImages = Array.from(document.querySelectorAll(selector)).map(i => i.src);
+    currentImages = Array.from(document.querySelectorAll(selector))
+        .map(i => ({ src: i.src, alt: i.alt || '' }));
 
-    // Trouve l'index de l'image cliquée (src peut être absolue ou relative)
-    currentIndex = currentImages.findIndex(s => s === src || s.endsWith(src.replace(/^.*\//, '/')));
+    currentIndex = currentImages.findIndex(i => i.src === src || i.src.endsWith(src.replace(/^.*\//, '/')));
     if (currentIndex === -1) currentIndex = 0;
 
     document.getElementById('lightbox').classList.add('open');
-    document.getElementById('lightbox-img').src = src;
     document.body.style.overflow = 'hidden';
+    updateLightbox();
+}
+
+function updateLightbox() {
+    const item = currentImages[currentIndex];
+    document.getElementById('lightbox-img').src  = item.src;
+    document.getElementById('lightbox-img').alt  = item.alt;
+    document.getElementById('lightbox-caption').textContent = item.alt;
+    document.getElementById('lightbox-counter').textContent =
+        currentImages.length > 1 ? `${currentIndex + 1} \u2F ${currentImages.length}` : '';
 }
 
 function closeLightbox() {
@@ -118,7 +127,7 @@ function closeLightbox() {
 
 function moveLightbox(dir) {
     currentIndex = (currentIndex + dir + currentImages.length) % currentImages.length;
-    document.getElementById('lightbox-img').src = currentImages[currentIndex];
+    updateLightbox();
 }
 
 // Navigation clavier
