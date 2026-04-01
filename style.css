@@ -374,7 +374,7 @@
         @media (max-width: 600px) {
 
             /* ── NAVBAR ── */
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: auto; width: 220px; background: rgba(61,40,16,0.97); padding: 1rem; border-radius: 0 0 8px 0; box-shadow: 4px 4px 20px rgba(0,0,0,0.3); }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; right: 0; left: auto; width: 220px; background: rgba(61,40,16,0.97); padding: 1rem; border-radius: 0 0 0 8px; box-shadow: -4px 4px 20px rgba(0,0,0,0.3); }
             .nav-links.open { display: flex; }
             .nav-toggle { display: flex; }
             /* Réduit le nom dans la nav pour qu'il ne couvre pas le burger */
