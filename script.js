@@ -48,6 +48,13 @@ window.onYouTubeIframeAPIReady = function () {
 
 // Note : le script YouTube IFrame API est chargé dans le <head> de index.html
 
+// Force le retour en haut de page à chaque chargement (évite que le téléphone
+// mémorise la position de défilement de la visite précédente)
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual'; // désactive la restauration automatique du navigateur
+}
+window.scrollTo(0, 0);
+
 
 /* ─────────────────────────────────────────
    2. NAVIGATION
