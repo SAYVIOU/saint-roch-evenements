@@ -124,6 +124,7 @@ document.querySelectorAll('.nav-links a').forEach(a => {
    3. LIGHTBOX
    - Cliquer sur une photo l'affiche en grand
    - Flèches gauche/droite uniquement dans le même groupe
+   - Swipe gauche/droite sur mobile
    - Touche Échap ou clic dehors pour fermer
 ───────────────────────────────────────── */
 
@@ -179,6 +180,21 @@ document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') moveLightbox(1);
     if (e.key === 'ArrowLeft')  moveLightbox(-1);
 });
+
+// Swipe gauche/droite dans le lightbox (mobile)
+(function () {
+    let lbStartX = 0, lbStartY = 0;
+    const lb = document.getElementById('lightbox');
+    lb.addEventListener('touchstart', e => {
+        lbStartX = e.touches[0].clientX;
+        lbStartY = e.touches[0].clientY;
+    }, { passive: true });
+    lb.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - lbStartX;
+        const dy = Math.abs(e.changedTouches[0].clientY - lbStartY);
+        if (Math.abs(dx) > 50 && dy < 80) moveLightbox(dx < 0 ? 1 : -1);
+    }, { passive: true });
+})();
 
 
 /* ─────────────────────────────────────────

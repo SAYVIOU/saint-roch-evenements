@@ -122,6 +122,29 @@
         @media (max-width: 700px)  { .cal-grid { grid-template-columns: 1fr; } }
         @media (max-width: 1000px) and (min-width: 701px) { .cal-grid { grid-template-columns: 1fr 1fr; } }
 
+        /* ── Calendrier mobile : jours plus grands ── */
+        @media (max-width: 700px) {
+            .tab-content { padding: 1rem; }
+            .cal-day { font-size: 0.85rem; min-height: 36px; border-radius: 6px; }
+            .cal-dow { font-size: 0.65rem; padding: 4px 0; }
+            .cal-days { gap: 4px; }
+            .cal-month { padding: 0.8rem 0.6rem; }
+            .editor-legend { flex-direction: column; align-items: flex-start; gap: 0.6rem; padding: 0.8rem 1rem; }
+            .cal-nav { gap: 0.5rem; }
+            .tabs { margin: 0 1rem; }
+            .tab-btn { padding: 0.6rem 1rem; font-size: 0.8rem; }
+            .editor-header { padding: 0.8rem 1rem; }
+            .editor-header h1 { font-size: 1.1rem; }
+            .btn-save { padding: 0.5rem 1rem; font-size: 0.78rem; }
+        }
+
+        /* ── Fiche modale : scrollable sur petit écran ── */
+        @media (max-width: 600px) {
+            .fiche-overlay { align-items: flex-end; padding: 0; }
+            .fiche-box { border-radius: 16px 16px 0 0; max-height: 90vh; overflow-y: auto; padding: 1.5rem 1.2rem 2rem; }
+            .form-row-2 { grid-template-columns: 1fr; }
+        }
+
         .cal-month { background: var(--white); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07); }
         .cal-month-title { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--brown); text-transform: capitalize; margin-bottom: 0.6rem; }
         .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
@@ -727,7 +750,7 @@ function renderMonth(year, month) {
         const mainResa = resa.rangeRef ? (dates.reservations[resa.rangeRef] || {}) : resa;
         const tooltip  = mainResa.nom ? (mainResa.nom + ' ' + (mainResa.prenom || '')).trim() : '';
         const events = isPast ? '' :
-            `data-ds="${ds}" onclick="clickDate('${ds}')" onmouseover="hoverDate('${ds}')" ontouchstart="clickDate('${ds}')"` ;
+            `data-ds="${ds}" onclick="clickDate('${ds}')" onmouseover="hoverDate('${ds}')" ontouchend="event.preventDefault();clickDate('${ds}')"` ;
         html += `<div class="${cls}" title="${tooltip}" ${events}>${d}</div>`;
     }
     html += `</div></div>`;
@@ -807,42 +830,70 @@ function renderResaList() {
 }
 
 // ── Swipe gauche pour supprimer ──
+// Handlers globaux uniques (évite les fuites d'écouteurs)
+let _swipeActive = null; // { item, card, startX, startY, currentX, locked }
+
+document.addEventListener('mousemove', e => {
+    if (!_swipeActive) return;
+    _swipeMoveX(e.clientX, e.clientY);
+});
+document.addEventListener('mouseup', () => {
+    if (_swipeActive) _swipeEnd();
+});
+document.addEventListener('touchmove', e => {
+    if (!_swipeActive) return;
+    if (_swipeActive.locked) e.preventDefault();
+    _swipeMoveX(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive: false });
+document.addEventListener('touchend', () => {
+    if (_swipeActive) _swipeEnd();
+});
+
+function _swipeMoveX(x, y) {
+    const s = _swipeActive;
+    const dx = x - s.startX;
+    const dy = Math.abs(y - s.startY);
+    // Détection direction au premier mouvement
+    if (!s.locked) {
+        if (Math.abs(dx) < 6 && dy < 6) return;
+        if (dy > Math.abs(dx)) { _swipeCancel(); return; } // glissement vertical → annuler
+        s.locked = true;
+        s.item.classList.add('swiping');
+    }
+    s.currentX = Math.min(0, dx);
+    s.card.style.transform = `translateX(${s.currentX}px)`;
+}
+function _swipeEnd() {
+    const s = _swipeActive;
+    _swipeActive = null;
+    s.item.classList.remove('swiping');
+    if (s.currentX < -100) {
+        s.item.classList.add('snap-delete');
+        s.card.style.transform = 'translateX(-100%)';
+        setTimeout(() => deleteResaByDate(s.item.dataset.d), 250);
+    } else {
+        s.item.classList.add('snap-back');
+        s.card.style.transform = '';
+        setTimeout(() => s.item.classList.remove('snap-back'), 350);
+    }
+}
+function _swipeCancel() {
+    if (!_swipeActive) return;
+    const s = _swipeActive; _swipeActive = null;
+    s.item.classList.remove('swiping');
+    s.card.style.transform = '';
+}
+
 function initSwipeDelete() {
-    const THRESHOLD = 110; // px pour déclencher la suppression
     document.querySelectorAll('.resa-item').forEach(item => {
         const card = item.querySelector('.resa-card');
-        let startX = 0, currentX = 0, dragging = false;
-
-        function onStart(x) { startX = x; currentX = 0; dragging = true; item.classList.add('swiping'); }
-        function onMove(x) {
-            if (!dragging) return;
-            currentX = Math.min(0, x - startX); // seulement vers la gauche
-            card.style.transform = `translateX(${currentX}px)`;
-        }
-        function onEnd() {
-            if (!dragging) return;
-            dragging = false;
-            item.classList.remove('swiping');
-            if (currentX < -THRESHOLD) {
-                // Supprimer
-                item.classList.add('snap-delete');
-                card.style.transform = `translateX(-100%)`;
-                setTimeout(() => deleteResaByDate(item.dataset.d), 250);
-            } else {
-                // Retour
-                item.classList.add('snap-back');
-                card.style.transform = '';
-                setTimeout(() => item.classList.remove('snap-back'), 350);
-            }
-        }
-        // Mouse
-        card.addEventListener('mousedown',  e => { if (e.button === 0) onStart(e.clientX); });
-        document.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
-        document.addEventListener('mouseup',   () => { if (dragging) onEnd(); });
-        // Touch
-        card.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
-        card.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
-        card.addEventListener('touchend',   () => onEnd());
+        card.addEventListener('mousedown', e => {
+            if (e.button !== 0) return;
+            _swipeActive = { item, card, startX: e.clientX, startY: e.clientY, currentX: 0, locked: false };
+        });
+        card.addEventListener('touchstart', e => {
+            _swipeActive = { item, card, startX: e.touches[0].clientX, startY: e.touches[0].clientY, currentX: 0, locked: false };
+        }, { passive: true });
     });
 }
 
