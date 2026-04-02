@@ -143,13 +143,16 @@
         .cal-day.option:hover { background: rgba(212,160,23,0.35); transform: scale(1.05); }
         /* petit point sur les dates avec fiche */
         .cal-day.has-info::after { content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.7; }
-        /* sélection de plage — style Airbnb */
-        .cal-day.sel-anchor { background: var(--taken) !important; color: #fff !important; font-weight: 700; border-radius: 6px 0 0 6px; border-color: transparent; transform: none; }
-        .cal-day.sel-mid    { background: rgba(192,57,43,0.18) !important; color: var(--taken) !important; border-radius: 0; border-color: transparent; transform: none; }
-        .cal-day.sel-end    { background: var(--taken) !important; color: #fff !important; font-weight: 700; border-radius: 0 6px 6px 0; border-color: transparent; transform: none; }
-        .cal-day.sel-anchor.sel-end { border-radius: 6px; }
-        /* indicateur "choisir 1ère date" */
-        .cal-selecting-hint { text-align:center; font-size:0.8rem; color: var(--taken); font-weight:600; margin-bottom:0.8rem; padding: 0.4rem; background: rgba(192,57,43,0.08); border-radius:5px; letter-spacing:0.04em; }
+        /* sélection de plage — drag */
+        .cal-day { transition: background 0.08s ease, color 0.08s ease, border-radius 0.12s ease; }
+        .cal-day.sel-anchor { background: var(--taken) !important; color: #fff !important; font-weight: 700; border-radius: 8px 0 0 8px; border-color: transparent !important; transform: none !important; }
+        .cal-day.sel-mid    { background: rgba(192,57,43,0.15) !important; color: var(--taken) !important; border-radius: 0 !important; border-color: transparent !important; transform: none !important; }
+        .cal-day.sel-end    { background: var(--taken) !important; color: #fff !important; font-weight: 700; border-radius: 0 8px 8px 0; border-color: transparent !important; transform: none !important; }
+        .cal-day.sel-anchor.sel-end { border-radius: 8px !important; }
+        .cal-days { user-select: none; }
+        /* indicateur de glissement */
+        .cal-selecting-hint { text-align:center; font-size:0.8rem; color: var(--taken); font-weight:600; margin-bottom:0.8rem; padding: 0.4rem 0.8rem; background: rgba(192,57,43,0.08); border-radius:5px; letter-spacing:0.04em; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.55; } }
 
         /* ── FICHE MODALE ── */
         .fiche-overlay {
@@ -289,8 +292,8 @@
             <div class="leg"><div class="leg-dot leg-taken-dot"></div> Réservé — cliquer pour voir/modifier</div>
             <div class="leg"><div class="leg-dot leg-option-dot"></div> En option — cliquer pour libérer</div>
         </div>
-        <div id="selecting-hint" class="cal-selecting-hint" style="display:none">📍 Maintenant cliquez sur la date de fin de la réservation</div>
-        <p class="editor-hint" id="editor-hint">Cliquez sur la 1ère date pour commencer une réservation. Cliquez sur une date réservée pour voir la fiche.</p>
+        <div id="selecting-hint" class="cal-selecting-hint" style="display:none">📍 Glissez jusqu'à la date de fin, puis relâchez</div>
+        <p class="editor-hint" id="editor-hint">Maintenez le clic sur la 1ère date et glissez jusqu'à la fin pour réserver. Cliquez sur une date réservée pour voir la fiche.</p>
 
         <div class="cal-nav">
             <button class="cal-nav-btn" id="cal-prev">‹</button>
@@ -466,79 +469,104 @@ function switchTab(name, btn) {
 }
 
 // ══════════════════════════════════════════
-//  SÉLECTION DE PLAGE (style Airbnb)
+//  SÉLECTION PAR GLISSEMENT (mousedown → drag → mouseup)
 // ══════════════════════════════════════════
-let rangeStart = null;
-let hoverDs    = null;
+let isSelecting = false;
+let rangeStart  = null;
+let hoverDs     = null;
 
 function getDatesInRange(a, b) {
-    const result = [];
-    const cur = new Date(a + 'T12:00:00');
-    const end = new Date(b + 'T12:00:00');
-    while (cur <= end) {
-        result.push(d2s(cur));
-        cur.setDate(cur.getDate() + 1);
-    }
+    const result = [], cur = new Date(a + 'T12:00:00'), end = new Date(b + 'T12:00:00');
+    while (cur <= end) { result.push(d2s(cur)); cur.setDate(cur.getDate() + 1); }
     return result;
 }
-
 function getSelRange() {
-    if (!rangeStart) return null;
-    const h = hoverDs || rangeStart;
-    return { start: rangeStart < h ? rangeStart : h, end: rangeStart < h ? h : rangeStart };
+    if (!rangeStart || !hoverDs) return null;
+    return { start: rangeStart <= hoverDs ? rangeStart : hoverDs,
+             end:   rangeStart <= hoverDs ? hoverDs    : rangeStart };
+}
+function setSelectingUI(on) {
+    document.getElementById('selecting-hint').style.display = on ? 'block' : 'none';
+    document.getElementById('editor-hint').style.display    = on ? 'none'  : 'block';
 }
 
-function setSelectingUI(selecting) {
-    document.getElementById('selecting-hint').style.display = selecting ? 'block' : 'none';
-    document.getElementById('editor-hint').style.display    = selecting ? 'none'  : 'block';
-}
-
-function clickDate(ds) {
+// ── mousedown : commence le glissement ──
+function startDrag(ds, e) {
+    e.preventDefault();
     const isTaken  = dates.taken.includes(ds);
     const isOption = dates.option.includes(ds);
+    if (isTaken) {
+        // Simple clic sur date réservée → ouvrira la fiche au mouseup
+        return;
+    }
+    if (isOption) return;
+    isSelecting = true; rangeStart = ds; hoverDs = ds;
+    setSelectingUI(true);
+    renderCalendar();
+}
 
-    if (rangeStart === null) {
+// ── mouseover/touchmove : met à jour la date de fin ──
+function dragOver(ds) {
+    if (!isSelecting) return;
+    if (ds !== hoverDs) { hoverDs = ds; renderCalendar(); }
+}
+
+// ── mouseup/touchend : confirme la plage ──
+function endDrag(ds, e) {
+    if (!isSelecting) {
+        // Simple clic sur date réservée
+        const isTaken = dates.taken.includes(ds);
         if (isTaken) {
-            // Ouvrir la fiche (suit le rangeRef si c'est une date secondaire)
             const mainDate = (dates.reservations[ds] && dates.reservations[ds].rangeRef) || ds;
             openFiche(mainDate, true);
-        } else if (isOption) {
-            // Libérer la date en option
-            dates.option = dates.option.filter(d => d !== ds);
-            delete dates.reservations[ds];
-            renderCalendar(); renderResaList();
-        } else {
-            // 1er clic : début de plage
-            rangeStart = ds; hoverDs = ds;
-            setSelectingUI(true);
-            renderCalendar();
+        } else if (dates.option.includes(ds)) {
+            if (confirm('Libérer cette date ?')) {
+                dates.option = dates.option.filter(d => d !== ds);
+                delete dates.reservations[ds];
+                renderCalendar(); renderResaList();
+            }
         }
-    } else {
-        // 2ème clic : fin de plage
-        const sel = getSelRange();
-        rangeStart = null; hoverDs = null;
-        setSelectingUI(false);
-
-        const range = getDatesInRange(sel.start, sel.end);
-        // Vérifier si des dates déjà réservées sont dans la plage
-        const conflicts = range.filter(d => dates.taken.includes(d) || dates.option.includes(d));
-        if (conflicts.length > 0) {
-            alert('Certaines dates de cette plage sont déjà réservées. Veuillez choisir une autre période.');
-            renderCalendar(); return;
-        }
-
-        range.forEach((d, i) => {
-            dates.taken.push(d);
-            if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
-        });
-        renderCalendar();
-        openFiche(sel.start, false, range);
+        return;
     }
+    isSelecting = false; setSelectingUI(false);
+    hoverDs = ds; // met à jour la fin avec la date du mouseup
+    const sel = getSelRange();
+    rangeStart = null; hoverDs = null;
+
+    const range = getDatesInRange(sel.start, sel.end);
+    const conflicts = range.filter(d => dates.taken.includes(d) || dates.option.includes(d));
+    if (conflicts.length > 0) {
+        alert('Certaines dates de cette plage sont déjà réservées. Choisissez une autre période.');
+        renderCalendar(); return;
+    }
+    range.forEach((d, i) => {
+        dates.taken.push(d);
+        if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
+    });
+    renderCalendar();
+    openFiche(sel.start, false, range);
 }
 
-function hoverDate(ds) {
-    if (rangeStart !== null) { hoverDs = ds; renderCalendar(); }
-}
+// Annule le glissement si le souris sort de la grille
+document.addEventListener('mouseup', () => {
+    if (isSelecting) { isSelecting = false; rangeStart = null; hoverDs = null; setSelectingUI(false); renderCalendar(); }
+});
+
+// ── Support tactile (mobile) ──
+document.addEventListener('touchmove', function(e) {
+    if (!isSelecting) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    if (el && el.dataset.ds) dragOver(el.dataset.ds);
+}, { passive: false });
+document.addEventListener('touchend', function(e) {
+    if (!isSelecting) return;
+    const t = e.changedTouches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    if (el && el.dataset.ds) endDrag(el.dataset.ds, e);
+    else { isSelecting = false; rangeStart = null; hoverDs = null; setSelectingUI(false); renderCalendar(); }
+});
 
 // ══════════════════════════════════════════
 //  FICHE CLIENT
@@ -652,7 +680,8 @@ function renderMonth(year, month) {
         let cls = 'cal-day';
         // Sélection en cours (preview Airbnb)
         if (!isPast && sel && ds >= sel.start && ds <= sel.end) {
-            if (ds === sel.start) cls += ' sel-anchor';
+            if (ds === sel.start && ds === sel.end) cls += ' sel-anchor sel-end';
+            else if (ds === sel.start) cls += ' sel-anchor';
             else if (ds === sel.end) cls += ' sel-end';
             else cls += ' sel-mid';
         } else if (isPast)        cls += ' past';
@@ -665,9 +694,9 @@ function renderMonth(year, month) {
 
         const mainResa = resa.rangeRef ? (dates.reservations[resa.rangeRef] || {}) : resa;
         const tooltip  = mainResa.nom ? (mainResa.nom + ' ' + (mainResa.prenom || '')).trim() : '';
-        const hover    = (!isPast && !isTaken && !isOption) || rangeStart !== null ? `onmouseover="hoverDate('${ds}')"` : '';
-        const click    = isPast ? '' : `onclick="clickDate('${ds}')"`;
-        html += `<div class="${cls}" title="${tooltip}" ${click} ${hover}>${d}</div>`;
+        const events = isPast ? '' :
+            `data-ds="${ds}" onmousedown="startDrag('${ds}',event)" onmouseup="endDrag('${ds}',event)" onmouseover="dragOver('${ds}')" ontouchstart="startDrag('${ds}',event)"`;
+        html += `<div class="${cls}" title="${tooltip}" ${events}>${d}</div>`;
     }
     html += `</div></div>`;
     return html;
