@@ -212,22 +212,46 @@
 
         /* ── LISTE RÉSERVATIONS ── */
         .resa-empty { text-align: center; color: #aaa; font-style: italic; padding: 3rem; }
-        .resa-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(92,61,30,0.07); }
-        .resa-table th { background: var(--brown-dark); color: var(--beige); padding: 0.75rem 1rem; text-align: left; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
-        .resa-table td { padding: 0.75rem 1rem; font-size: 0.85rem; border-bottom: 1px solid var(--beige-dark); vertical-align: middle; }
-        .resa-table tr:last-child td { border-bottom: none; }
-        .resa-table tr:hover td { background: rgba(245,237,217,0.5); }
-        .resa-date { font-weight: 600; color: var(--brown); white-space: nowrap; }
-        .resa-name { font-weight: 500; }
-        .resa-contact { font-size: 0.78rem; color: #888; }
-        .resa-notes { font-size: 0.78rem; color: #999; font-style: italic; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .resa-status { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+        .resa-hint  { text-align: center; font-size: 0.78rem; color: #bbb; font-style: italic; margin-bottom: 1rem; }
+
+        /* Carte swipeable */
+        .resa-item { position: relative; overflow: hidden; border-radius: 8px;
+            margin-bottom: 0.6rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07); }
+        /* Fond rouge "Supprimer" révélé au swipe */
+        .resa-delete-bg {
+            position: absolute; inset: 0; background: var(--taken);
+            display: flex; align-items: center; justify-content: flex-end;
+            padding-right: 1.5rem; color: #fff; font-size: 0.82rem;
+            font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+            border-radius: 8px; user-select: none;
+        }
+        .resa-delete-bg span { display: flex; align-items: center; gap: 0.4rem; }
+        /* Contenu de la carte (glisse par dessus le fond rouge) */
+        .resa-card {
+            position: relative; background: var(--white); border-radius: 8px;
+            padding: 0.85rem 1rem; display: flex; align-items: center;
+            gap: 1rem; flex-wrap: wrap;
+            transition: transform 0.15s ease;
+            cursor: default;
+        }
+        .resa-card:hover { background: #fdfaf5; }
+        .resa-item.swiping .resa-card { transition: none; }
+        .resa-item.snap-back .resa-card { transition: transform 0.3s cubic-bezier(.25,.8,.25,1); }
+        .resa-item.snap-delete .resa-card { transition: transform 0.25s ease; }
+
+        .resa-date  { font-weight: 600; color: var(--brown); font-size: 0.85rem; min-width: 120px; flex-shrink: 0; }
+        .resa-name  { font-weight: 500; font-size: 0.9rem; flex: 1; min-width: 100px; }
+        .resa-contact { font-size: 0.78rem; color: #888; flex: 1; min-width: 100px; }
+        .resa-notes { font-size: 0.78rem; color: #999; font-style: italic; flex: 1; min-width: 80px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+        .resa-status { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 3px;
+            font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; flex-shrink: 0; }
         .resa-status.taken  { background: rgba(192,57,43,0.15); color: var(--taken); }
         .resa-status.option { background: rgba(212,160,23,0.2);  color: #7a5e00; }
         .btn-edit-row {
             background: none; border: 1px solid var(--beige-dark); color: var(--brown);
             padding: 0.3rem 0.7rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer;
-            transition: all 0.2s; white-space: nowrap;
+            transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
         }
         .btn-edit-row:hover { background: var(--sage); color: var(--beige); border-color: var(--sage); }
     </style>
@@ -290,7 +314,7 @@
         <div class="editor-legend">
             <div class="leg"><div class="leg-dot leg-free-dot"></div> Disponible — cliquer pour réserver</div>
             <div class="leg"><div class="leg-dot leg-taken-dot"></div> Réservé — cliquer pour voir/modifier</div>
-            <div class="leg"><div class="leg-dot leg-option-dot"></div> En option — cliquer pour libérer</div>
+            <div class="leg"><div class="leg-dot leg-option-dot"></div> En attente — cliquer pour libérer</div>
         </div>
         <div id="selecting-hint" class="cal-selecting-hint" style="display:none">📍 Cliquez maintenant sur la date de fin — Échap pour annuler</div>
         <p class="editor-hint" id="editor-hint">Cliquez sur la 1ère date pour commencer, puis sur la date de fin pour valider. Cliquez sur une date réservée pour voir la fiche.</p>
@@ -333,7 +357,7 @@
         </div>
 
         <div class="fiche-danger" id="fiche-danger" style="display:none">
-            <button class="btn-option" onclick="setOption()">🟡 Mettre en option</button>
+            <button class="btn-option" onclick="setOption()">🟡 Mettre en attente</button>
             <button class="btn-delete" onclick="deleteReservation()">🗑 Libérer la date</button>
         </div>
     </div>
@@ -603,9 +627,22 @@ function closeFicheOutside(e) {
 
 function saveFiche() {
     if (!ficheDate) return;
+    const nom    = document.getElementById('f-nom').value.trim();
+    const prenom = document.getElementById('f-prenom').value.trim();
+    if (!nom || !prenom) {
+        // Mettre en évidence les champs manquants
+        const nomEl    = document.getElementById('f-nom');
+        const prenomEl = document.getElementById('f-prenom');
+        if (!nom)    { nomEl.style.borderColor    = 'var(--taken)'; nomEl.focus(); }
+        if (!prenom) { prenomEl.style.borderColor = 'var(--taken)'; if (nom) prenomEl.focus(); }
+        return;
+    }
+    // Réinitialiser la bordure si tout est ok
+    document.getElementById('f-nom').style.borderColor    = '';
+    document.getElementById('f-prenom').style.borderColor = '';
     dates.reservations[ficheDate] = {
-        nom:      document.getElementById('f-nom').value.trim(),
-        prenom:   document.getElementById('f-prenom').value.trim(),
+        nom,
+        prenom,
         tel:      document.getElementById('f-tel').value.trim(),
         email:    document.getElementById('f-email').value.trim(),
         notes:    document.getElementById('f-notes').value.trim(),
@@ -716,18 +753,17 @@ document.getElementById('cal-prev').addEventListener('click', () => { if (calOff
 document.getElementById('cal-next').addEventListener('click', () => { calOffset++; renderCalendar(); });
 
 // ══════════════════════════════════════════
-//  LISTE DES RÉSERVATIONS
+//  LISTE DES RÉSERVATIONS (cartes swipeables)
 // ══════════════════════════════════════════
 function renderResaList() {
     const container = document.getElementById('resa-list');
 
-    // N'afficher que les dates "principales" (pas les rangeRef)
     const mainDates = [
         ...dates.taken.map(d => ({ d, status: 'taken' })),
         ...dates.option.map(d => ({ d, status: 'option' }))
     ].filter(({ d }) => {
         const r = dates.reservations[d] || {};
-        return d >= todayStr && !r.rangeRef; // exclure les dates secondaires
+        return d >= todayStr && !r.rangeRef;
     }).sort((a,b) => a.d.localeCompare(b.d));
 
     if (mainDates.length === 0) {
@@ -735,38 +771,90 @@ function renderResaList() {
         return;
     }
 
-    let html = `<table class="resa-table"><thead><tr>
-        <th>Période</th><th>Client</th><th>Contact</th><th>Notes</th><th>Statut</th><th></th>
-    </tr></thead><tbody>`;
+    let html = '<p class="resa-hint">← Glissez une réservation vers la gauche pour la supprimer</p>';
 
     mainDates.forEach(({ d, status }) => {
         const r = dates.reservations[d] || {};
         const nom     = [r.nom, r.prenom].filter(Boolean).join(' ') || '<em style="color:#bbb">—</em>';
         const contact = [r.tel, r.email].filter(Boolean).join(' · ') || '<em style="color:#bbb">—</em>';
         const notes   = r.notes || '';
-        const label   = status === 'taken' ? 'Réservé' : 'En option';
+        const label   = status === 'taken' ? 'Réservé' : 'En attente';
 
-        // Afficher la plage si dateEnd existe
         let dateDisplay;
         if (r.dateEnd && r.dateEnd !== d) {
-            const fmt = dt => new Date(dt+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
-            dateDisplay = `Du ${fmt(d)}<br>au ${fmt(r.dateEnd)}`;
+            const fmt = dt => new Date(dt+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+            dateDisplay = `Du ${fmt(d)} au ${fmt(r.dateEnd)}`;
         } else {
-            dateDisplay = dateLabel(d);
+            dateDisplay = new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
         }
 
-        html += `<tr>
-            <td class="resa-date" style="font-size:0.82rem; line-height:1.5">${dateDisplay}</td>
-            <td class="resa-name">${nom}</td>
-            <td class="resa-contact">${contact}</td>
-            <td class="resa-notes" title="${notes}">${notes || '—'}</td>
-            <td><span class="resa-status ${status}">${label}</span></td>
-            <td><button class="btn-edit-row" onclick="openFiche('${d}', true, getAllRangeDates('${d}'))">✏️ Modifier</button></td>
-        </tr>`;
+        html += `
+        <div class="resa-item" data-d="${d}">
+            <div class="resa-delete-bg"><span>🗑 Supprimer</span></div>
+            <div class="resa-card">
+                <div class="resa-date">${dateDisplay}</div>
+                <div class="resa-name">${nom}</div>
+                <div class="resa-contact">${contact}</div>
+                <div class="resa-notes" title="${notes}">${notes || ''}</div>
+                <span class="resa-status ${status}">${label}</span>
+                <button class="btn-edit-row" onclick="openFiche('${d}', true, getAllRangeDates('${d}'))">✏️ Modifier</button>
+            </div>
+        </div>`;
     });
 
-    html += '</tbody></table>';
     container.innerHTML = html;
+    initSwipeDelete();
+}
+
+// ── Swipe gauche pour supprimer ──
+function initSwipeDelete() {
+    const THRESHOLD = 110; // px pour déclencher la suppression
+    document.querySelectorAll('.resa-item').forEach(item => {
+        const card = item.querySelector('.resa-card');
+        let startX = 0, currentX = 0, dragging = false;
+
+        function onStart(x) { startX = x; currentX = 0; dragging = true; item.classList.add('swiping'); }
+        function onMove(x) {
+            if (!dragging) return;
+            currentX = Math.min(0, x - startX); // seulement vers la gauche
+            card.style.transform = `translateX(${currentX}px)`;
+        }
+        function onEnd() {
+            if (!dragging) return;
+            dragging = false;
+            item.classList.remove('swiping');
+            if (currentX < -THRESHOLD) {
+                // Supprimer
+                item.classList.add('snap-delete');
+                card.style.transform = `translateX(-100%)`;
+                setTimeout(() => deleteResaByDate(item.dataset.d), 250);
+            } else {
+                // Retour
+                item.classList.add('snap-back');
+                card.style.transform = '';
+                setTimeout(() => item.classList.remove('snap-back'), 350);
+            }
+        }
+        // Mouse
+        card.addEventListener('mousedown',  e => { if (e.button === 0) onStart(e.clientX); });
+        document.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+        document.addEventListener('mouseup',   () => { if (dragging) onEnd(); });
+        // Touch
+        card.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
+        card.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
+        card.addEventListener('touchend',   () => onEnd());
+    });
+}
+
+function deleteResaByDate(d) {
+    const allRange = getAllRangeDates(d);
+    allRange.forEach(x => {
+        dates.taken  = dates.taken.filter(t => t !== x);
+        dates.option = dates.option.filter(o => o !== x);
+        delete dates.reservations[x];
+    });
+    renderCalendar();
+    renderResaList();
 }
 
 // ══════════════════════════════════════════
