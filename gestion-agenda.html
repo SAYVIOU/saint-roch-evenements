@@ -602,13 +602,96 @@ function cancelSelection() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelection(); });
 
-// ── Support tactile : le tap = click ──
-document.addEventListener('touchend', function(e) {
-    if (!isSelecting) return;
-    const t = e.changedTouches[0];
-    const el = document.elementFromPoint(t.clientX, t.clientY);
-    if (el && el.dataset.ds) { e.preventDefault(); clickDate(el.dataset.ds); }
-}, { passive: false });
+// ══════════════════════════════════════════
+//  GESTION TACTILE DU CALENDRIER (mobile)
+//  • Tap  → même comportement que clic souris
+//  • Drag → glisser de la date début à la date fin,
+//           relâcher pour confirmer (sans double-ouverture)
+// ══════════════════════════════════════════
+(function () {
+    let tdDs = null, tdX = 0, tdY = 0, tdDrag = false, tdBlock = false;
+
+    // ── touchstart : mémorise la date et position ──
+    document.addEventListener('touchstart', function (e) {
+        const el = e.target.closest('[data-ds]');
+        const grid = document.getElementById('cal-grid');
+        if (!el || !grid || !grid.contains(el)) return;
+        tdDs   = el.dataset.ds;
+        tdX    = e.touches[0].clientX;
+        tdY    = e.touches[0].clientY;
+        tdDrag = false;
+    }, { passive: true });
+
+    // ── touchmove : si bougé > 8px sur une date libre → mode drag ──
+    document.addEventListener('touchmove', function (e) {
+        if (!tdDs) return;
+        const t  = e.touches[0];
+        const dx = Math.abs(t.clientX - tdX);
+        const dy = Math.abs(t.clientY - tdY);
+
+        if (!tdDrag && (dx > 8 || dy > 8)) {
+            const ds = tdDs;
+            if (!dates.taken.includes(ds) && !dates.option.includes(ds)) {
+                tdDrag = true;
+                if (!isSelecting) {
+                    isSelecting = true; rangeStart = ds; hoverDs = ds;
+                    setSelectingUI(true); renderCalendar();
+                }
+            } else { tdDs = null; return; }
+        }
+        if (tdDrag) {
+            const elUnder = document.elementFromPoint(t.clientX, t.clientY);
+            if (elUnder && elUnder.dataset.ds) hoverDate(elUnder.dataset.ds);
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // ── touchend : confirme le drag OU exécute le tap ──
+    document.addEventListener('touchend', function (e) {
+        if (!tdDs) return;
+        const startDs = tdDs;
+        tdDs = null;
+        // Bloquer le click synthétique qui suit (300ms)
+        tdBlock = true;
+        setTimeout(() => { tdBlock = false; }, 600);
+
+        if (tdDrag) {
+            tdDrag = false;
+            const t     = e.changedTouches[0];
+            const elEnd = document.elementFromPoint(t.clientX, t.clientY);
+            if (elEnd && elEnd.dataset.ds) hoverDs = elEnd.dataset.ds;
+
+            const sel = getSelRange();
+            isSelecting = false; rangeStart = null; hoverDs = null;
+            setSelectingUI(false);
+            if (!sel) { renderCalendar(); return; }
+
+            const range = getDatesInRange(sel.start, sel.end);
+            const conflicts = range.filter(d => dates.taken.includes(d) || dates.option.includes(d));
+            if (conflicts.length > 0) {
+                alert('Certaines dates de cette plage sont déjà réservées. Choisissez une autre période.');
+                renderCalendar(); return;
+            }
+            range.forEach((d, i) => {
+                dates.taken.push(d);
+                if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
+            });
+            renderCalendar();
+            openFiche(sel.start, false, range);
+        } else {
+            // Tap simple : appel direct (évite le double-déclenchement)
+            clickDate(startDs);
+        }
+        e.preventDefault();
+    }, { passive: false });
+
+    // ── Bloque le click synthétique post-touch sur les jours ──
+    document.addEventListener('click', function (e) {
+        if (!tdBlock) return;
+        const el = e.target.closest('[data-ds]');
+        if (el) { e.stopImmediatePropagation(); e.preventDefault(); }
+    }, { capture: true });
+})();
 
 // ══════════════════════════════════════════
 //  FICHE CLIENT
@@ -750,7 +833,7 @@ function renderMonth(year, month) {
         const mainResa = resa.rangeRef ? (dates.reservations[resa.rangeRef] || {}) : resa;
         const tooltip  = mainResa.nom ? (mainResa.nom + ' ' + (mainResa.prenom || '')).trim() : '';
         const events = isPast ? '' :
-            `data-ds="${ds}" onclick="clickDate('${ds}')" onmouseover="hoverDate('${ds}')" ontouchend="event.preventDefault();clickDate('${ds}')"` ;
+            `data-ds="${ds}" onclick="clickDate('${ds}')" onmouseover="hoverDate('${ds}')"` ;
         html += `<div class="${cls}" title="${tooltip}" ${events}>${d}</div>`;
     }
     html += `</div></div>`;
