@@ -198,33 +198,115 @@ document.addEventListener('keydown', e => {
 
 
 /* ─────────────────────────────────────────
-   4. MODALES TRAITEUR
-   - openModal(id) : ouvre la modale ciblée
-   - closeModal()  : ferme toutes les modales
-   - Clic en dehors de la boîte → ferme
-   - Touche Échap → ferme (géré ci-dessus)
+   4. MODALES TRAITEUR + TARIFS
+   - Groupes de modales : navigation swipe/flèches entre elles
+   - openModal(id)  : ouvre la modale ciblée
+   - closeModal()   : ferme toutes les modales
+   - moveModal(dir) : passe à la modale suivante/précédente du groupe
+   - Swipe gauche/droite sur mobile
+   - Flèches ‹ › injectées automatiquement
 ───────────────────────────────────────── */
+
+// Groupes de modales navigables
+const MODAL_GROUPS = {
+    traiteur: ['modal-vin','modal-champetre','modal-tradition','modal-brasero','modal-brunch','modal-affineur'],
+    tarifs:   ['modal-tarif-jour','modal-tarif-2j','modal-tarif-we']
+};
+
+let currentModalId = null;
+
+function _getModalGroup(id) {
+    for (const ids of Object.values(MODAL_GROUPS)) {
+        if (ids.includes(id)) return ids;
+    }
+    return null;
+}
+
 function openModal(id) {
-    closeModal(); // ferme toute modale déjà ouverte
+    closeModal();
     const modal = document.getElementById(id);
     if (!modal) return;
+    currentModalId = id;
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
+    // Mettre à jour la visibilité des flèches
+    const group = _getModalGroup(id);
+    const idx   = group ? group.indexOf(id) : -1;
+    const prev  = modal.querySelector('.modal-nav-prev');
+    const next  = modal.querySelector('.modal-nav-next');
+    if (prev) prev.style.opacity = (group && idx > 0)                   ? '1' : '0';
+    if (next) next.style.opacity = (group && idx < group.length - 1)    ? '1' : '0';
+    // Indicateur de position (points)
+    const dots = modal.querySelectorAll('.modal-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 }
 
 function closeModal() {
-    document.querySelectorAll('.tr-modal.open').forEach(m => {
-        m.classList.remove('open');
-    });
+    document.querySelectorAll('.tr-modal.open').forEach(m => m.classList.remove('open'));
     document.body.style.overflow = '';
+    currentModalId = null;
 }
 
-// Ferme si on clique sur l'overlay (fond sombre), pas sur la boîte
 function closeModalOutside(event) {
-    if (event.target.classList.contains('tr-modal')) {
-        closeModal();
-    }
+    if (event.target.classList.contains('tr-modal')) closeModal();
 }
+
+function moveModal(dir) {
+    if (!currentModalId) return;
+    const group = _getModalGroup(currentModalId);
+    if (!group) return;
+    const newIdx = group.indexOf(currentModalId) + dir;
+    if (newIdx >= 0 && newIdx < group.length) openModal(group[newIdx]);
+}
+
+// Injection automatique : flèches + points + swipe dans chaque modale
+(function () {
+    document.querySelectorAll('.tr-modal').forEach(modal => {
+        const id    = modal.id;
+        const group = _getModalGroup(id);
+        const idx   = group ? group.indexOf(id) : -1;
+
+        // ── Flèches ‹ ›
+        ['prev','next'].forEach(dir => {
+            const btn = document.createElement('button');
+            btn.className  = `modal-nav-btn modal-nav-${dir}`;
+            btn.innerHTML  = dir === 'prev' ? '‹' : '›';
+            btn.setAttribute('aria-label', dir === 'prev' ? 'Précédent' : 'Suivant');
+            btn.style.opacity = '0'; // sera mis à jour par openModal
+            btn.onclick = e => { e.stopPropagation(); moveModal(dir === 'prev' ? -1 : 1); };
+            modal.appendChild(btn);
+        });
+
+        // ── Points de navigation (dots)
+        if (group && group.length > 1) {
+            const bar = document.createElement('div');
+            bar.className = 'modal-dots';
+            group.forEach((_, i) => {
+                const d = document.createElement('span');
+                d.className = 'modal-dot' + (i === idx ? ' active' : '');
+                bar.appendChild(d);
+            });
+            // Insérer les dots dans la boîte modale (en bas)
+            const box = modal.querySelector('.tr-modal-inner, .tarif-modal-box');
+            if (box) box.appendChild(bar);
+        }
+
+        // ── Swipe touch sur la boîte (pas l'overlay pour ne pas déclencher la fermeture)
+        const box = modal.querySelector('.tr-modal-inner, .tarif-modal-box');
+        if (box) {
+            let swX = 0, swY = 0;
+            box.addEventListener('touchstart', e => {
+                swX = e.touches[0].clientX;
+                swY = e.touches[0].clientY;
+            }, { passive: true });
+            box.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - swX;
+                const dy = Math.abs(e.changedTouches[0].clientY - swY);
+                if (Math.abs(dx) > 50 && dy < 100) moveModal(dx < 0 ? 1 : -1);
+            }, { passive: true });
+        }
+    });
+})();
 
 
 /* ─────────────────────────────────────────
