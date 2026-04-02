@@ -292,8 +292,8 @@
             <div class="leg"><div class="leg-dot leg-taken-dot"></div> Réservé — cliquer pour voir/modifier</div>
             <div class="leg"><div class="leg-dot leg-option-dot"></div> En option — cliquer pour libérer</div>
         </div>
-        <div id="selecting-hint" class="cal-selecting-hint" style="display:none">📍 Glissez jusqu'à la date de fin, puis relâchez</div>
-        <p class="editor-hint" id="editor-hint">Maintenez le clic sur la 1ère date et glissez jusqu'à la fin pour réserver. Cliquez sur une date réservée pour voir la fiche.</p>
+        <div id="selecting-hint" class="cal-selecting-hint" style="display:none">📍 Cliquez maintenant sur la date de fin — Échap pour annuler</div>
+        <p class="editor-hint" id="editor-hint">Cliquez sur la 1ère date pour commencer, puis sur la date de fin pour valider. Cliquez sur une date réservée pour voir la fiche.</p>
 
         <div class="cal-nav">
             <button class="cal-nav-btn" id="cal-prev">‹</button>
@@ -469,7 +469,9 @@ function switchTab(name, btn) {
 }
 
 // ══════════════════════════════════════════
-//  SÉLECTION PAR GLISSEMENT (mousedown → drag → mouseup)
+//  SÉLECTION EN DEUX CLICS (style Airbnb)
+//  1er clic → fixe le début, aperçu suit la souris
+//  2ème clic → confirme la fin
 // ══════════════════════════════════════════
 let isSelecting = false;
 let rangeStart  = null;
@@ -490,83 +492,76 @@ function setSelectingUI(on) {
     document.getElementById('editor-hint').style.display    = on ? 'none'  : 'block';
 }
 
-// ── mousedown : commence le glissement ──
-function startDrag(ds, e) {
-    e.preventDefault();
+// ── Clic sur une date ──
+function clickDate(ds) {
     const isTaken  = dates.taken.includes(ds);
     const isOption = dates.option.includes(ds);
+
+    // Clic sur date réservée
     if (isTaken) {
-        // Simple clic sur date réservée → ouvrira la fiche au mouseup
+        if (isSelecting) { cancelSelection(); return; }
+        const mainDate = (dates.reservations[ds] && dates.reservations[ds].rangeRef) || ds;
+        openFiche(mainDate, true);
         return;
     }
-    if (isOption) return;
-    isSelecting = true; rangeStart = ds; hoverDs = ds;
-    setSelectingUI(true);
-    renderCalendar();
+    // Clic sur date en option
+    if (isOption) {
+        if (isSelecting) { cancelSelection(); return; }
+        if (confirm('Libérer cette date ?')) {
+            dates.option = dates.option.filter(d => d !== ds);
+            delete dates.reservations[ds];
+            renderCalendar(); renderResaList();
+        }
+        return;
+    }
+
+    if (!isSelecting) {
+        // 1er clic : fixe le début
+        isSelecting = true; rangeStart = ds; hoverDs = ds;
+        setSelectingUI(true);
+        renderCalendar();
+    } else {
+        // 2ème clic : confirme la fin
+        hoverDs = ds;
+        const sel = getSelRange();
+        isSelecting = false; rangeStart = null; hoverDs = null;
+        setSelectingUI(false);
+
+        const range = getDatesInRange(sel.start, sel.end);
+        const conflicts = range.filter(d => dates.taken.includes(d) || dates.option.includes(d));
+        if (conflicts.length > 0) {
+            alert('Certaines dates de cette plage sont déjà réservées. Choisissez une autre période.');
+            renderCalendar(); return;
+        }
+        range.forEach((d, i) => {
+            dates.taken.push(d);
+            if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
+        });
+        renderCalendar();
+        openFiche(sel.start, false, range);
+    }
 }
 
-// ── mouseover/touchmove : met à jour la date de fin ──
-function dragOver(ds) {
+// ── Survol : met à jour l'aperçu ──
+function hoverDate(ds) {
     if (!isSelecting) return;
     if (ds !== hoverDs) { hoverDs = ds; renderCalendar(); }
 }
 
-// ── mouseup/touchend : confirme la plage ──
-function endDrag(ds, e) {
-    if (!isSelecting) {
-        // Simple clic sur date réservée
-        const isTaken = dates.taken.includes(ds);
-        if (isTaken) {
-            const mainDate = (dates.reservations[ds] && dates.reservations[ds].rangeRef) || ds;
-            openFiche(mainDate, true);
-        } else if (dates.option.includes(ds)) {
-            if (confirm('Libérer cette date ?')) {
-                dates.option = dates.option.filter(d => d !== ds);
-                delete dates.reservations[ds];
-                renderCalendar(); renderResaList();
-            }
-        }
-        return;
-    }
-    isSelecting = false; setSelectingUI(false);
-    hoverDs = ds; // met à jour la fin avec la date du mouseup
-    const sel = getSelRange();
-    rangeStart = null; hoverDs = null;
-
-    const range = getDatesInRange(sel.start, sel.end);
-    const conflicts = range.filter(d => dates.taken.includes(d) || dates.option.includes(d));
-    if (conflicts.length > 0) {
-        alert('Certaines dates de cette plage sont déjà réservées. Choisissez une autre période.');
-        renderCalendar(); return;
-    }
-    range.forEach((d, i) => {
-        dates.taken.push(d);
-        if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
-    });
-    renderCalendar();
-    openFiche(sel.start, false, range);
+// Annuler la sélection (touche Échap)
+function cancelSelection() {
+    isSelecting = false; rangeStart = null; hoverDs = null;
+    setSelectingUI(false); renderCalendar();
 }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelection(); });
 
-// Annule le glissement si le souris sort de la grille
-document.addEventListener('mouseup', () => {
-    if (isSelecting) { isSelecting = false; rangeStart = null; hoverDs = null; setSelectingUI(false); renderCalendar(); }
-});
-
-// ── Support tactile (mobile) ──
-document.addEventListener('touchmove', function(e) {
-    if (!isSelecting) return;
-    e.preventDefault();
-    const t = e.touches[0];
-    const el = document.elementFromPoint(t.clientX, t.clientY);
-    if (el && el.dataset.ds) dragOver(el.dataset.ds);
-}, { passive: false });
+// ── Support tactile : le tap = click ──
 document.addEventListener('touchend', function(e) {
     if (!isSelecting) return;
     const t = e.changedTouches[0];
     const el = document.elementFromPoint(t.clientX, t.clientY);
-    if (el && el.dataset.ds) endDrag(el.dataset.ds, e);
-    else { isSelecting = false; rangeStart = null; hoverDs = null; setSelectingUI(false); renderCalendar(); }
-});
+    if (el && el.dataset.ds) { e.preventDefault(); clickDate(el.dataset.ds); }
+}, { passive: false });
 
 // ══════════════════════════════════════════
 //  FICHE CLIENT
@@ -695,7 +690,7 @@ function renderMonth(year, month) {
         const mainResa = resa.rangeRef ? (dates.reservations[resa.rangeRef] || {}) : resa;
         const tooltip  = mainResa.nom ? (mainResa.nom + ' ' + (mainResa.prenom || '')).trim() : '';
         const events = isPast ? '' :
-            `data-ds="${ds}" onmousedown="startDrag('${ds}',event)" onmouseup="endDrag('${ds}',event)" onmouseover="dragOver('${ds}')" ontouchstart="startDrag('${ds}',event)"`;
+            `data-ds="${ds}" onclick="clickDate('${ds}')" onmouseover="hoverDate('${ds}')" ontouchstart="clickDate('${ds}')"` ;
         html += `<div class="${cls}" title="${tooltip}" ${events}>${d}</div>`;
     }
     html += `</div></div>`;
