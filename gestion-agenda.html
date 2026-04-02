@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Gestion Agenda — Saint-Roch</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -138,11 +138,17 @@
             .btn-save { padding: 0.5rem 1rem; font-size: 0.78rem; }
         }
 
-        /* ── Fiche modale : scrollable sur petit écran ── */
+        /* ── Fiche modale : carte centrée avec marges ── */
         @media (max-width: 600px) {
-            .fiche-overlay { align-items: flex-end; padding: 0; }
-            .fiche-box { border-radius: 16px 16px 0 0; max-height: 90vh; overflow-y: auto; padding: 1.5rem 1.2rem 2rem; }
+            .fiche-overlay { align-items: center; padding: 1rem; }
+            .fiche-box { border-radius: 14px; max-height: 88vh; overflow-y: auto; padding: 1.4rem 1.1rem 1.8rem; margin: 0 0.25rem; }
             .form-row-2 { grid-template-columns: 1fr; }
+        }
+        /* Anti-zoom iOS : inputs ≥ 16px */
+        @media (max-width: 900px) {
+            .field input, .field textarea, #inp-user, #inp-pass, #inp-token {
+                font-size: 16px !important;
+            }
         }
 
         .cal-month { background: var(--white); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07); }
