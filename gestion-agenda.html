@@ -11,12 +11,12 @@
             --brown: #5C3D1E; --brown-dark: #3d2810;
             --beige: #F5EDD9; --beige-dark: #EDE0C4;
             --gold: #B5935A; --white: #FAFAF8;
-            --taken: #c0392b; --option: #d4a017; --free: #6d7d5e;
+            --taken: #c0392b; --option: #d4a017;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Raleway', sans-serif; background: var(--beige); color: var(--brown); min-height: 100vh; }
 
-        /* ── ÉCRAN LOGIN ── */
+        /* ── LOGIN ── */
         #screen-login {
             display: flex; align-items: center; justify-content: center;
             min-height: 100vh; padding: 2rem;
@@ -24,33 +24,21 @@
         .login-box {
             background: var(--white); border-radius: 12px;
             padding: 2.5rem 2rem; max-width: 380px; width: 100%;
-            box-shadow: 0 8px 40px rgba(92,61,30,0.14);
-            text-align: center;
+            box-shadow: 0 8px 40px rgba(92,61,30,0.14); text-align: center;
         }
-        .login-logo {
-            width: 80px; height: 80px; border-radius: 50%;
-            margin: 0 auto 1.2rem;
-            border: 2px solid var(--gold);
-            overflow: hidden;
-        }
+        .login-logo { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1.2rem; border: 2px solid var(--gold); overflow: hidden; }
         .login-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .login-box h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem; color: var(--brown); margin-bottom: 0.2rem;
-        }
-        .login-box .sub {
-            font-size: 0.78rem; color: var(--gold); letter-spacing: 0.15em;
-            text-transform: uppercase; margin-bottom: 1.8rem;
-        }
+        .login-box h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--brown); margin-bottom: 0.2rem; }
+        .login-box .sub { font-size: 0.78rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.8rem; }
         .field { margin-bottom: 1rem; text-align: left; }
         .field label { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
-        .field input {
+        .field input, .field textarea {
             width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--beige-dark);
             border-radius: 6px; font-family: 'Raleway', sans-serif; font-size: 0.9rem;
-            background: var(--beige); color: var(--brown);
-            transition: border-color 0.2s;
+            background: var(--beige); color: var(--brown); transition: border-color 0.2s;
         }
-        .field input:focus { outline: none; border-color: var(--sage); }
+        .field input:focus, .field textarea:focus { outline: none; border-color: var(--sage); }
+        .field textarea { resize: vertical; min-height: 80px; }
         .btn-primary {
             width: 100%; padding: 0.8rem; background: var(--sage-dark);
             color: var(--beige); border: none; border-radius: 6px;
@@ -61,40 +49,29 @@
         .btn-primary:hover { background: var(--brown); }
         .login-error { color: var(--taken); font-size: 0.82rem; margin-top: 0.8rem; min-height: 1.2em; }
 
-        /* ── ÉCRAN TOKEN ── */
-        #screen-token {
-            display: none; align-items: center; justify-content: center;
-            min-height: 100vh; padding: 2rem;
-        }
-        .token-box {
-            background: var(--white); border-radius: 12px;
-            padding: 2.5rem 2rem; max-width: 480px; width: 100%;
-            box-shadow: 0 8px 40px rgba(92,61,30,0.14);
-        }
+        /* ── TOKEN ── */
+        #screen-token { display: none; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+        .token-box { background: var(--white); border-radius: 12px; padding: 2.5rem 2rem; max-width: 480px; width: 100%; box-shadow: 0 8px 40px rgba(92,61,30,0.14); }
         .token-box h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
         .token-box p { font-size: 0.85rem; color: #666; line-height: 1.7; margin-bottom: 1rem; }
         .token-box ol { font-size: 0.85rem; color: #555; padding-left: 1.2rem; margin-bottom: 1.5rem; line-height: 2; }
         .token-box ol a { color: var(--sage-dark); }
         .token-error { color: var(--taken); font-size: 0.82rem; margin-top: 0.6rem; }
 
-        /* ── ÉCRAN ÉDITEUR ── */
+        /* ── ÉDITEUR ── */
         #screen-editor { display: none; }
         .editor-header {
             background: var(--brown-dark); color: var(--beige);
             padding: 1rem 2rem; display: flex; align-items: center;
             justify-content: space-between; flex-wrap: wrap; gap: 1rem;
         }
-        .editor-header h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem; letter-spacing: 0.08em;
-        }
-        .header-actions { display: flex; gap: 0.8rem; align-items: center; }
+        .editor-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 0.08em; }
+        .header-actions { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
         .btn-save {
             background: var(--sage); color: var(--beige); border: none;
             padding: 0.6rem 1.4rem; border-radius: 5px; cursor: pointer;
             font-family: 'Raleway', sans-serif; font-size: 0.82rem;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            transition: background 0.2s;
+            letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s;
         }
         .btn-save:hover { background: var(--sage-dark); }
         .btn-save:disabled { background: #aaa; cursor: default; }
@@ -102,117 +79,174 @@
             background: transparent; color: rgba(245,237,217,0.6);
             border: 1px solid rgba(245,237,217,0.3); padding: 0.6rem 1rem;
             border-radius: 5px; cursor: pointer; font-family: 'Raleway', sans-serif;
-            font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
-            transition: all 0.2s;
+            font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.2s;
         }
         .btn-logout:hover { color: var(--beige); border-color: var(--beige); }
-        .save-status {
-            font-size: 0.8rem; padding: 0.4rem 0.8rem; border-radius: 4px;
-        }
-        .save-status.ok { background: rgba(107,127,89,0.2); color: var(--sage-dark); }
-        .save-status.err { background: rgba(192,57,43,0.15); color: var(--taken); }
+        .save-status { font-size: 0.8rem; padding: 0.4rem 0.8rem; border-radius: 4px; }
+        .save-status.ok     { background: rgba(107,127,89,0.2);  color: var(--sage-dark); }
+        .save-status.err    { background: rgba(192,57,43,0.15);   color: var(--taken); }
         .save-status.saving { color: var(--gold); }
 
-        .editor-body { padding: 2rem; max-width: 1100px; margin: 0 auto; }
+        /* ── ONGLETS ── */
+        .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--beige-dark); margin: 0 2rem; margin-top: 1.5rem; }
+        .tab-btn {
+            padding: 0.7rem 1.5rem; background: none; border: none; cursor: pointer;
+            font-family: 'Raleway', sans-serif; font-size: 0.85rem; font-weight: 500;
+            color: var(--brown); border-bottom: 2px solid transparent; margin-bottom: -2px;
+            transition: color 0.2s; letter-spacing: 0.05em;
+        }
+        .tab-btn.active { color: var(--sage-dark); border-bottom-color: var(--sage-dark); font-weight: 600; }
+        .tab-btn:hover:not(.active) { color: var(--gold); }
+        .tab-content { display: none; padding: 1.5rem 2rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .tab-content.active { display: block; }
 
+        /* ── CALENDRIER ── */
         .editor-legend {
             display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
-            margin-bottom: 2rem; background: var(--white); border-radius: 8px;
-            padding: 1rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07);
+            margin-bottom: 1.2rem; background: var(--white); border-radius: 8px;
+            padding: 0.8rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07);
         }
-        .leg { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: default; }
-        .leg-dot { width: 20px; height: 20px; border-radius: 4px; }
+        .leg { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
+        .leg-dot { width: 18px; height: 18px; border-radius: 4px; }
         .leg-free-dot   { background: rgba(107,127,89,0.18); border: 1px solid var(--sage); }
-        .leg-taken-dot  { background: rgba(192,57,43,0.2); border: 1px solid var(--taken); }
+        .leg-taken-dot  { background: rgba(192,57,43,0.2);   border: 1px solid var(--taken); }
         .leg-option-dot { background: rgba(212,160,23,0.25); border: 1px solid var(--option); }
+        .editor-hint { text-align: center; font-size: 0.8rem; color: #999; margin-bottom: 1.2rem; font-style: italic; }
 
-        .editor-hint {
-            text-align: center; font-size: 0.82rem; color: #888;
-            margin-bottom: 1.5rem; font-style: italic;
-        }
-
-        .cal-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
-        .cal-nav-btn {
-            background: var(--white); border: 1px solid var(--beige-dark);
-            color: var(--brown); width: 36px; height: 36px; border-radius: 5px;
-            font-size: 1.2rem; cursor: pointer; transition: all 0.2s;
-        }
+        .cal-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.2rem; }
+        .cal-nav-btn { background: var(--white); border: 1px solid var(--beige-dark); color: var(--brown); width: 36px; height: 36px; border-radius: 5px; font-size: 1.2rem; cursor: pointer; transition: all 0.2s; }
         .cal-nav-btn:hover { background: var(--sage); color: var(--beige); border-color: var(--sage); }
-        .cal-period {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
-            color: var(--brown); min-width: 180px; text-align: center;
-        }
+        .cal-period { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--brown); min-width: 180px; text-align: center; }
 
-        .cal-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
-        }
-        @media (max-width: 700px) { .cal-grid { grid-template-columns: 1fr; } }
+        .cal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+        @media (max-width: 700px)  { .cal-grid { grid-template-columns: 1fr; } }
         @media (max-width: 1000px) and (min-width: 701px) { .cal-grid { grid-template-columns: 1fr 1fr; } }
 
-        .cal-month {
-            background: var(--white); border-radius: 8px;
-            padding: 1rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07);
-        }
-        .cal-month-title {
-            text-align: center; font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem; font-weight: 600; color: var(--brown);
-            text-transform: capitalize; margin-bottom: 0.6rem;
-        }
+        .cal-month { background: var(--white); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 8px rgba(92,61,30,0.07); }
+        .cal-month-title { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--brown); text-transform: capitalize; margin-bottom: 0.6rem; }
         .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
-        .cal-dow {
-            text-align: center; font-size: 0.6rem; font-weight: 700;
-            color: #aaa; text-transform: uppercase; padding: 3px 0;
-        }
+        .cal-dow { text-align: center; font-size: 0.6rem; font-weight: 700; color: #aaa; text-transform: uppercase; padding: 3px 0; }
         .cal-day {
             aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 0.78rem; border-radius: 5px; cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-            border: 1px solid transparent;
-            user-select: none;
+            font-size: 0.75rem; border-radius: 5px; cursor: pointer;
+            transition: transform 0.1s; border: 1px solid transparent;
+            user-select: none; position: relative; flex-direction: column; gap: 1px;
         }
         .cal-day.empty { cursor: default; }
         .cal-day.past  { color: #ddd; cursor: default; }
         .cal-day.today { font-weight: 700; outline: 2px solid var(--sage); outline-offset: -2px; }
         .cal-day.free  { background: rgba(107,127,89,0.1); color: var(--sage-dark); }
-        .cal-day.free:not(.past):hover  { background: rgba(107,127,89,0.3); transform: scale(1.1); }
-        .cal-day.taken { background: rgba(192,57,43,0.15); color: var(--taken); font-weight: 600; border-color: rgba(192,57,43,0.3); }
-        .cal-day.taken:hover { background: rgba(192,57,43,0.25); transform: scale(1.1); }
+        .cal-day.free:not(.past):hover { background: rgba(107,127,89,0.3); transform: scale(1.1); }
+        .cal-day.taken  { background: rgba(192,57,43,0.15); color: var(--taken); font-weight: 600; border-color: rgba(192,57,43,0.3); }
+        .cal-day.taken:hover  { background: rgba(192,57,43,0.25); transform: scale(1.05); }
         .cal-day.option { background: rgba(212,160,23,0.2); color: #8a6a00; font-weight: 600; border-color: rgba(212,160,23,0.4); }
-        .cal-day.option:hover { background: rgba(212,160,23,0.35); transform: scale(1.1); }
+        .cal-day.option:hover { background: rgba(212,160,23,0.35); transform: scale(1.05); }
+        /* petit point blanc sur les dates avec fiche */
+        .cal-day.has-info::after {
+            content: ''; display: block; width: 4px; height: 4px;
+            border-radius: 50%; background: currentColor; opacity: 0.7;
+        }
+
+        /* ── FICHE MODALE ── */
+        .fiche-overlay {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(61,40,16,0.55); backdrop-filter: blur(3px);
+            align-items: center; justify-content: center; padding: 1rem;
+        }
+        .fiche-overlay.open { display: flex; }
+        .fiche-box {
+            background: var(--white); border-radius: 12px;
+            padding: 2rem; width: 100%; max-width: 440px;
+            box-shadow: 0 12px 50px rgba(0,0,0,0.25);
+            animation: fadeUp 0.2s ease;
+        }
+        @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+        .fiche-date {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;
+            color: var(--brown); margin-bottom: 1.2rem; padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--beige-dark);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .fiche-date .badge {
+            font-size: 0.65rem; font-family: 'Raleway', sans-serif;
+            letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.5rem;
+            border-radius: 3px; background: rgba(192,57,43,0.15); color: var(--taken);
+        }
+        .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .fiche-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; flex-wrap: wrap; }
+        .btn-fiche-save {
+            flex: 1; padding: 0.75rem; background: var(--sage-dark); color: var(--beige);
+            border: none; border-radius: 6px; font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem; cursor: pointer; transition: background 0.2s;
+        }
+        .btn-fiche-save:hover { background: var(--brown); }
+        .btn-fiche-skip {
+            padding: 0.75rem 1.2rem; background: var(--beige); color: var(--brown);
+            border: 1px solid var(--beige-dark); border-radius: 6px;
+            font-family: 'Raleway', sans-serif; font-size: 0.85rem; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-fiche-skip:hover { background: var(--beige-dark); }
+        .fiche-danger { border-top: 1px solid var(--beige-dark); margin-top: 1rem; padding-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .btn-option {
+            flex: 1; padding: 0.6rem; background: rgba(212,160,23,0.15); color: #7a5e00;
+            border: 1px solid rgba(212,160,23,0.4); border-radius: 6px;
+            font-family: 'Raleway', sans-serif; font-size: 0.78rem; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-option:hover { background: rgba(212,160,23,0.3); }
+        .btn-delete {
+            flex: 1; padding: 0.6rem; background: rgba(192,57,43,0.1); color: var(--taken);
+            border: 1px solid rgba(192,57,43,0.3); border-radius: 6px;
+            font-family: 'Raleway', sans-serif; font-size: 0.78rem; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover { background: rgba(192,57,43,0.2); }
+
+        /* ── LISTE RÉSERVATIONS ── */
+        .resa-empty { text-align: center; color: #aaa; font-style: italic; padding: 3rem; }
+        .resa-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(92,61,30,0.07); }
+        .resa-table th { background: var(--brown-dark); color: var(--beige); padding: 0.75rem 1rem; text-align: left; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+        .resa-table td { padding: 0.75rem 1rem; font-size: 0.85rem; border-bottom: 1px solid var(--beige-dark); vertical-align: middle; }
+        .resa-table tr:last-child td { border-bottom: none; }
+        .resa-table tr:hover td { background: rgba(245,237,217,0.5); }
+        .resa-date { font-weight: 600; color: var(--brown); white-space: nowrap; }
+        .resa-name { font-weight: 500; }
+        .resa-contact { font-size: 0.78rem; color: #888; }
+        .resa-notes { font-size: 0.78rem; color: #999; font-style: italic; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .resa-status { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+        .resa-status.taken  { background: rgba(192,57,43,0.15); color: var(--taken); }
+        .resa-status.option { background: rgba(212,160,23,0.2);  color: #7a5e00; }
+        .btn-edit-row {
+            background: none; border: 1px solid var(--beige-dark); color: var(--brown);
+            padding: 0.3rem 0.7rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .btn-edit-row:hover { background: var(--sage); color: var(--beige); border-color: var(--sage); }
     </style>
 </head>
 <body>
 
-<!-- ════════ ÉCRAN 1 : LOGIN ════════ -->
+<!-- ════════ LOGIN ════════ -->
 <div id="screen-login">
     <div class="login-box">
-        <div class="login-logo">
-            <img src="images/logo-batiment-transparent.png" alt="SRE">
-        </div>
+        <div class="login-logo"><img src="images/logo-batiment-transparent.png" alt="SRE"></div>
         <h1>Saint-Roch-Événements</h1>
         <div class="sub">Gestion de l'agenda</div>
-
         <form id="form-login">
-            <div class="field">
-                <label>Identifiant</label>
-                <input type="text" id="inp-user" autocomplete="username" required>
-            </div>
-            <div class="field">
-                <label>Mot de passe</label>
-                <input type="password" id="inp-pass" autocomplete="current-password" required>
-            </div>
+            <div class="field"><label>Identifiant</label><input type="text" id="inp-user" autocomplete="username" required></div>
+            <div class="field"><label>Mot de passe</label><input type="password" id="inp-pass" autocomplete="current-password" required></div>
             <button type="submit" class="btn-primary">Se connecter</button>
             <div class="login-error" id="login-error"></div>
         </form>
     </div>
 </div>
 
-<!-- ════════ ÉCRAN 2 : CONFIGURATION GITHUB (1ère connexion) ════════ -->
+<!-- ════════ TOKEN ════════ -->
 <div id="screen-token">
     <div class="token-box">
         <h2>Configuration initiale</h2>
-        <p>Pour que les modifications soient enregistrées sur le site, entrez votre jeton GitHub une seule fois. Il sera mémorisé sur cet appareil.</p>
+        <p>Pour enregistrer les modifications sur le site, entrez votre jeton GitHub une seule fois. Il sera mémorisé sur cet appareil.</p>
         <ol>
             <li>Allez sur <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com → Settings → Tokens</a></li>
             <li>Cliquez <strong>Generate new token</strong></li>
@@ -221,19 +255,16 @@
             <li>Permissions : <strong>Contents → Read and Write</strong></li>
             <li>Copiez et collez le jeton ci-dessous</li>
         </ol>
-        <div class="field">
-            <label>Jeton GitHub (commence par ghp_…)</label>
-            <input type="password" id="inp-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-        </div>
+        <div class="field"><label>Jeton GitHub (commence par ghp_…)</label><input type="password" id="inp-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
         <button class="btn-primary" onclick="validateToken()">Valider et continuer</button>
         <div class="token-error" id="token-error"></div>
     </div>
 </div>
 
-<!-- ════════ ÉCRAN 3 : ÉDITEUR CALENDRIER ════════ -->
+<!-- ════════ ÉDITEUR ════════ -->
 <div id="screen-editor">
     <div class="editor-header">
-        <h1>📅 Gestion des disponibilités</h1>
+        <h1>Gestion des disponibilités</h1>
         <div class="header-actions">
             <span id="save-status" class="save-status" style="display:none"></span>
             <button class="btn-save" id="btn-save" onclick="saveChanges()">💾 Enregistrer</button>
@@ -241,51 +272,92 @@
         </div>
     </div>
 
-    <div class="editor-body">
+    <!-- Onglets -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('calendrier', this)">📅 Calendrier</button>
+        <button class="tab-btn" onclick="switchTab('reservations', this)">📋 Réservations</button>
+    </div>
+
+    <!-- Onglet Calendrier -->
+    <div class="tab-content active" id="tab-calendrier">
         <div class="editor-legend">
-            <div class="leg"><div class="leg-dot leg-free-dot"></div> Disponible (clic 1)</div>
-            <div class="leg"><div class="leg-dot leg-taken-dot"></div> Réservé (clic 2)</div>
-            <div class="leg"><div class="leg-dot leg-option-dot"></div> En option (clic 3)</div>
+            <div class="leg"><div class="leg-dot leg-free-dot"></div> Disponible — cliquer pour réserver</div>
+            <div class="leg"><div class="leg-dot leg-taken-dot"></div> Réservé — cliquer pour voir/modifier</div>
+            <div class="leg"><div class="leg-dot leg-option-dot"></div> En option — cliquer pour libérer</div>
         </div>
-        <p class="editor-hint">Cliquez sur une date pour changer son statut. Cliquez sur "Enregistrer" pour publier sur le site.</p>
+        <p class="editor-hint">Cliquez sur une date disponible pour créer une réservation. N'oubliez pas d'enregistrer après chaque modification.</p>
 
         <div class="cal-nav">
             <button class="cal-nav-btn" id="cal-prev">‹</button>
             <div class="cal-period" id="cal-period"></div>
             <button class="cal-nav-btn" id="cal-next">›</button>
         </div>
-
         <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <!-- Onglet Réservations -->
+    <div class="tab-content" id="tab-reservations">
+        <div id="resa-list"></div>
+    </div>
+</div>
+
+<!-- ════════ FICHE CLIENT (modale) ════════ -->
+<div class="fiche-overlay" id="fiche-overlay" onclick="closeFicheOutside(event)">
+    <div class="fiche-box">
+        <div class="fiche-date" id="fiche-date-label">
+            <span id="fiche-date-txt"></span>
+            <span class="badge" id="fiche-badge">Réservé</span>
+        </div>
+
+        <div class="form-row-2">
+            <div class="field"><label>Nom *</label><input type="text" id="f-nom" placeholder="Dupont"></div>
+            <div class="field"><label>Prénom</label><input type="text" id="f-prenom" placeholder="Marie"></div>
+        </div>
+        <div class="form-row-2">
+            <div class="field"><label>Téléphone</label><input type="tel" id="f-tel" placeholder="06 12 34 56 78"></div>
+            <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="marie@email.com"></div>
+        </div>
+        <div class="field"><label>Notes</label><textarea id="f-notes" placeholder="Type d'événement, nombre de personnes, demandes particulières…"></textarea></div>
+
+        <div class="fiche-actions">
+            <button class="btn-fiche-save" onclick="saveFiche()">💾 Enregistrer la fiche</button>
+            <button class="btn-fiche-skip" onclick="closeFiche()">Annuler</button>
+        </div>
+
+        <div class="fiche-danger" id="fiche-danger" style="display:none">
+            <button class="btn-option" onclick="setOption()">🟡 Mettre en option</button>
+            <button class="btn-delete" onclick="deleteReservation()">🗑 Libérer la date</button>
+        </div>
     </div>
 </div>
 
 <script>
 // ══════════════════════════════════════════
-//  CONFIGURATION — NE PAS MODIFIER
+//  CONFIG
 // ══════════════════════════════════════════
 const GH_REPO = 'SAYVIOU/saint-roch-evenements';
 const GH_FILE = 'disponibilites.json';
-// Identifiants chiffrés (base64) — modifiables via gestion-config.html
-const _u = 'c2FpbnQtcm9jaA==';   // saint-roch
-const _p = 'U1JFMjAyNiFhZ2VuZGE='; // SRE2026!agenda
+const _u = 'c2FpbnQtcm9jaA==';
+const _p = 'U1JFMjAyNiFhZ2VuZGE=';
 
 // ══════════════════════════════════════════
 //  ÉTAT
 // ══════════════════════════════════════════
-let dates  = { taken: [], option: [] };
-let modified = false;
-let calOffset = 0; // décalage mois
+let dates = { taken: [], option: [], reservations: {} };
+let calOffset = 0;
+let ficheDate = null; // date en cours d'édition
 const today = new Date();
 const todayStr = d2s(today);
 
 function d2s(d) {
-    return d.getFullYear() + '-' +
-        String(d.getMonth() + 1).padStart(2,'0') + '-' +
-        String(d.getDate()).padStart(2,'0');
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function dateLabel(ds) {
+    return new Date(ds + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 }
 
 // ══════════════════════════════════════════
-//  AUTHENTIFICATION
+//  AUTH
 // ══════════════════════════════════════════
 document.getElementById('form-login').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -293,12 +365,7 @@ document.getElementById('form-login').addEventListener('submit', function(e) {
     const p = document.getElementById('inp-pass').value;
     if (u === atob(_u) && p === atob(_p)) {
         document.getElementById('login-error').textContent = '';
-        const token = localStorage.getItem('sre_gh_token');
-        if (!token) {
-            show('token');
-        } else {
-            loadAndShow();
-        }
+        localStorage.getItem('sre_gh_token') ? loadAndShow() : show('token');
     } else {
         document.getElementById('login-error').textContent = 'Identifiant ou mot de passe incorrect.';
     }
@@ -308,10 +375,8 @@ async function validateToken() {
     const t = document.getElementById('inp-token').value.trim();
     document.getElementById('token-error').textContent = 'Vérification…';
     try {
-        const res = await fetch(`https://api.github.com/repos/${GH_REPO}`, {
-            headers: { 'Authorization': `token ${t}` }
-        });
-        if (!res.ok) throw new Error('Token invalide');
+        const res = await fetch(`https://api.github.com/repos/${GH_REPO}`, { headers: { 'Authorization': `token ${t}` } });
+        if (!res.ok) throw new Error();
         localStorage.setItem('sre_gh_token', t);
         document.getElementById('token-error').textContent = '';
         loadAndShow();
@@ -320,145 +385,189 @@ async function validateToken() {
     }
 }
 
-function logout() {
-    sessionStorage.clear();
-    show('login');
-    document.getElementById('inp-user').value = '';
-    document.getElementById('inp-pass').value = '';
-}
+function logout() { show('login'); document.getElementById('inp-user').value = ''; document.getElementById('inp-pass').value = ''; }
 
 function show(screen) {
     ['login','token','editor'].forEach(s => {
         const el = document.getElementById('screen-' + s);
-        el.style.display = (s === screen) ? (s === 'login' || s === 'token' ? 'flex' : 'block') : 'none';
+        el.style.display = s === screen ? (s === 'editor' ? 'block' : 'flex') : 'none';
     });
 }
 
 // ══════════════════════════════════════════
-//  CHARGEMENT DES DATES DEPUIS LE REPO
+//  CHARGEMENT
 // ══════════════════════════════════════════
 async function loadAndShow() {
     try {
         const token = localStorage.getItem('sre_gh_token');
-        const res = await fetch(
-            `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
-            { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
-        );
+        const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
+            { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
         if (!res.ok) throw new Error();
         const data = await res.json();
-        dates = JSON.parse(atob(data.content.replace(/\n/g,'')));
+        const parsed = JSON.parse(atob(data.content.replace(/\n/g,'')));
+        dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
     } catch(e) {
-        // fallback : dates vides
-        dates = { taken: [], option: [] };
+        dates = { taken: [], option: [], reservations: {} };
     }
     renderCalendar();
+    renderResaList();
     show('editor');
 }
 
 // ══════════════════════════════════════════
-//  ENREGISTREMENT VIA GITHUB API
+//  SAUVEGARDE
 // ══════════════════════════════════════════
 async function saveChanges() {
     const btn = document.getElementById('btn-save');
     const status = document.getElementById('save-status');
     const token = localStorage.getItem('sre_gh_token');
-
     btn.disabled = true;
-    status.style.display = 'inline';
-    status.className = 'save-status saving';
-    status.textContent = '⏳ Enregistrement…';
-
+    status.style.display = 'inline'; status.className = 'save-status saving'; status.textContent = '⏳ Enregistrement…';
     try {
-        // 1. Récupérer le SHA actuel du fichier
-        const getRes = await fetch(
-            `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
-            { headers: { 'Authorization': `token ${token}` } }
-        );
+        const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
+            { headers: { 'Authorization': `token ${token}` } });
         const fileData = await getRes.json();
 
-        // 2. Trier et dédupliquer
         dates.taken  = [...new Set(dates.taken)].sort();
         dates.option = [...new Set(dates.option)].sort();
 
-        // 3. Envoyer la mise à jour
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(dates, null, 2) + '\n')));
-        const putRes = await fetch(
-            `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'Mise à jour disponibilités',
-                    content: content,
-                    sha: fileData.sha
-                })
-            }
-        );
-        if (!putRes.ok) throw new Error();
+        // Nettoyer les fiches des dates qui ne sont plus réservées
+        Object.keys(dates.reservations).forEach(d => {
+            if (!dates.taken.includes(d) && !dates.option.includes(d)) delete dates.reservations[d];
+        });
 
-        status.className = 'save-status ok';
-        status.textContent = '✅ Publié sur le site !';
-        modified = false;
+        const payload = { taken: dates.taken, option: dates.option, reservations: dates.reservations };
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2) + '\n')));
+        const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
+            { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: 'Mise à jour disponibilités', content, sha: fileData.sha }) });
+        if (!putRes.ok) throw new Error();
+        status.className = 'save-status ok'; status.textContent = '✅ Publié sur le site !';
         setTimeout(() => { status.style.display = 'none'; }, 4000);
     } catch(e) {
-        status.className = 'save-status err';
-        status.textContent = '❌ Erreur. Vérifiez votre connexion.';
+        status.className = 'save-status err'; status.textContent = '❌ Erreur. Vérifiez votre connexion.';
     }
     btn.disabled = false;
 }
 
 // ══════════════════════════════════════════
-//  CLIC SUR UNE DATE — cycle disponible → réservé → option
+//  ONGLETS
 // ══════════════════════════════════════════
-function toggleDate(dateStr) {
-    const isTaken  = dates.taken.includes(dateStr);
-    const isOption = dates.option.includes(dateStr);
-
-    if (!isTaken && !isOption) {
-        // Disponible → Réservé
-        dates.taken.push(dateStr);
-    } else if (isTaken) {
-        // Réservé → Option
-        dates.taken = dates.taken.filter(d => d !== dateStr);
-        dates.option.push(dateStr);
-    } else {
-        // Option → Disponible
-        dates.option = dates.option.filter(d => d !== dateStr);
-    }
-    modified = true;
-    renderCalendar();
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+    if (name === 'reservations') renderResaList();
 }
 
 // ══════════════════════════════════════════
-//  RENDU DU CALENDRIER
+//  CLIC SUR DATE
+// ══════════════════════════════════════════
+function clickDate(ds) {
+    const isTaken  = dates.taken.includes(ds);
+    const isOption = dates.option.includes(ds);
+
+    if (!isTaken && !isOption) {
+        // Libre → réservé : marquer + ouvrir fiche
+        dates.taken.push(ds);
+        renderCalendar();
+        openFiche(ds, false);
+    } else if (isTaken) {
+        // Réservé → ouvrir fiche pour voir/modifier
+        openFiche(ds, true);
+    } else {
+        // Option → libérer
+        dates.option = dates.option.filter(d => d !== ds);
+        delete dates.reservations[ds];
+        renderCalendar();
+        renderResaList();
+    }
+}
+
+// ══════════════════════════════════════════
+//  FICHE CLIENT
+// ══════════════════════════════════════════
+function openFiche(ds, isEdit) {
+    ficheDate = ds;
+    const resa = dates.reservations[ds] || {};
+    document.getElementById('fiche-date-txt').textContent = dateLabel(ds);
+    document.getElementById('f-nom').value    = resa.nom    || '';
+    document.getElementById('f-prenom').value = resa.prenom || '';
+    document.getElementById('f-tel').value    = resa.tel    || '';
+    document.getElementById('f-email').value  = resa.email  || '';
+    document.getElementById('f-notes').value  = resa.notes  || '';
+    document.getElementById('fiche-danger').style.display = isEdit ? 'flex' : 'none';
+    document.getElementById('fiche-overlay').classList.add('open');
+    document.getElementById('f-nom').focus();
+}
+
+function closeFiche() {
+    document.getElementById('fiche-overlay').classList.remove('open');
+    ficheDate = null;
+}
+
+function closeFicheOutside(e) {
+    if (e.target === document.getElementById('fiche-overlay')) closeFiche();
+}
+
+function saveFiche() {
+    if (!ficheDate) return;
+    const nom = document.getElementById('f-nom').value.trim();
+    dates.reservations[ficheDate] = {
+        nom:    nom,
+        prenom: document.getElementById('f-prenom').value.trim(),
+        tel:    document.getElementById('f-tel').value.trim(),
+        email:  document.getElementById('f-email').value.trim(),
+        notes:  document.getElementById('f-notes').value.trim(),
+    };
+    closeFiche();
+    renderCalendar();
+    renderResaList();
+}
+
+function setOption() {
+    if (!ficheDate) return;
+    dates.taken  = dates.taken.filter(d => d !== ficheDate);
+    dates.option.push(ficheDate);
+    closeFiche();
+    renderCalendar();
+    renderResaList();
+}
+
+function deleteReservation() {
+    if (!ficheDate) return;
+    if (!confirm('Supprimer cette réservation et libérer la date ?')) return;
+    dates.taken  = dates.taken.filter(d => d !== ficheDate);
+    dates.option = dates.option.filter(d => d !== ficheDate);
+    delete dates.reservations[ficheDate];
+    closeFiche();
+    renderCalendar();
+    renderResaList();
+}
+
+// ══════════════════════════════════════════
+//  RENDU CALENDRIER
 // ══════════════════════════════════════════
 const JOURS = ['Lu','Ma','Me','Je','Ve','Sa','Di'];
-
 function pad(n) { return String(n).padStart(2,'0'); }
 
 function renderMonth(year, month) {
-    const firstDay   = new Date(year, month, 1);
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const title       = firstDay.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    const firstDay    = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const title       = firstDay.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
+    let startDow = firstDay.getDay() - 1; if (startDow < 0) startDow = 6;
 
-    let startDow = firstDay.getDay() - 1;
-    if (startDow < 0) startDow = 6;
-
-    let html = `<div class="cal-month">
-        <div class="cal-month-title">${title}</div>
-        <div class="cal-days">`;
-
+    let html = `<div class="cal-month"><div class="cal-month-title">${title}</div><div class="cal-days">`;
     JOURS.forEach(j => { html += `<div class="cal-dow">${j}</div>`; });
     for (let i = 0; i < startDow; i++) html += `<div class="cal-day empty"></div>`;
 
     for (let d = 1; d <= daysInMonth; d++) {
-        const ds = `${year}-${pad(month+1)}-${pad(d)}`;
+        const ds       = `${year}-${pad(month+1)}-${pad(d)}`;
         const isPast   = ds < todayStr;
         const isTaken  = dates.taken.includes(ds);
         const isOption = dates.option.includes(ds);
+        const hasInfo  = !!dates.reservations[ds];
         const isToday  = ds === todayStr;
 
         let cls = 'cal-day';
@@ -467,9 +576,10 @@ function renderMonth(year, month) {
         else if (isOption) cls += ' option';
         else               cls += ' free';
         if (isToday) cls += ' today';
+        if (hasInfo) cls += ' has-info';
 
-        const click = isPast ? '' : `onclick="toggleDate('${ds}')"`;
-        html += `<div class="${cls}" ${click}>${d}</div>`;
+        const click = isPast ? '' : `onclick="clickDate('${ds}')"`;
+        html += `<div class="${cls}" title="${hasInfo ? (dates.reservations[ds].nom || '') + ' ' + (dates.reservations[ds].prenom || '') : ''}" ${click}>${d}</div>`;
     }
     html += `</div></div>`;
     return html;
@@ -478,30 +588,60 @@ function renderMonth(year, month) {
 function renderCalendar() {
     const grid = document.getElementById('cal-grid');
     const period = document.getElementById('cal-period');
-
-    let html = '';
-    let firstMonth, lastMonth;
+    let html = ''; let first, last;
     for (let i = 0; i < 3; i++) {
         const d = new Date(today.getFullYear(), today.getMonth() + calOffset + i, 1);
-        if (i === 0) firstMonth = d;
-        if (i === 2) lastMonth = d;
+        if (i===0) first=d; if (i===2) last=d;
         html += renderMonth(d.getFullYear(), d.getMonth());
     }
     grid.innerHTML = html;
-
-    const fmt = (d) => d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
-    period.textContent = fmt(firstMonth) + ' — ' + fmt(lastMonth);
-
-    document.getElementById('cal-prev').disabled = calOffset === 0;
+    const fmt = d => d.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
+    period.textContent = fmt(first) + ' — ' + fmt(last);
     document.getElementById('cal-prev').style.opacity = calOffset === 0 ? '0.4' : '1';
 }
 
-document.getElementById('cal-prev').addEventListener('click', () => {
-    if (calOffset > 0) { calOffset--; renderCalendar(); }
-});
-document.getElementById('cal-next').addEventListener('click', () => {
-    calOffset++; renderCalendar();
-});
+document.getElementById('cal-prev').addEventListener('click', () => { if (calOffset > 0) { calOffset--; renderCalendar(); } });
+document.getElementById('cal-next').addEventListener('click', () => { calOffset++; renderCalendar(); });
+
+// ══════════════════════════════════════════
+//  LISTE DES RÉSERVATIONS
+// ══════════════════════════════════════════
+function renderResaList() {
+    const container = document.getElementById('resa-list');
+    const allDates = [
+        ...dates.taken.map(d => ({ d, status: 'taken' })),
+        ...dates.option.map(d => ({ d, status: 'option' }))
+    ].filter(({ d }) => d >= todayStr).sort((a,b) => a.d.localeCompare(b.d));
+
+    if (allDates.length === 0) {
+        container.innerHTML = '<p class="resa-empty">Aucune réservation à venir.</p>';
+        return;
+    }
+
+    let html = `<table class="resa-table">
+        <thead><tr>
+            <th>Date</th><th>Client</th><th>Contact</th><th>Notes</th><th>Statut</th><th></th>
+        </tr></thead><tbody>`;
+
+    allDates.forEach(({ d, status }) => {
+        const r = dates.reservations[d] || {};
+        const nom     = [r.nom, r.prenom].filter(Boolean).join(' ') || '<em style="color:#bbb">—</em>';
+        const contact = [r.tel, r.email].filter(Boolean).join(' · ') || '<em style="color:#bbb">—</em>';
+        const notes   = r.notes || '';
+        const label   = status === 'taken' ? 'Réservé' : 'En option';
+        html += `<tr>
+            <td class="resa-date">${dateLabel(d)}</td>
+            <td class="resa-name">${nom}</td>
+            <td class="resa-contact">${contact}</td>
+            <td class="resa-notes" title="${notes}">${notes || '—'}</td>
+            <td><span class="resa-status ${status}">${label}</span></td>
+            <td><button class="btn-edit-row" onclick="openFiche('${d}', true)">✏️ Modifier</button></td>
+        </tr>`;
+    });
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
 
 // ══════════════════════════════════════════
 //  INIT
