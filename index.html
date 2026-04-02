@@ -857,95 +857,87 @@
 
 <!-- MODALES TARIFS -->
 <div class="tr-modal" id="modal-tarif-jour" onclick="closeModalOutside(event)">
-    <div class="tr-modal-box">
+    <div class="tarif-modal-box">
         <button class="tr-modal-close" onclick="closeModal()">✕</button>
-        <div class="tr-modal-photo" style="background: linear-gradient(135deg, var(--sage-dark), var(--sage)); display:flex; align-items:center; justify-content:center;">
-            <div style="text-align:center; color:var(--beige);">
-                <div style="font-size:3rem; margin-bottom:0.5rem;">🎉</div>
-                <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; letter-spacing:0.1em;">Location à la Journée</div>
+        <div class="tarif-modal-inner">
+            <div class="tarif-modal-ornament">✦</div>
+            <h2 class="tarif-modal-title">Location à la Journée</h2>
+            <div class="tarif-modal-sub">Entrée 9h · Sortie 4h du matin</div>
+            <div class="tarif-modal-price-block">
+                <span class="tarif-modal-amount">400</span><span class="tarif-modal-euro"> €</span>
             </div>
-        </div>
-        <div class="tr-modal-content">
-            <div class="tr-modal-header">
-                <h2>Location à la Journée</h2>
-                <div class="tr-modal-price">400 €</div>
-            </div>
-            <p style="font-style:italic; color:var(--text-light); margin-bottom:1.2rem;">Accès de 9h du matin jusqu'à 4h du matin — une journée complète pour célébrer.</p>
-            <ul class="tr-modal-list">
+            <div class="tarif-modal-divider"></div>
+            <p class="tarif-modal-desc">Une journée complète pour célébrer, de l'installation du matin jusqu'aux dernières danses du petit matin.</p>
+            <ul class="tarif-modal-list">
                 <li>Accès à la salle dès 9h00</li>
                 <li>Fin de soirée à 4h00 du matin</li>
                 <li>Capacité jusqu'à 130 personnes</li>
-                <li>Sono, micro, piste de danse inclus</li>
-                <li>Bar équipé (réfrigérateurs, comptoir)</li>
+                <li>Sono, micro &amp; piste de danse inclus</li>
+                <li>Bar équipé — réfrigérateurs &amp; comptoir</li>
                 <li>Cuisine professionnelle à disposition</li>
                 <li>Tables, chaises et matériel inclus</li>
                 <li>Parking privatif sur place</li>
             </ul>
-            <p class="tr-modal-note">Caution de 1 000 € à la remise des clés · 30% d'arrhes à la réservation</p>
-            <a href="#contact" class="tr-modal-cta" onclick="closeModal()">Réserver cette formule →</a>
+            <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
+            <a href="#contact" class="tarif-modal-cta" onclick="closeModal()">Réserver cette formule</a>
         </div>
     </div>
 </div>
 
 <div class="tr-modal" id="modal-tarif-2j" onclick="closeModalOutside(event)">
-    <div class="tr-modal-box">
+    <div class="tarif-modal-box tarif-modal-star">
         <button class="tr-modal-close" onclick="closeModal()">✕</button>
-        <div class="tr-modal-photo" style="background: linear-gradient(135deg, var(--brown), var(--gold)); display:flex; align-items:center; justify-content:center;">
-            <div style="text-align:center; color:var(--beige);">
-                <div style="font-size:3rem; margin-bottom:0.5rem;">⭐</div>
-                <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; letter-spacing:0.1em;">La formule la plus populaire</div>
+        <div class="tarif-modal-badge">La plus populaire</div>
+        <div class="tarif-modal-inner">
+            <div class="tarif-modal-ornament">✦</div>
+            <h2 class="tarif-modal-title">Location 2 Jours</h2>
+            <div class="tarif-modal-sub">Deux journées complètes</div>
+            <div class="tarif-modal-price-block">
+                <span class="tarif-modal-amount">750</span><span class="tarif-modal-euro"> €</span>
             </div>
-        </div>
-        <div class="tr-modal-content">
-            <div class="tr-modal-header">
-                <h2>Location 2 Jours</h2>
-                <div class="tr-modal-price">750 €</div>
-            </div>
-            <p style="font-style:italic; color:var(--text-light); margin-bottom:1.2rem;">Deux journées complètes pour profiter sans compter — idéale pour les mariages et grandes fêtes.</p>
-            <ul class="tr-modal-list">
+            <div class="tarif-modal-divider"></div>
+            <p class="tarif-modal-desc">Profitez sans compter sur deux journées entières — idéale pour les mariages, fêtes et réunions de famille.</p>
+            <ul class="tarif-modal-list">
                 <li>Accès dès 9h00 le premier jour</li>
                 <li>Deux soirées jusqu'à 4h00 du matin</li>
                 <li>Capacité jusqu'à 130 personnes</li>
-                <li>Sono, micro, piste de danse inclus</li>
-                <li>Bar équipé (réfrigérateurs, comptoir)</li>
+                <li>Sono, micro &amp; piste de danse inclus</li>
+                <li>Bar équipé — réfrigérateurs &amp; comptoir</li>
                 <li>Cuisine professionnelle à disposition</li>
                 <li>Tables, chaises et matériel inclus</li>
                 <li>Parking privatif sur place</li>
-                <li>Temps de décoration et installation inclus</li>
+                <li>Temps d'installation et de décoration inclus</li>
             </ul>
-            <p class="tr-modal-note">Caution de 1 000 € à la remise des clés · 30% d'arrhes à la réservation</p>
-            <a href="#contact" class="tr-modal-cta" onclick="closeModal()">Réserver cette formule →</a>
+            <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
+            <a href="#contact" class="tarif-modal-cta" onclick="closeModal()">Réserver cette formule</a>
         </div>
     </div>
 </div>
 
 <div class="tr-modal" id="modal-tarif-we" onclick="closeModalOutside(event)">
-    <div class="tr-modal-box">
+    <div class="tarif-modal-box">
         <button class="tr-modal-close" onclick="closeModal()">✕</button>
-        <div class="tr-modal-photo" style="background: linear-gradient(135deg, var(--brown-dark), var(--brown)); display:flex; align-items:center; justify-content:center;">
-            <div style="text-align:center; color:var(--beige);">
-                <div style="font-size:3rem; margin-bottom:0.5rem;">🏡</div>
-                <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; letter-spacing:0.1em;">Week-end tout compris</div>
+        <div class="tarif-modal-inner">
+            <div class="tarif-modal-ornament">✦</div>
+            <h2 class="tarif-modal-title">Week-end avec Couchages</h2>
+            <div class="tarif-modal-sub">Salle + 23 couchages · Sortie dim. 20h</div>
+            <div class="tarif-modal-price-block">
+                <span class="tarif-modal-amount">1 300</span><span class="tarif-modal-euro"> €</span>
             </div>
-        </div>
-        <div class="tr-modal-content">
-            <div class="tr-modal-header">
-                <h2>Week-end avec Couchages</h2>
-                <div class="tr-modal-price">1 300 €</div>
-            </div>
-            <p style="font-style:italic; color:var(--text-light); margin-bottom:1.2rem;">Salle + hébergement pour 23 personnes — tout le monde reste sur place jusqu'au dimanche soir.</p>
-            <ul class="tr-modal-list">
-                <li>Accès salle + gîte &amp; dortoirs inclus</li>
+            <div class="tarif-modal-divider"></div>
+            <p class="tarif-modal-desc">Salle et hébergement réunis — vos invités restent sur place et savourent le week-end jusqu'au bout.</p>
+            <ul class="tarif-modal-list">
+                <li>Salle + gîte &amp; dortoirs inclus</li>
                 <li>23 couchages — 3 espaces distincts</li>
                 <li>Sortie dimanche à 20h00</li>
                 <li>Capacité jusqu'à 130 personnes en soirée</li>
-                <li>Sono, micro, piste de danse inclus</li>
+                <li>Sono, micro &amp; piste de danse inclus</li>
                 <li>Bar équipé et cuisine professionnelle</li>
                 <li>Parking privatif sur place</li>
                 <li>Cadre bucolique au bord de l'Orne</li>
             </ul>
-            <p class="tr-modal-note">Caution de 1 000 € à la remise des clés · 30% d'arrhes à la réservation</p>
-            <a href="#contact" class="tr-modal-cta" onclick="closeModal()">Réserver cette formule →</a>
+            <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
+            <a href="#contact" class="tarif-modal-cta" onclick="closeModal()">Réserver cette formule</a>
         </div>
     </div>
 </div>

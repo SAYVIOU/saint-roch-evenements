@@ -388,10 +388,9 @@ async function validateToken() {
 function logout() { show('login'); document.getElementById('inp-user').value = ''; document.getElementById('inp-pass').value = ''; }
 
 function show(screen) {
-    ['login','token','editor'].forEach(s => {
-        const el = document.getElementById('screen-' + s);
-        el.style.display = s === screen ? (s === 'editor' ? 'block' : 'flex') : 'none';
-    });
+    document.getElementById('screen-login').style.display  = screen === 'login'  ? 'flex'  : 'none';
+    document.getElementById('screen-token').style.display  = screen === 'token'  ? 'flex'  : 'none';
+    document.getElementById('screen-editor').style.display = screen === 'editor' ? 'block' : 'none';
 }
 
 // ══════════════════════════════════════════

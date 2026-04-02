@@ -649,6 +649,41 @@
         }
         .tr-modal-close:hover { background: rgba(30,20,10,0.85); }
 
+        /* ── MODALES TARIFS ── */
+        .tarif-modal-box {
+            background: var(--white); border-radius: 4px;
+            max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto;
+            position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-top: 4px solid var(--gold);
+        }
+        .tarif-modal-box.tarif-modal-star { border-top-color: var(--brown); }
+        .tarif-modal-badge {
+            background: var(--brown); color: var(--beige);
+            font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+            text-align: center; padding: 0.45rem 1rem; font-weight: 600;
+        }
+        .tarif-modal-inner { padding: 2.2rem 2.5rem 2rem; text-align: center; }
+        .tarif-modal-ornament { color: var(--gold); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.3em; }
+        .tarif-modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: var(--brown); letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+        .tarif-modal-sub { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; }
+        .tarif-modal-price-block { margin-bottom: 1.4rem; }
+        .tarif-modal-amount { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 700; color: var(--brown); line-height: 1; }
+        .tarif-modal-euro { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--gold); }
+        .tarif-modal-divider { width: 50px; height: 1px; background: var(--gold); margin: 0 auto 1.4rem; opacity: 0.6; }
+        .tarif-modal-desc { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-light); line-height: 1.65; margin-bottom: 1.4rem; }
+        .tarif-modal-list { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.5rem; }
+        .tarif-modal-list li { font-size: 0.85rem; color: var(--text); padding-left: 1.4rem; position: relative; }
+        .tarif-modal-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 0.75rem; }
+        .tarif-modal-note { font-size: 0.75rem; color: var(--text-light); background: var(--beige); border-radius: 3px; padding: 0.6rem 0.9rem; margin-bottom: 1.5rem; text-align: center; }
+        .tarif-modal-cta {
+            display: block; width: 100%; padding: 0.9rem;
+            background: var(--brown); color: var(--beige);
+            text-align: center; border-radius: 3px;
+            font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase;
+            font-weight: 500; transition: background 0.2s; text-decoration: none;
+        }
+        .tarif-modal-cta:hover { background: var(--brown-dark); }
+
         /* Responsive modale */
         @media (max-width: 600px) {
             .tr-modal-photo { height: 200px; }
