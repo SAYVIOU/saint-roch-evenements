@@ -141,11 +141,15 @@
         .cal-day.taken:hover  { background: rgba(192,57,43,0.25); transform: scale(1.05); }
         .cal-day.option { background: rgba(212,160,23,0.2); color: #8a6a00; font-weight: 600; border-color: rgba(212,160,23,0.4); }
         .cal-day.option:hover { background: rgba(212,160,23,0.35); transform: scale(1.05); }
-        /* petit point blanc sur les dates avec fiche */
-        .cal-day.has-info::after {
-            content: ''; display: block; width: 4px; height: 4px;
-            border-radius: 50%; background: currentColor; opacity: 0.7;
-        }
+        /* petit point sur les dates avec fiche */
+        .cal-day.has-info::after { content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.7; }
+        /* sélection de plage — style Airbnb */
+        .cal-day.sel-anchor { background: var(--taken) !important; color: #fff !important; font-weight: 700; border-radius: 6px 0 0 6px; border-color: transparent; transform: none; }
+        .cal-day.sel-mid    { background: rgba(192,57,43,0.18) !important; color: var(--taken) !important; border-radius: 0; border-color: transparent; transform: none; }
+        .cal-day.sel-end    { background: var(--taken) !important; color: #fff !important; font-weight: 700; border-radius: 0 6px 6px 0; border-color: transparent; transform: none; }
+        .cal-day.sel-anchor.sel-end { border-radius: 6px; }
+        /* indicateur "choisir 1ère date" */
+        .cal-selecting-hint { text-align:center; font-size:0.8rem; color: var(--taken); font-weight:600; margin-bottom:0.8rem; padding: 0.4rem; background: rgba(192,57,43,0.08); border-radius:5px; letter-spacing:0.04em; }
 
         /* ── FICHE MODALE ── */
         .fiche-overlay {
@@ -285,7 +289,8 @@
             <div class="leg"><div class="leg-dot leg-taken-dot"></div> Réservé — cliquer pour voir/modifier</div>
             <div class="leg"><div class="leg-dot leg-option-dot"></div> En option — cliquer pour libérer</div>
         </div>
-        <p class="editor-hint">Cliquez sur une date disponible pour créer une réservation. N'oubliez pas d'enregistrer après chaque modification.</p>
+        <div id="selecting-hint" class="cal-selecting-hint" style="display:none">📍 Maintenant cliquez sur la date de fin de la réservation</div>
+        <p class="editor-hint" id="editor-hint">Cliquez sur la 1ère date pour commencer une réservation. Cliquez sur une date réservée pour voir la fiche.</p>
 
         <div class="cal-nav">
             <button class="cal-nav-btn" id="cal-prev">‹</button>
@@ -461,36 +466,99 @@ function switchTab(name, btn) {
 }
 
 // ══════════════════════════════════════════
-//  CLIC SUR DATE
+//  SÉLECTION DE PLAGE (style Airbnb)
 // ══════════════════════════════════════════
+let rangeStart = null;
+let hoverDs    = null;
+
+function getDatesInRange(a, b) {
+    const result = [];
+    const cur = new Date(a + 'T12:00:00');
+    const end = new Date(b + 'T12:00:00');
+    while (cur <= end) {
+        result.push(d2s(cur));
+        cur.setDate(cur.getDate() + 1);
+    }
+    return result;
+}
+
+function getSelRange() {
+    if (!rangeStart) return null;
+    const h = hoverDs || rangeStart;
+    return { start: rangeStart < h ? rangeStart : h, end: rangeStart < h ? h : rangeStart };
+}
+
+function setSelectingUI(selecting) {
+    document.getElementById('selecting-hint').style.display = selecting ? 'block' : 'none';
+    document.getElementById('editor-hint').style.display    = selecting ? 'none'  : 'block';
+}
+
 function clickDate(ds) {
     const isTaken  = dates.taken.includes(ds);
     const isOption = dates.option.includes(ds);
 
-    if (!isTaken && !isOption) {
-        // Libre → réservé : marquer + ouvrir fiche
-        dates.taken.push(ds);
-        renderCalendar();
-        openFiche(ds, false);
-    } else if (isTaken) {
-        // Réservé → ouvrir fiche pour voir/modifier
-        openFiche(ds, true);
+    if (rangeStart === null) {
+        if (isTaken) {
+            // Ouvrir la fiche (suit le rangeRef si c'est une date secondaire)
+            const mainDate = (dates.reservations[ds] && dates.reservations[ds].rangeRef) || ds;
+            openFiche(mainDate, true);
+        } else if (isOption) {
+            // Libérer la date en option
+            dates.option = dates.option.filter(d => d !== ds);
+            delete dates.reservations[ds];
+            renderCalendar(); renderResaList();
+        } else {
+            // 1er clic : début de plage
+            rangeStart = ds; hoverDs = ds;
+            setSelectingUI(true);
+            renderCalendar();
+        }
     } else {
-        // Option → libérer
-        dates.option = dates.option.filter(d => d !== ds);
-        delete dates.reservations[ds];
+        // 2ème clic : fin de plage
+        const sel = getSelRange();
+        rangeStart = null; hoverDs = null;
+        setSelectingUI(false);
+
+        const range = getDatesInRange(sel.start, sel.end);
+        // Vérifier si des dates déjà réservées sont dans la plage
+        const conflicts = range.filter(d => dates.taken.includes(d) || dates.option.includes(d));
+        if (conflicts.length > 0) {
+            alert('Certaines dates de cette plage sont déjà réservées. Veuillez choisir une autre période.');
+            renderCalendar(); return;
+        }
+
+        range.forEach((d, i) => {
+            dates.taken.push(d);
+            if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
+        });
         renderCalendar();
-        renderResaList();
+        openFiche(sel.start, false, range);
     }
+}
+
+function hoverDate(ds) {
+    if (rangeStart !== null) { hoverDs = ds; renderCalendar(); }
 }
 
 // ══════════════════════════════════════════
 //  FICHE CLIENT
 // ══════════════════════════════════════════
-function openFiche(ds, isEdit) {
-    ficheDate = ds;
+let ficheRange = []; // dates de la plage en cours
+
+function openFiche(ds, isEdit, range) {
+    ficheDate  = ds;
+    ficheRange = range || [ds];
     const resa = dates.reservations[ds] || {};
-    document.getElementById('fiche-date-txt').textContent = dateLabel(ds);
+
+    // Libellé date / plage
+    const label = ficheRange.length > 1
+        ? 'Du ' + dateLabel(ficheRange[0]) + '\nau ' + dateLabel(ficheRange[ficheRange.length-1])
+        : dateLabel(ds);
+    document.getElementById('fiche-date-txt').textContent = ficheRange.length > 1
+        ? 'Du ' + new Date(ficheRange[0]+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'})
+          + ' au ' + new Date(ficheRange[ficheRange.length-1]+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})
+        : dateLabel(ds);
+
     document.getElementById('f-nom').value    = resa.nom    || '';
     document.getElementById('f-prenom').value = resa.prenom || '';
     document.getElementById('f-tel').value    = resa.tel    || '';
@@ -503,7 +571,7 @@ function openFiche(ds, isEdit) {
 
 function closeFiche() {
     document.getElementById('fiche-overlay').classList.remove('open');
-    ficheDate = null;
+    ficheDate = null; ficheRange = [];
 }
 
 function closeFicheOutside(e) {
@@ -512,37 +580,46 @@ function closeFicheOutside(e) {
 
 function saveFiche() {
     if (!ficheDate) return;
-    const nom = document.getElementById('f-nom').value.trim();
     dates.reservations[ficheDate] = {
-        nom:    nom,
-        prenom: document.getElementById('f-prenom').value.trim(),
-        tel:    document.getElementById('f-tel').value.trim(),
-        email:  document.getElementById('f-email').value.trim(),
-        notes:  document.getElementById('f-notes').value.trim(),
+        nom:      document.getElementById('f-nom').value.trim(),
+        prenom:   document.getElementById('f-prenom').value.trim(),
+        tel:      document.getElementById('f-tel').value.trim(),
+        email:    document.getElementById('f-email').value.trim(),
+        notes:    document.getElementById('f-notes').value.trim(),
+        dateEnd:  ficheRange.length > 1 ? ficheRange[ficheRange.length-1] : undefined,
     };
-    closeFiche();
-    renderCalendar();
-    renderResaList();
+    closeFiche(); renderCalendar(); renderResaList();
 }
 
 function setOption() {
     if (!ficheDate) return;
-    dates.taken  = dates.taken.filter(d => d !== ficheDate);
-    dates.option.push(ficheDate);
-    closeFiche();
-    renderCalendar();
-    renderResaList();
+    // Récupérer toute la plage
+    const allRange = getAllRangeDates(ficheDate);
+    allRange.forEach(d => {
+        dates.taken  = dates.taken.filter(x => x !== d);
+        if (d === ficheDate) dates.option.push(d);
+        else delete dates.reservations[d];
+    });
+    closeFiche(); renderCalendar(); renderResaList();
 }
 
 function deleteReservation() {
     if (!ficheDate) return;
-    if (!confirm('Supprimer cette réservation et libérer la date ?')) return;
-    dates.taken  = dates.taken.filter(d => d !== ficheDate);
-    dates.option = dates.option.filter(d => d !== ficheDate);
-    delete dates.reservations[ficheDate];
-    closeFiche();
-    renderCalendar();
-    renderResaList();
+    if (!confirm('Libérer toute la période réservée ?')) return;
+    const allRange = getAllRangeDates(ficheDate);
+    allRange.forEach(d => {
+        dates.taken  = dates.taken.filter(x => x !== d);
+        dates.option = dates.option.filter(x => x !== d);
+        delete dates.reservations[d];
+    });
+    closeFiche(); renderCalendar(); renderResaList();
+}
+
+function getAllRangeDates(startDate) {
+    const resa = dates.reservations[startDate] || {};
+    const endDate = resa.dateEnd;
+    if (!endDate) return [startDate];
+    return getDatesInRange(startDate, endDate);
 }
 
 // ══════════════════════════════════════════
@@ -561,24 +638,36 @@ function renderMonth(year, month) {
     JOURS.forEach(j => { html += `<div class="cal-dow">${j}</div>`; });
     for (let i = 0; i < startDow; i++) html += `<div class="cal-day empty"></div>`;
 
+    const sel = getSelRange();
+
     for (let d = 1; d <= daysInMonth; d++) {
         const ds       = `${year}-${pad(month+1)}-${pad(d)}`;
         const isPast   = ds < todayStr;
         const isTaken  = dates.taken.includes(ds);
         const isOption = dates.option.includes(ds);
-        const hasInfo  = !!dates.reservations[ds];
+        const resa     = dates.reservations[ds] || {};
+        const hasInfo  = !!(resa.nom || resa.rangeRef);
         const isToday  = ds === todayStr;
 
         let cls = 'cal-day';
-        if (isPast)        cls += ' past';
+        // Sélection en cours (preview Airbnb)
+        if (!isPast && sel && ds >= sel.start && ds <= sel.end) {
+            if (ds === sel.start) cls += ' sel-anchor';
+            else if (ds === sel.end) cls += ' sel-end';
+            else cls += ' sel-mid';
+        } else if (isPast)        cls += ' past';
         else if (isTaken)  cls += ' taken';
         else if (isOption) cls += ' option';
         else               cls += ' free';
-        if (isToday) cls += ' today';
-        if (hasInfo) cls += ' has-info';
 
-        const click = isPast ? '' : `onclick="clickDate('${ds}')"`;
-        html += `<div class="${cls}" title="${hasInfo ? (dates.reservations[ds].nom || '') + ' ' + (dates.reservations[ds].prenom || '') : ''}" ${click}>${d}</div>`;
+        if (isToday) cls += ' today';
+        if (hasInfo && !resa.rangeRef) cls += ' has-info';
+
+        const mainResa = resa.rangeRef ? (dates.reservations[resa.rangeRef] || {}) : resa;
+        const tooltip  = mainResa.nom ? (mainResa.nom + ' ' + (mainResa.prenom || '')).trim() : '';
+        const hover    = (!isPast && !isTaken && !isOption) || rangeStart !== null ? `onmouseover="hoverDate('${ds}')"` : '';
+        const click    = isPast ? '' : `onclick="clickDate('${ds}')"`;
+        html += `<div class="${cls}" title="${tooltip}" ${click} ${hover}>${d}</div>`;
     }
     html += `</div></div>`;
     return html;
@@ -607,34 +696,48 @@ document.getElementById('cal-next').addEventListener('click', () => { calOffset+
 // ══════════════════════════════════════════
 function renderResaList() {
     const container = document.getElementById('resa-list');
-    const allDates = [
+
+    // N'afficher que les dates "principales" (pas les rangeRef)
+    const mainDates = [
         ...dates.taken.map(d => ({ d, status: 'taken' })),
         ...dates.option.map(d => ({ d, status: 'option' }))
-    ].filter(({ d }) => d >= todayStr).sort((a,b) => a.d.localeCompare(b.d));
+    ].filter(({ d }) => {
+        const r = dates.reservations[d] || {};
+        return d >= todayStr && !r.rangeRef; // exclure les dates secondaires
+    }).sort((a,b) => a.d.localeCompare(b.d));
 
-    if (allDates.length === 0) {
+    if (mainDates.length === 0) {
         container.innerHTML = '<p class="resa-empty">Aucune réservation à venir.</p>';
         return;
     }
 
-    let html = `<table class="resa-table">
-        <thead><tr>
-            <th>Date</th><th>Client</th><th>Contact</th><th>Notes</th><th>Statut</th><th></th>
-        </tr></thead><tbody>`;
+    let html = `<table class="resa-table"><thead><tr>
+        <th>Période</th><th>Client</th><th>Contact</th><th>Notes</th><th>Statut</th><th></th>
+    </tr></thead><tbody>`;
 
-    allDates.forEach(({ d, status }) => {
+    mainDates.forEach(({ d, status }) => {
         const r = dates.reservations[d] || {};
         const nom     = [r.nom, r.prenom].filter(Boolean).join(' ') || '<em style="color:#bbb">—</em>';
         const contact = [r.tel, r.email].filter(Boolean).join(' · ') || '<em style="color:#bbb">—</em>';
         const notes   = r.notes || '';
         const label   = status === 'taken' ? 'Réservé' : 'En option';
+
+        // Afficher la plage si dateEnd existe
+        let dateDisplay;
+        if (r.dateEnd && r.dateEnd !== d) {
+            const fmt = dt => new Date(dt+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+            dateDisplay = `Du ${fmt(d)}<br>au ${fmt(r.dateEnd)}`;
+        } else {
+            dateDisplay = dateLabel(d);
+        }
+
         html += `<tr>
-            <td class="resa-date">${dateLabel(d)}</td>
+            <td class="resa-date" style="font-size:0.82rem; line-height:1.5">${dateDisplay}</td>
             <td class="resa-name">${nom}</td>
             <td class="resa-contact">${contact}</td>
             <td class="resa-notes" title="${notes}">${notes || '—'}</td>
             <td><span class="resa-status ${status}">${label}</span></td>
-            <td><button class="btn-edit-row" onclick="openFiche('${d}', true)">✏️ Modifier</button></td>
+            <td><button class="btn-edit-row" onclick="openFiche('${d}', true, getAllRangeDates('${d}'))">✏️ Modifier</button></td>
         </tr>`;
     });
 
