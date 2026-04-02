@@ -444,40 +444,23 @@
         <div class="section-subtitle">Location de la salle — Formules claires et sans surprise</div>
         <div class="divider"><span>✦</span></div>
         <div class="tarif-grid">
-            <div class="tarif-card">
+            <div class="tarif-card tr-clickable" onclick="openModal('modal-tarif-jour')">
                 <h3>Location à la Journée</h3>
                 <div class="tarif-price">400 <span>€</span></div>
                 <div class="tagline">Entrée 9h · Sortie 4h du matin</div>
-                <ul class="tarif-details">
-                    <li>Accès dès 9h00</li>
-                    <li>Sortie à 4h00 du matin</li>
-                    <li>Tous les équipements inclus</li>
-                    <li>Jusqu'à 130 personnes</li>
-                </ul>
+                <div class="tarif-btn">Voir les détails →</div>
             </div>
-            <div class="tarif-card star">
+            <div class="tarif-card star tr-clickable" onclick="openModal('modal-tarif-2j')">
                 <h3>Location 2 Jours</h3>
                 <div class="tarif-price">750 <span>€</span></div>
                 <div class="tagline">La formule la plus populaire</div>
-                <ul class="tarif-details">
-                    <li>Accès dès 9h00 le 1er jour</li>
-                    <li>Deux journées complètes</li>
-                    <li>Tous les équipements inclus</li>
-                    <li>Jusqu'à 130 personnes</li>
-                    <li>Idéal pour les fêtes en deux temps</li>
-                </ul>
+                <div class="tarif-btn">Voir les détails →</div>
             </div>
-            <div class="tarif-card">
+            <div class="tarif-card tr-clickable" onclick="openModal('modal-tarif-we')">
                 <h3>Week-end avec Couchages</h3>
                 <div class="tarif-price">1 300 <span>€</span></div>
                 <div class="tagline">Salle + 23 couchages · Sortie dim. 20h</div>
-                <ul class="tarif-details">
-                    <li>Salle + gîte &amp; dortoirs inclus</li>
-                    <li>Sortie dimanche à 20h00</li>
-                    <li>23 couchages — 3 espaces distincts</li>
-                    <li>Tous les équipements inclus</li>
-                    <li>Idéal pour les grands événements</li>
-                </ul>
+                <div class="tarif-btn">Voir les détails →</div>
             </div>
         </div>
         <div class="tarif-info-grid">
@@ -871,6 +854,101 @@
 </div>
 
 <script src="script.js?v=4"></script>
+
+<!-- MODALES TARIFS -->
+<div class="tr-modal" id="modal-tarif-jour" onclick="closeModalOutside(event)">
+    <div class="tr-modal-box">
+        <button class="tr-modal-close" onclick="closeModal()">✕</button>
+        <div class="tr-modal-photo" style="background: linear-gradient(135deg, var(--sage-dark), var(--sage)); display:flex; align-items:center; justify-content:center;">
+            <div style="text-align:center; color:var(--beige);">
+                <div style="font-size:3rem; margin-bottom:0.5rem;">🎉</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; letter-spacing:0.1em;">Location à la Journée</div>
+            </div>
+        </div>
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Location à la Journée</h2>
+                <div class="tr-modal-price">400 €</div>
+            </div>
+            <p style="font-style:italic; color:var(--text-light); margin-bottom:1.2rem;">Accès de 9h du matin jusqu'à 4h du matin — une journée complète pour célébrer.</p>
+            <ul class="tr-modal-list">
+                <li>Accès à la salle dès 9h00</li>
+                <li>Fin de soirée à 4h00 du matin</li>
+                <li>Capacité jusqu'à 130 personnes</li>
+                <li>Sono, micro, piste de danse inclus</li>
+                <li>Bar équipé (réfrigérateurs, comptoir)</li>
+                <li>Cuisine professionnelle à disposition</li>
+                <li>Tables, chaises et matériel inclus</li>
+                <li>Parking privatif sur place</li>
+            </ul>
+            <p class="tr-modal-note">Caution de 1 000 € à la remise des clés · 30% d'arrhes à la réservation</p>
+            <a href="#contact" class="tr-modal-cta" onclick="closeModal()">Réserver cette formule →</a>
+        </div>
+    </div>
+</div>
+
+<div class="tr-modal" id="modal-tarif-2j" onclick="closeModalOutside(event)">
+    <div class="tr-modal-box">
+        <button class="tr-modal-close" onclick="closeModal()">✕</button>
+        <div class="tr-modal-photo" style="background: linear-gradient(135deg, var(--brown), var(--gold)); display:flex; align-items:center; justify-content:center;">
+            <div style="text-align:center; color:var(--beige);">
+                <div style="font-size:3rem; margin-bottom:0.5rem;">⭐</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; letter-spacing:0.1em;">La formule la plus populaire</div>
+            </div>
+        </div>
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Location 2 Jours</h2>
+                <div class="tr-modal-price">750 €</div>
+            </div>
+            <p style="font-style:italic; color:var(--text-light); margin-bottom:1.2rem;">Deux journées complètes pour profiter sans compter — idéale pour les mariages et grandes fêtes.</p>
+            <ul class="tr-modal-list">
+                <li>Accès dès 9h00 le premier jour</li>
+                <li>Deux soirées jusqu'à 4h00 du matin</li>
+                <li>Capacité jusqu'à 130 personnes</li>
+                <li>Sono, micro, piste de danse inclus</li>
+                <li>Bar équipé (réfrigérateurs, comptoir)</li>
+                <li>Cuisine professionnelle à disposition</li>
+                <li>Tables, chaises et matériel inclus</li>
+                <li>Parking privatif sur place</li>
+                <li>Temps de décoration et installation inclus</li>
+            </ul>
+            <p class="tr-modal-note">Caution de 1 000 € à la remise des clés · 30% d'arrhes à la réservation</p>
+            <a href="#contact" class="tr-modal-cta" onclick="closeModal()">Réserver cette formule →</a>
+        </div>
+    </div>
+</div>
+
+<div class="tr-modal" id="modal-tarif-we" onclick="closeModalOutside(event)">
+    <div class="tr-modal-box">
+        <button class="tr-modal-close" onclick="closeModal()">✕</button>
+        <div class="tr-modal-photo" style="background: linear-gradient(135deg, var(--brown-dark), var(--brown)); display:flex; align-items:center; justify-content:center;">
+            <div style="text-align:center; color:var(--beige);">
+                <div style="font-size:3rem; margin-bottom:0.5rem;">🏡</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; letter-spacing:0.1em;">Week-end tout compris</div>
+            </div>
+        </div>
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>Week-end avec Couchages</h2>
+                <div class="tr-modal-price">1 300 €</div>
+            </div>
+            <p style="font-style:italic; color:var(--text-light); margin-bottom:1.2rem;">Salle + hébergement pour 23 personnes — tout le monde reste sur place jusqu'au dimanche soir.</p>
+            <ul class="tr-modal-list">
+                <li>Accès salle + gîte &amp; dortoirs inclus</li>
+                <li>23 couchages — 3 espaces distincts</li>
+                <li>Sortie dimanche à 20h00</li>
+                <li>Capacité jusqu'à 130 personnes en soirée</li>
+                <li>Sono, micro, piste de danse inclus</li>
+                <li>Bar équipé et cuisine professionnelle</li>
+                <li>Parking privatif sur place</li>
+                <li>Cadre bucolique au bord de l'Orne</li>
+            </ul>
+            <p class="tr-modal-note">Caution de 1 000 € à la remise des clés · 30% d'arrhes à la réservation</p>
+            <a href="#contact" class="tr-modal-cta" onclick="closeModal()">Réserver cette formule →</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

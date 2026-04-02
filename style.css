@@ -361,6 +361,9 @@
         .tarif-price span { font-size: 1.1rem; font-weight: 300; }
         .tagline { font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.4rem; }
         .tarif-card.star .tagline { color: var(--beige-dark); }
+        .tarif-btn { margin-top: auto; font-size: 0.8rem; color: var(--sage-dark); letter-spacing: 0.08em; padding-top: 1rem; border-top: 1px solid rgba(107,127,89,0.2); }
+        .tarif-card.star .tarif-btn { color: var(--beige-dark); border-top-color: rgba(245,237,217,0.2); }
+        .tarif-card { display: flex; flex-direction: column; }
         .tarif-details { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 0.45rem; }
         .tarif-details li { font-size: 0.85rem; color: var(--text-light); padding-left: 1.3rem; position: relative; }
         .tarif-card.star .tarif-details li { color: rgba(245,237,217,0.85); }
