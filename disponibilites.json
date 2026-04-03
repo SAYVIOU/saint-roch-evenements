@@ -1,20 +1,5 @@
 {
-  "taken": [
-    "2026-05-02",
-    "2026-05-03"
-  ],
+  "taken": [],
   "option": [],
-  "reservations": {
-    "2026-05-03": {
-      "rangeRef": "2026-05-02"
-    },
-    "2026-05-02": {
-      "nom": "merchier",
-      "prenom": "matheo",
-      "tel": "0777494199",
-      "email": "matmerchier@gmail.com",
-      "notes": "",
-      "dateEnd": "2026-05-03"
-    }
-  }
+  "reservations": {}
 }
