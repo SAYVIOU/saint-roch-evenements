@@ -563,10 +563,15 @@
             display: none;
         }
         @media (max-width: 700px) {
+            /* Espace vertical identique à l'ancien padding haut/bas des grilles */
+            .carousel-wrap {
+                margin-top: 0.25rem;
+                margin-bottom: 1rem;
+            }
             .carousel-nav {
                 display: flex;
                 align-items: center; justify-content: center;
-                position: absolute; top: 50%; transform: translateY(-50%);
+                position: absolute; top: 0; bottom: 0; margin: auto 0;
                 width: 36px; height: 36px; border-radius: 50%;
                 background: rgba(61,40,16,0.72);
                 border: 1px solid rgba(245,237,217,0.3);
@@ -606,13 +611,13 @@
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
-                padding: 0.25rem 1.2rem 1rem;
+                padding: 0 1.2rem;
                 margin: 0 -1.2rem;
             }
             .traiteur-grid::-webkit-scrollbar { display: none; }
             .traiteur-grid .tr-card {
                 flex: 0 0 82%;
-                scroll-snap-align: center;
+                scroll-snap-align: start;
             }
 
             /* ── CARROUSEL traiteur (petites cartes) ── */
@@ -625,13 +630,13 @@
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
-                padding: 0.25rem 1.2rem 1rem;
+                padding: 0 1.2rem;
                 margin: 0 -1.2rem;
             }
             .tr-small-grid::-webkit-scrollbar { display: none; }
             .tr-small-grid .tr-small {
                 flex: 0 0 72%;
-                scroll-snap-align: center;
+                scroll-snap-align: start;
             }
 
             /* ── CARROUSEL tarifs ── */
@@ -644,13 +649,13 @@
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
-                padding: 0.25rem 1.2rem 1rem;
+                padding: 0 1.2rem;
                 margin: 0 -1.2rem;
             }
             .tarif-grid::-webkit-scrollbar { display: none; }
             .tarif-grid .tarif-card {
                 flex: 0 0 85%;
-                scroll-snap-align: center;
+                scroll-snap-align: start;
             }
 
             /* Afficher le hint "Appuyez pour détails" en permanence sur mobile */
