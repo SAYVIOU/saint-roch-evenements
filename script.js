@@ -350,7 +350,66 @@ function moveModal(dir) {
 
 
 /* ─────────────────────────────────────────
-   6. CALENDRIER DES DISPONIBILITÉS
+   6. SLIDER TÉMOIGNAGES
+   1 témoignage visible à la fois, flèches + points + swipe
+───────────────────────────────────────── */
+(function () {
+    const cards = Array.from(document.querySelectorAll('.temo-card'));
+    if (cards.length < 2) return;
+
+    let current = 0;
+    cards[0].classList.add('temo-active');
+
+    function show(idx, fromLeft) {
+        cards[current].classList.remove('temo-active', 'temo-from-left');
+        current = ((idx % cards.length) + cards.length) % cards.length;
+        cards[current].classList.toggle('temo-from-left', !!fromLeft);
+        cards[current].classList.add('temo-active');
+        document.querySelectorAll('.temo-dot').forEach(function (d, i) {
+            d.classList.toggle('active', i === current);
+        });
+    }
+
+    // Créer la navigation (flèches + points)
+    const nav = document.createElement('div');
+    nav.className = 'temo-nav';
+
+    const prev = document.createElement('button');
+    prev.className = 'temo-nav-btn'; prev.innerHTML = '‹'; prev.setAttribute('aria-label', 'Précédent');
+    prev.addEventListener('click', function () { show(current - 1, true); });
+
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'temo-dots';
+    cards.forEach(function (_, i) {
+        const dot = document.createElement('span');
+        dot.className = 'temo-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', function () { show(i, i < current); });
+        dotsWrap.appendChild(dot);
+    });
+
+    const next = document.createElement('button');
+    next.className = 'temo-nav-btn'; next.innerHTML = '›'; next.setAttribute('aria-label', 'Suivant');
+    next.addEventListener('click', function () { show(current + 1, false); });
+
+    nav.appendChild(prev); nav.appendChild(dotsWrap); nav.appendChild(next);
+
+    // Insérer avant .temo-cta
+    const cta = document.querySelector('.temo-cta');
+    cta.parentNode.insertBefore(nav, cta);
+
+    // Swipe tactile
+    let swX = 0;
+    const grid = document.querySelector('.temo-grid');
+    grid.addEventListener('touchstart', function (e) { swX = e.touches[0].clientX; }, { passive: true });
+    grid.addEventListener('touchend', function (e) {
+        const dx = e.changedTouches[0].clientX - swX;
+        if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1), dx > 0);
+    }, { passive: true });
+})();
+
+
+/* ─────────────────────────────────────────
+   7. CALENDRIER DES DISPONIBILITÉS
    Les dates sont lues depuis disponibilites.json
    Modifiables via /gestion-agenda.html
 ───────────────────────────────────────── */
