@@ -249,8 +249,8 @@
         .options-note strong { color: var(--brown); font-style: normal; }
 
         /* ═══════════ COUCHAGES ═══════════ */
-        .couch-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-        .couch-photo-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(92,61,30,0.12); }
+        .couch-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; align-items: start; }
+        .couch-photo-wrap { border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(92,61,30,0.12); display: flex; flex-direction: column; }
         .couch-photo-wrap img { width: 100%; aspect-ratio: 4/3; object-fit: cover; transition: transform 0.4s; cursor: pointer; touch-action: manipulation; }
         .couch-photo-wrap img:hover { transform: scale(1.05); }
         .couch-photo-wrap .label { background: var(--sage); color: var(--beige); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; padding: 0.6rem; }
