@@ -531,9 +531,10 @@ function moveModal(dir) {
         container.innerHTML = html;
     }
 
-    // Charger les dates depuis disponibilites.json
-    fetch('disponibilites.json?v=' + Date.now())
-        .then(r => r.json())
+    // Charger les dates depuis GitHub Raw (mise à jour immédiate, sans délai de déploiement)
+    const _DISPO_URL = 'https://raw.githubusercontent.com/SAYVIOU/saint-roch-evenements/main/disponibilites.json';
+    fetch(_DISPO_URL + '?t=' + Date.now(), { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : fetch('disponibilites.json?t=' + Date.now()).then(r2 => r2.json()))
         .then(data => {
             takenSet  = new Set(data.taken  || []);
             optionSet = new Set(data.option || []);
