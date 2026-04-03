@@ -607,7 +607,7 @@
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
-                overscroll-behavior-x: contain;
+                overscroll-behavior-x: none;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
@@ -617,7 +617,8 @@
             .traiteur-grid::-webkit-scrollbar { display: none; }
             .traiteur-grid .tr-card {
                 flex: 0 0 82%;
-                scroll-snap-align: start;
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
             }
 
             /* ── CARROUSEL traiteur (petites cartes) ── */
@@ -626,7 +627,7 @@
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
-                overscroll-behavior-x: contain;
+                overscroll-behavior-x: none;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
@@ -636,7 +637,8 @@
             .tr-small-grid::-webkit-scrollbar { display: none; }
             .tr-small-grid .tr-small {
                 flex: 0 0 72%;
-                scroll-snap-align: start;
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
             }
 
             /* ── CARROUSEL tarifs ── */
@@ -645,7 +647,7 @@
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
-                overscroll-behavior-x: contain;
+                overscroll-behavior-x: none;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
@@ -655,7 +657,8 @@
             .tarif-grid::-webkit-scrollbar { display: none; }
             .tarif-grid .tarif-card {
                 flex: 0 0 85%;
-                scroll-snap-align: start;
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
             }
 
             /* Afficher le hint "Appuyez pour détails" en permanence sur mobile */
