@@ -620,27 +620,30 @@
             #lightbox-box { max-width: 100vw; border-radius: 0; }
             #lightbox-img { max-height: 65vh; }
 
-            /* ── MODALES mobile : carte centrée avec marges ── */
-            .tr-modal { padding: 1.2rem 1rem; align-items: center; }
+            /* ── MODALES mobile : carte centrée, tout visible sans scroll ── */
+            .tr-modal { padding: 1rem 0.8rem; align-items: center; }
             .tr-modal-inner {
-                max-width: 92%;
-                max-height: 82vh;
+                max-width: 94%;
+                max-height: 92vh;
                 overflow-y: auto;
                 border-radius: 14px;
             }
-            .tr-modal-photo { height: 155px; }
-            .tr-modal-content { padding: 0.9rem 1rem 1.2rem; }
-            .tr-modal-header { margin-bottom: 0.5rem; }
-            .tr-modal-header h2 { font-size: 1.15rem; }
-            .tr-modal-price { font-size: 0.95rem; }
-            .tr-modal-desc { font-size: 0.8rem; margin-bottom: 0.5rem; }
-            .tr-modal-list li { font-size: 0.8rem; padding: 0.15rem 0 0.15rem 1rem; }
-            .tr-modal-note { font-size: 0.75rem; padding: 0.6rem 0.8rem; margin: 0.8rem 0; }
-            .tr-modal-cta { padding: 0.65rem 1.2rem; font-size: 0.75rem; }
+            /* Photo réduite en bandeau */
+            .tr-modal-photo { height: 90px !important; object-position: center 35%; }
+            /* Description cachée sur mobile (visible sur la carte) */
+            .tr-modal-desc { display: none !important; }
+            .tr-modal-content { padding: 0.75rem 0.9rem 1rem !important; }
+            .tr-modal-header { margin-bottom: 0.4rem; flex-wrap: nowrap; }
+            .tr-modal-header h2 { font-size: 1.05rem !important; }
+            .tr-modal-price { font-size: 0.9rem !important; }
+            .tr-modal-list { margin-bottom: 0.4rem; }
+            .tr-modal-list li { font-size: 0.78rem; padding: 0.1rem 0 0.1rem 0.9rem; }
+            .tr-modal-note { font-size: 0.72rem; padding: 0.5rem 0.7rem; margin: 0.5rem 0; }
+            .tr-modal-cta { padding: 0.6rem 1rem !important; font-size: 0.74rem !important; margin-top: 0.5rem; }
             /* Modales tarif */
             .tarif-modal-box {
-                max-width: 92%;
-                max-height: 82vh;
+                max-width: 94%;
+                max-height: 92vh;
                 overflow-y: auto;
                 border-radius: 14px;
             }
@@ -840,10 +843,4 @@
         }
         .tarif-modal-cta:hover { background: var(--brown-dark); }
 
-        /* Responsive modale */
-        @media (max-width: 600px) {
-            .tr-modal-photo { height: 200px; }
-            .tr-modal-content { padding: 1.4rem 1.3rem 1.8rem; }
-            .tr-modal-header h2 { font-size: 1.5rem; }
-            .tr-modal-price { font-size: 1.25rem; }
-        }
+        /* Responsive modale — voir les règles mobiles centralisées plus haut */
