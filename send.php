@@ -26,7 +26,8 @@ $nom     = clean($_POST['nom']       ?? '');
 $prenom  = clean($_POST['prenom']    ?? '');
 $tel     = clean($_POST['telephone'] ?? '');
 $email   = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
-$date    = clean($_POST['date']      ?? '');
+$date_debut = clean($_POST['date_debut'] ?? '');
+$date_fin   = clean($_POST['date_fin']   ?? '');
 $formule = clean($_POST['formule']   ?? '');
 $invites = clean($_POST['invites']   ?? '');
 $message = clean($_POST['message']   ?? '');
@@ -49,7 +50,8 @@ $corps .= "   Téléphone : $tel\n";
 $corps .= "   Email     : $email\n\n";
 
 $corps .= "📅 ÉVÉNEMENT\n";
-$corps .= "   Date souhaitée    : " . ($date    ?: 'Non précisée') . "\n";
+$corps .= "   Date de début     : " . ($date_debut ?: 'Non précisée') . "\n";
+$corps .= "   Date de fin       : " . ($date_fin   ?: 'Non précisée') . "\n";
 $corps .= "   Formule souhaitée : " . ($formule ?: 'Non précisée') . "\n";
 $corps .= "   Nombre d'invités  : " . ($invites ?: 'Non précisé')  . "\n\n";
 

@@ -632,9 +632,15 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="date">Date souhaitée</label>
-                            <input type="date" id="date" name="date">
+                            <label for="date_debut">Date de début</label>
+                            <input type="date" id="date_debut" name="date_debut">
                         </div>
+                        <div class="form-group">
+                            <label for="date_fin">Date de fin</label>
+                            <input type="date" id="date_fin" name="date_fin">
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group">
                             <label for="formule">Formule souhaitée</label>
                             <select id="formule" name="formule">
@@ -646,10 +652,10 @@
                                 <option value="autre">Autre / À préciser</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="invites">Nombre d'invités estimé (max 130)</label>
-                        <input type="number" id="invites" name="invites" min="1" max="130" placeholder="Ex : 80">
+                        <div class="form-group">
+                            <label for="invites">Nombre d'invités estimé (max 130)</label>
+                            <input type="number" id="invites" name="invites" min="1" max="130" placeholder="Ex : 80">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="message">Votre message</label>
@@ -730,7 +736,7 @@
                 <li>Service à la française ou en plateaux circulants</li>
             </ul>
             <div class="tr-modal-note">💡 Idéal pour un cocktail d'1h à 1h30 avant un repas assis ou dansant.</div>
-            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Nous contacter pour ce menu</a>
         </div>
     </div>
 </div>
@@ -754,7 +760,7 @@
                 <li>Pain de campagne et baguettes artisanales</li>
             </ul>
             <div class="tr-modal-note">💡 Formule idéale pour les repas décontractés : anniversaires, réunions de famille, fêtes champêtres.</div>
-            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Nous contacter pour ce menu</a>
         </div>
     </div>
 </div>
@@ -778,7 +784,7 @@
                 <li>Pain, beurre demi-sel normand</li>
             </ul>
             <div class="tr-modal-note">💡 Formule recommandée pour les mariages, communions et grandes réceptions assises.</div>
-            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Nous contacter pour ce menu</a>
         </div>
     </div>
 </div>
@@ -802,7 +808,7 @@
                 <li>+ 2 entrées en option — supplément 4 € / pers</li>
             </ul>
             <div class="tr-modal-note">🔥 Notre Chef anime le brasero en direct — spectacle garanti pour vos invités !</div>
-            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Nous contacter pour ce menu</a>
         </div>
     </div>
 </div>
@@ -826,7 +832,7 @@
                 <li>Tout le service et la mise en place inclus</li>
             </ul>
             <div class="tr-modal-note">☕ Parfait pour un lendemain de mariage ou un week-end entre amis avec couchages.</div>
-            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Nous contacter pour ce menu</a>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Nous contacter pour ce menu</a>
         </div>
     </div>
 </div>
@@ -850,12 +856,12 @@
                 <li>Conseil et accord mets / fromages sur demande</li>
             </ul>
             <div class="tr-modal-note">🧀 Tarif personnalisé selon la sélection et le nombre de convives — contactez-nous pour un devis.</div>
-            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="closeModal()">Demander un devis</a>
+            <a href="#contact" class="btn btn-primary tr-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Demander un devis</a>
         </div>
     </div>
 </div>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 
 <!-- MODALES TARIFS -->
 <div class="tr-modal" id="modal-tarif-jour" onclick="closeModalOutside(event)">
@@ -881,7 +887,7 @@
                 <li>Parking privatif sur place</li>
             </ul>
             <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
-            <a href="#contact" class="tarif-modal-cta" onclick="closeModal()">Réserver cette formule</a>
+            <a href="#contact" class="tarif-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Réserver cette formule</a>
         </div>
     </div>
 </div>
@@ -911,7 +917,7 @@
                 <li>Temps d'installation et de décoration inclus</li>
             </ul>
             <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
-            <a href="#contact" class="tarif-modal-cta" onclick="closeModal()">Réserver cette formule</a>
+            <a href="#contact" class="tarif-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Réserver cette formule</a>
         </div>
     </div>
 </div>
@@ -939,7 +945,7 @@
                 <li>Cadre bucolique au bord de l'Orne</li>
             </ul>
             <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
-            <a href="#contact" class="tarif-modal-cta" onclick="closeModal()">Réserver cette formule</a>
+            <a href="#contact" class="tarif-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Réserver cette formule</a>
         </div>
     </div>
 </div>

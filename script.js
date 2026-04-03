@@ -54,6 +54,8 @@ if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'; // désactive la restauration automatique du navigateur
 }
 window.scrollTo(0, 0);
+// iOS Safari peut ignorer scrollTo synchrone — on le redéclenche au chargement complet
+window.addEventListener('load', function () { window.scrollTo(0, 0); });
 
 
 /* ─────────────────────────────────────────
@@ -310,7 +312,45 @@ function moveModal(dir) {
 
 
 /* ─────────────────────────────────────────
-   5. CALENDRIER DES DISPONIBILITÉS
+   5. BOUTONS DE NAVIGATION CARROUSELS MOBILES
+   - Flèches ‹ / › injectées autour de chaque carrousel
+   - Visibles uniquement sur mobile (≤ 700px via CSS)
+   - Un clic fait défiler d'une carte
+───────────────────────────────────────── */
+(function () {
+    [
+        { cls: '.tarif-grid',    card: '.tarif-card' },
+        { cls: '.traiteur-grid', card: '.tr-card'    }
+    ].forEach(function (cfg) {
+        const el = document.querySelector(cfg.cls);
+        if (!el) return;
+
+        // Wrapper relatif pour positionner les boutons
+        const wrap = document.createElement('div');
+        wrap.className = 'carousel-wrap';
+        el.parentNode.insertBefore(wrap, el);
+        wrap.appendChild(el);
+
+        function makeBtn(dir) {
+            const btn = document.createElement('button');
+            btn.className = 'carousel-nav carousel-' + (dir < 0 ? 'prev' : 'next');
+            btn.innerHTML  = dir < 0 ? '‹' : '›';
+            btn.setAttribute('aria-label', dir < 0 ? 'Précédent' : 'Suivant');
+            btn.addEventListener('click', function () {
+                const card = el.querySelector(cfg.card);
+                if (!card) return;
+                el.scrollBy({ left: dir * (card.offsetWidth + 16), behavior: 'smooth' });
+            });
+            wrap.appendChild(btn);
+        }
+        makeBtn(-1);
+        makeBtn(1);
+    });
+})();
+
+
+/* ─────────────────────────────────────────
+   6. CALENDRIER DES DISPONIBILITÉS
    Les dates sont lues depuis disponibilites.json
    Modifiables via /gestion-agenda.html
 ───────────────────────────────────────── */

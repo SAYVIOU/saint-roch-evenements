@@ -462,7 +462,15 @@ async function loadAndShow() {
         const token = localStorage.getItem('sre_gh_token');
         const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
             { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
-        if (!res.ok) throw new Error();
+        if (!res.ok) {
+            if (res.status === 401 || res.status === 403) {
+                localStorage.removeItem('sre_gh_token');
+                document.getElementById('token-error').textContent = '🔑 Jeton expiré ou révoqué. Générez-en un nouveau.';
+                show('token');
+                return;
+            }
+            throw new Error();
+        }
         const data = await res.json();
         const parsed = JSON.parse(atob(data.content.replace(/\n/g,'')));
         dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
@@ -486,6 +494,16 @@ async function saveChanges() {
     try {
         const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
             { headers: { 'Authorization': `token ${token}` } });
+        if (!getRes.ok) {
+            if (getRes.status === 401 || getRes.status === 403) {
+                localStorage.removeItem('sre_gh_token');
+                status.className = 'save-status err'; status.textContent = '🔑 Jeton expiré — reconnectez-vous.';
+                btn.disabled = false;
+                setTimeout(() => show('token'), 2000);
+                return;
+            }
+            throw new Error();
+        }
         const fileData = await getRes.json();
 
         dates.taken  = [...new Set(dates.taken)].sort();
@@ -501,11 +519,20 @@ async function saveChanges() {
         const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
             { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
               body: JSON.stringify({ message: 'Mise à jour disponibilités', content, sha: fileData.sha }) });
-        if (!putRes.ok) throw new Error();
+        if (!putRes.ok) {
+            if (putRes.status === 401 || putRes.status === 403) {
+                localStorage.removeItem('sre_gh_token');
+                status.className = 'save-status err'; status.textContent = '🔑 Jeton expiré — reconnectez-vous.';
+                btn.disabled = false;
+                setTimeout(() => show('token'), 2000);
+                return;
+            }
+            throw new Error();
+        }
         status.className = 'save-status ok'; status.textContent = '✅ Publié sur le site !';
         setTimeout(() => { status.style.display = 'none'; }, 4000);
     } catch(e) {
-        status.className = 'save-status err'; status.textContent = '❌ Erreur. Vérifiez votre connexion.';
+        status.className = 'save-status err'; status.textContent = '❌ Erreur réseau. Vérifiez votre connexion.';
     }
     btn.disabled = false;
 }
@@ -849,15 +876,17 @@ function renderMonth(year, month) {
 function renderCalendar() {
     const grid = document.getElementById('cal-grid');
     const period = document.getElementById('cal-period');
+    // Sur mobile étroit (< 600px), 1 seul mois pour éviter un calendrier trop long
+    const numMonths = window.innerWidth < 600 ? 1 : 3;
     let html = ''; let first, last;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < numMonths; i++) {
         const d = new Date(today.getFullYear(), today.getMonth() + calOffset + i, 1);
-        if (i===0) first=d; if (i===2) last=d;
+        if (i===0) first=d; last=d;
         html += renderMonth(d.getFullYear(), d.getMonth());
     }
     grid.innerHTML = html;
     const fmt = d => d.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
-    period.textContent = fmt(first) + ' — ' + fmt(last);
+    period.textContent = numMonths > 1 ? fmt(first) + ' — ' + fmt(last) : fmt(first);
     document.getElementById('cal-prev').style.opacity = calOffset === 0 ? '0.4' : '1';
 }
 
