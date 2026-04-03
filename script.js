@@ -350,7 +350,77 @@ function moveModal(dir) {
 
 
 /* ─────────────────────────────────────────
-   6. SLIDER TÉMOIGNAGES
+   6. SCROLL REVEAL — fondu doux à l'entrée dans le viewport
+───────────────────────────────────────── */
+(function () {
+    if (!('IntersectionObserver' in window)) return; // vieux navigateurs : pas d'animation
+
+    // Éléments qui apparaissent en fondu
+    const singleSelectors = [
+        '#lieu .lieu-text',
+        '#lieu .lieu-photo',
+        '#salle .cap-banner',
+        '#salle .salle-gallery',
+        '#salle .options-note',
+        '#couchages .couch-total',
+        '#traiteur .traiteur-intro',
+        '#traiteur .tr-note',
+        '.tarif-info-grid .tib',
+        '#temoignages .temo-cta',
+        '#disponibilites .dispo-wrap',
+        '#disponibilites .dispo-note',
+        '.contact-info',
+        '.contact-form',
+        '.map-wrap',
+        '.event-band',
+    ];
+
+    // Grilles de cartes avec cascade de délais
+    const gridSelectors = [
+        { parent: '.equip-grid',     child: '.equip-card' },
+        { parent: '.couch-photos',   child: '.couch-photo-wrap' },
+        { parent: '.tarif-info-grid',child: '.tib' },
+        { parent: '.temo-grid',      child: '.temo-card' },
+        { parent: '.salle-gallery',  child: 'img' },
+    ];
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    // Appliquer aux éléments individuels
+    singleSelectors.forEach(function (sel) {
+        document.querySelectorAll(sel).forEach(function (el) {
+            el.classList.add('reveal');
+            observer.observe(el);
+        });
+    });
+
+    // Appliquer avec cascade aux grilles
+    gridSelectors.forEach(function (cfg) {
+        document.querySelectorAll(cfg.parent).forEach(function (grid) {
+            grid.querySelectorAll(cfg.child).forEach(function (card, i) {
+                card.classList.add('reveal', 'reveal-delay-' + Math.min(i + 1, 5));
+                observer.observe(card);
+            });
+        });
+    });
+
+    // Section titles + subtitles
+    document.querySelectorAll('.section-title, .section-subtitle, .divider').forEach(function (el) {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+})();
+
+
+/* ─────────────────────────────────────────
+   7. SLIDER TÉMOIGNAGES
    1 témoignage visible à la fois, flèches + points + swipe
 ───────────────────────────────────────── */
 (function () {

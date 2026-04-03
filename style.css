@@ -45,6 +45,27 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Raleway', sans-serif; color: var(--text); background: var(--white); line-height: 1.7; }
 
+        /* ── Scroll Reveal — fondu doux à l'entrée dans le viewport ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Délais en cascade pour les grilles de cartes */
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+        /* Pas d'animation si l'utilisateur préfère pas de mouvement */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+
         /* ── Anti-zoom tactile global ──
            touch-action:manipulation désactive le zoom double-tap sur tous les éléments
            interactifs. Les inputs en 16px minimum empêchent le zoom auto d'iOS
