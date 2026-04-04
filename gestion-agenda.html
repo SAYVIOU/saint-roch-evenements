@@ -658,7 +658,8 @@ function clickDate(ds) {
             if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
         });
         renderCalendar();
-        openFiche(sel.start, false, range);
+        // Délai pour voir la sélection avant que la fiche s'ouvre
+        setTimeout(() => openFiche(sel.start, false, range), 700);
     }
 }
 
@@ -757,7 +758,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelect
                 if (i > 0) dates.reservations[d] = { rangeRef: sel.start };
             });
             renderCalendar();
-            openFiche(sel.start, false, range);
+            // Délai pour voir la sélection avant que la fiche s'ouvre
+            setTimeout(() => openFiche(sel.start, false, range), 700);
         } else {
             // Tap simple : appel direct (évite le double-déclenchement)
             clickDate(startDs);
