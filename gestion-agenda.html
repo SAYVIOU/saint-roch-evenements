@@ -841,7 +841,8 @@ function setOption() {
 function deleteReservation() {
     if (!ficheDate) return;
     if (!confirm('Libérer toute la période réservée ?')) return;
-    const allRange = getAllRangeDates(ficheDate);
+    // ficheRange si plage fraîche, sinon getAllRangeDates (fiche déjà sauvegardée avec dateEnd)
+    const allRange = ficheRange.length > 1 ? ficheRange : getAllRangeDates(ficheDate);
     allRange.forEach(d => {
         dates.taken  = dates.taken.filter(x => x !== d);
         dates.option = dates.option.filter(x => x !== d);
