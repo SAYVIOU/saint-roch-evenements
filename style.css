@@ -957,3 +957,67 @@
         .tarif-modal-cta:hover { background: var(--brown-dark); }
 
         /* Responsive modale — voir les règles mobiles centralisées plus haut */
+
+        /* ══════════════════════════════════════════
+           BOUTON INVENTAIRE & MODALE INVENTAIRE
+        ══════════════════════════════════════════ */
+        .btn-inventaire { background: var(--brown); color: var(--beige); }
+        .btn-inventaire:hover { background: var(--brown-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(92,61,30,0.35); }
+        .inv-btn-wrap { text-align: center; margin-top: 1.8rem; }
+
+        .inv-modal-inner {
+            background: var(--white);
+            border-radius: 8px;
+            max-width: 680px;
+            width: 95%;
+            max-height: 88vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalIn 0.28s cubic-bezier(0.22,1,0.36,1);
+        }
+        .inv-modal-header {
+            background: linear-gradient(135deg, var(--brown), var(--brown-dark));
+            color: var(--beige);
+            padding: 1.8rem 2rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        .inv-modal-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.25rem;
+        }
+        .inv-modal-header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--gold-light);
+            font-size: 0.95rem;
+        }
+        .inv-modal-body { padding: 1.8rem 2rem 2rem; }
+        .inv-categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.1rem;
+            margin-bottom: 1.4rem;
+        }
+        .inv-cat {
+            background: var(--beige);
+            border-radius: 6px;
+            padding: 1.2rem;
+            border-top: 3px solid var(--gold);
+        }
+        .inv-cat h3 { font-size: 0.82rem; color: var(--brown); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+        .inv-cat ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+        .inv-cat ul li { font-size: 0.82rem; color: var(--text); padding-left: 1rem; position: relative; line-height: 1.45; }
+        .inv-cat ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 0.65rem; top: 0.22em; }
+        .inv-options-note { background: var(--beige-dark); border-radius: 5px; padding: 1rem 1.2rem; border-left: 4px solid var(--gold); font-size: 0.83rem; color: var(--text); }
+        .inv-options-note strong { color: var(--brown); }
+
+        @media (max-width: 700px) {
+            .inv-categories { grid-template-columns: 1fr; }
+            .inv-modal-header { padding: 1.3rem 1.2rem 1rem; }
+            .inv-modal-header h2 { font-size: 1.5rem; }
+            .inv-modal-body { padding: 1.1rem 1rem 1.4rem; }
+        }

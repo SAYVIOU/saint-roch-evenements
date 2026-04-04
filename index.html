@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Saint-Roch-Événements — Écouchés-les-Vallées</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=10">
     <!-- API YouTube IFrame — doit être chargée AVANT script.js -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -191,6 +191,9 @@
         </div>
         <div class="options-note">
             <p><strong>Options de Locations Complémentaires :</strong> nappes, housses de chaises et serviettes en tissu — tarif sur demande.</p>
+        </div>
+        <div class="inv-btn-wrap">
+            <button class="btn btn-inventaire" onclick="openModal('modal-inventaire')">📋 Inventaire complet</button>
         </div>
     </div>
 </section>
@@ -944,6 +947,63 @@
             </ul>
             <p class="tarif-modal-note">Caution 1 000 € à la remise des clés · 30 % d'arrhes à la signature</p>
             <a href="#contact" class="tarif-modal-cta" onclick="event.preventDefault(); closeModal(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 60);">Réserver cette formule</a>
+        </div>
+    </div>
+</div>
+
+<!-- MODALE : Inventaire complet -->
+<div class="tr-modal" id="modal-inventaire" onclick="closeModalOutside(event)">
+    <div class="inv-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <div class="inv-modal-header">
+            <div style="color:var(--gold-light);font-size:0.8rem;letter-spacing:0.3em;margin-bottom:0.5rem;">✦</div>
+            <h2>Inventaire</h2>
+            <p>Tout le matériel à votre disposition</p>
+        </div>
+        <div class="inv-modal-body">
+            <div class="inv-categories">
+                <div class="inv-cat">
+                    <h3>🍳 Espace Cuisine</h3>
+                    <ul>
+                        <li>Cuisine professionnelle équipée</li>
+                        <li>Percolateur à café</li>
+                        <li>Fontaine à eau chaude</li>
+                        <li>Casseroles et équipements de cuisson</li>
+                    </ul>
+                </div>
+                <div class="inv-cat">
+                    <h3>🍷 Bar</h3>
+                    <ul>
+                        <li>Bar intégré à la salle</li>
+                        <li>Machine à glaçons</li>
+                        <li>Lave-verres</li>
+                        <li>Réfrigérateur</li>
+                    </ul>
+                </div>
+                <div class="inv-cat">
+                    <h3>🍽️ Art de la Table</h3>
+                    <ul>
+                        <li>Tables rondes</li>
+                        <li>Tables rectangulaires</li>
+                        <li>Chaises</li>
+                        <li>Assiettes</li>
+                        <li>Verres</li>
+                        <li>Couverts</li>
+                        <li>Mange-debout</li>
+                    </ul>
+                </div>
+                <div class="inv-cat">
+                    <h3>🎵 Sono &amp; Vidéo</h3>
+                    <ul>
+                        <li>Sono avec micros</li>
+                        <li>Table de mixage</li>
+                        <li>Vidéoprojecteur</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="inv-options-note">
+                <strong>📦 Options complémentaires (tarif sur demande) :</strong> nappes, housses de chaises et serviettes en tissu.
+            </div>
         </div>
     </div>
 </div>
