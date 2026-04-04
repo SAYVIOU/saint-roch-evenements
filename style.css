@@ -603,62 +603,68 @@
             .swipe-hint { display: block; }
 
             /* ── CARROUSEL traiteur (cartes principales) ── */
+            /* padding 9% = (100%-82%)/2 → centre chaque carte + bloque l'over-scroll */
             .traiteur-grid {
                 display: flex !important;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
+                scroll-padding-inline: 9%;
                 scroll-behavior: smooth;
                 overscroll-behavior-x: none;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
-                padding: 0 1.2rem;
+                padding: 0 9%;
                 margin: 0 -1.2rem;
             }
             .traiteur-grid::-webkit-scrollbar { display: none; }
             .traiteur-grid .tr-card {
                 flex: 0 0 82%;
-                scroll-snap-align: center;
+                scroll-snap-align: start;
                 scroll-snap-stop: always;
             }
 
             /* ── CARROUSEL traiteur (petites cartes) ── */
+            /* padding 14% = (100%-72%)/2 */
             .tr-small-grid {
                 display: flex !important;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
+                scroll-padding-inline: 14%;
                 scroll-behavior: smooth;
                 overscroll-behavior-x: none;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
-                padding: 0 1.2rem;
+                padding: 0 14%;
                 margin: 0 -1.2rem;
             }
             .tr-small-grid::-webkit-scrollbar { display: none; }
             .tr-small-grid .tr-small {
                 flex: 0 0 72%;
-                scroll-snap-align: center;
+                scroll-snap-align: start;
                 scroll-snap-stop: always;
             }
 
             /* ── CARROUSEL tarifs ── */
+            /* padding 7.5% = (100%-85%)/2 */
             .tarif-grid {
                 display: flex !important;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
+                scroll-padding-inline: 7.5%;
                 scroll-behavior: smooth;
                 overscroll-behavior-x: none;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 gap: 1rem;
-                padding: 0 1.2rem;
+                padding: 0 7.5%;
                 margin: 0 -1.2rem;
             }
             .tarif-grid::-webkit-scrollbar { display: none; }
             .tarif-grid .tarif-card {
                 flex: 0 0 85%;
-                scroll-snap-align: center;
+                scroll-snap-align: start;
                 scroll-snap-stop: always;
             }
 
