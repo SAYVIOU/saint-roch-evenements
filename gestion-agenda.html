@@ -417,7 +417,7 @@
 
         <div class="fiche-actions">
             <button class="btn-fiche-save" onclick="saveFiche()">💾 Enregistrer la fiche</button>
-            <button class="btn-fiche-skip" onclick="closeFiche()">Annuler</button>
+            <button class="btn-fiche-skip" onclick="cancelFiche()">Annuler</button>
         </div>
 
         <div class="fiche-danger" id="fiche-danger" style="display:none">
@@ -778,11 +778,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelect
 // ══════════════════════════════════════════
 //  FICHE CLIENT
 // ══════════════════════════════════════════
-let ficheRange = []; // dates de la plage en cours
+let ficheRange  = []; // dates de la plage en cours
+let ficheIsEdit = false; // true = modification, false = nouvelle réservation
 
 function openFiche(ds, isEdit, range) {
-    ficheDate  = ds;
-    ficheRange = range || [ds];
+    ficheDate   = ds;
+    ficheRange  = range || [ds];
+    ficheIsEdit = !!isEdit;
     const resa = dates.reservations[ds] || {};
 
     // Libellé date / plage
@@ -806,11 +808,24 @@ function openFiche(ds, isEdit, range) {
 
 function closeFiche() {
     document.getElementById('fiche-overlay').classList.remove('open');
-    ficheDate = null; ficheRange = [];
+    ficheDate = null; ficheRange = []; ficheIsEdit = false;
+}
+
+function cancelFiche() {
+    // Si c'est une nouvelle réservation, remettre les dates en libre
+    if (!ficheIsEdit && ficheRange.length > 0) {
+        ficheRange.forEach(d => {
+            dates.taken  = dates.taken.filter(x => x !== d);
+            dates.option = dates.option.filter(x => x !== d);
+            delete dates.reservations[d];
+        });
+        renderCalendar(); renderResaList();
+    }
+    closeFiche();
 }
 
 function closeFicheOutside(e) {
-    if (e.target === document.getElementById('fiche-overlay')) closeFiche();
+    if (e.target === document.getElementById('fiche-overlay')) cancelFiche();
 }
 
 function saveFiche() {
