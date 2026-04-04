@@ -306,6 +306,11 @@
             transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
         }
         .btn-edit-row:hover { background: var(--sage); color: var(--beige); border-color: var(--sage); }
+        @media (max-width: 700px) {
+            .btn-edit-row { display: none; }
+            .resa-card { cursor: pointer; }
+            .resa-card:active { background: #f5f0e8; }
+        }
     </style>
 </head>
 <body>
@@ -998,7 +1003,7 @@ function renderResaList() {
         html += `
         <div class="resa-item" data-d="${d}">
             <div class="resa-delete-bg"><span>🗑 Supprimer</span></div>
-            <div class="resa-card">
+            <div class="resa-card" onclick="openResaFiche('${d}')">
                 <div class="resa-date">${dateDisplay}</div>
                 <div class="resa-name">${nom}</div>
                 <div class="resa-contact">${contact}</div>
@@ -1015,7 +1020,13 @@ function renderResaList() {
 
 // ── Swipe gauche pour supprimer ──
 // Handlers globaux uniques (évite les fuites d'écouteurs)
-let _swipeActive = null; // { item, card, startX, startY, currentX, locked }
+let _swipeActive   = null;  // { item, card, startX, startY, currentX, locked }
+let _swipedRecently = false; // bloque le onclick si un vrai swipe vient de se terminer
+
+function openResaFiche(d) {
+    if (_swipedRecently) return; // le touchend d'un swipe génère un click synthétique → ignorer
+    openFiche(d, true, getAllRangeDates(d));
+}
 
 document.addEventListener('mousemove', e => {
     if (!_swipeActive) return;
@@ -1051,6 +1062,7 @@ function _swipeEnd() {
     const s = _swipeActive;
     _swipeActive = null;
     s.item.classList.remove('swiping');
+    if (s.locked) { _swipedRecently = true; setTimeout(() => { _swipedRecently = false; }, 400); }
     if (s.currentX < -100) {
         s.item.classList.add('snap-delete');
         s.card.style.transform = 'translateX(-100%)';
