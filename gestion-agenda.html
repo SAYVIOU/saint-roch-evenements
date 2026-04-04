@@ -617,9 +617,14 @@ function clickDate(ds) {
     // Clic sur date en option
     if (isOption) {
         if (isSelecting) { cancelSelection(); return; }
-        if (confirm('Libérer cette date ?')) {
-            dates.option = dates.option.filter(d => d !== ds);
-            delete dates.reservations[ds];
+        if (confirm('Libérer toute la période en attente ?')) {
+            // Retrouver le début de la plage (rangeRef ou ds lui-même)
+            const startDate = (dates.reservations[ds] && dates.reservations[ds].rangeRef) || ds;
+            const allRange  = getAllRangeDates(startDate);
+            allRange.forEach(d => {
+                dates.option = dates.option.filter(x => x !== d);
+                delete dates.reservations[d];
+            });
             renderCalendar(); renderResaList();
         }
         return;
@@ -826,8 +831,9 @@ function setOption() {
     const allRange = getAllRangeDates(ficheDate);
     allRange.forEach(d => {
         dates.taken  = dates.taken.filter(x => x !== d);
-        dates.option.push(d); // tous les jours de la plage passent en attente
-        if (d !== ficheDate) delete dates.reservations[d];
+        dates.option.push(d);
+        // Stocker rangeRef sur les jours suivants pour retrouver la plage au clic
+        if (d !== ficheDate) dates.reservations[d] = { rangeRef: ficheDate };
     });
     closeFiche(); renderCalendar(); renderResaList();
 }
