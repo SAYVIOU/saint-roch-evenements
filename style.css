@@ -607,6 +607,7 @@
             .traiteur-grid {
                 display: flex !important;
                 overflow-x: auto;
+                overflow-y: hidden;
                 scroll-snap-type: x mandatory;
                 scroll-padding-inline-start: 9vw;
                 scroll-behavior: smooth;
@@ -615,7 +616,7 @@
                 scrollbar-width: none;
                 gap: 1rem;
                 padding: 0 9vw;
-                margin: 0 -1.2rem;
+                margin: 0 -2rem;
             }
             .traiteur-grid::-webkit-scrollbar { display: none; }
             .traiteur-grid .tr-card {
@@ -628,6 +629,7 @@
             .tr-small-grid {
                 display: flex !important;
                 overflow-x: auto;
+                overflow-y: hidden;
                 scroll-snap-type: x mandatory;
                 scroll-padding-inline-start: 14vw;
                 scroll-behavior: smooth;
@@ -636,7 +638,7 @@
                 scrollbar-width: none;
                 gap: 1rem;
                 padding: 0 14vw;
-                margin: 0 -1.2rem;
+                margin: 0 -2rem;
             }
             .tr-small-grid::-webkit-scrollbar { display: none; }
             .tr-small-grid .tr-small {
@@ -649,6 +651,7 @@
             .tarif-grid {
                 display: flex !important;
                 overflow-x: auto;
+                overflow-y: hidden;
                 scroll-snap-type: x mandatory;
                 scroll-padding-inline-start: 7.5vw;
                 scroll-behavior: smooth;
@@ -657,7 +660,7 @@
                 scrollbar-width: none;
                 gap: 1rem;
                 padding: 0 7.5vw;
-                margin: 0 -1.2rem;
+                margin: 0 -2rem;
             }
             .tarif-grid::-webkit-scrollbar { display: none; }
             .tarif-grid .tarif-card {
