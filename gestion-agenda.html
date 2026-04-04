@@ -421,7 +421,7 @@
         </div>
 
         <div class="fiche-danger" id="fiche-danger" style="display:none">
-            <button class="btn-option" onclick="setOption()">🟡 Mettre en attente</button>
+            <button class="btn-option" id="btn-toggle-status" onclick="toggleStatus()">🟡 Mettre en attente</button>
             <button class="btn-delete" onclick="deleteReservation()">🗑 Libérer la date</button>
         </div>
     </div>
@@ -801,7 +801,24 @@ function openFiche(ds, isEdit, range) {
     document.getElementById('f-tel').value    = resa.tel    || '';
     document.getElementById('f-email').value  = resa.email  || '';
     document.getElementById('f-notes').value  = resa.notes  || '';
-    document.getElementById('fiche-danger').style.display = isEdit ? 'flex' : 'none';
+    if (isEdit) {
+        const isOption = dates.option.includes(ds) || dates.option.includes((dates.reservations[ds] || {}).rangeRef || ds);
+        const btn = document.getElementById('btn-toggle-status');
+        if (isOption) {
+            btn.textContent = '✅ Marquer comme réservé';
+            btn.style.background = 'rgba(107,127,89,0.15)';
+            btn.style.color = 'var(--sage-dark)';
+            btn.style.borderColor = 'var(--sage)';
+        } else {
+            btn.textContent = '🟡 Mettre en attente';
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+        }
+        document.getElementById('fiche-danger').style.display = 'flex';
+    } else {
+        document.getElementById('fiche-danger').style.display = 'none';
+    }
     document.getElementById('fiche-overlay').classList.add('open');
     document.getElementById('f-nom').focus();
 }
@@ -856,15 +873,30 @@ function saveFiche() {
 
 function setOption() {
     if (!ficheDate) return;
-    // Récupérer toute la plage
     const allRange = getAllRangeDates(ficheDate);
     allRange.forEach(d => {
         dates.taken  = dates.taken.filter(x => x !== d);
         dates.option.push(d);
-        // Stocker rangeRef sur les jours suivants pour retrouver la plage au clic
         if (d !== ficheDate) dates.reservations[d] = { rangeRef: ficheDate };
     });
     closeFiche(); renderCalendar(); renderResaList();
+}
+
+function setTaken() {
+    if (!ficheDate) return;
+    const allRange = getAllRangeDates(ficheDate);
+    allRange.forEach(d => {
+        dates.option = dates.option.filter(x => x !== d);
+        dates.taken.push(d);
+        if (d !== ficheDate) dates.reservations[d] = { rangeRef: ficheDate };
+    });
+    closeFiche(); renderCalendar(); renderResaList();
+}
+
+function toggleStatus() {
+    if (!ficheDate) return;
+    const isOption = dates.option.includes(ficheDate);
+    if (isOption) setTaken(); else setOption();
 }
 
 function deleteReservation() {
