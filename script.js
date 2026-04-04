@@ -22,12 +22,12 @@
 // 1a — Callback global appelé par YouTube quand l'API est prête
 window.onYouTubeIframeAPIReady = function () {
     new YT.Player('hero-yt', {
-        videoId: 'HPoDR_BGSrw',
+        videoId: 'Hm-bGGTaZ04',
         playerVars: {
             autoplay:       1,
             mute:           1,
             loop:           1,
-            playlist:       'HPoDR_BGSrw',
+            playlist:       'Hm-bGGTaZ04',
             controls:       0,
             showinfo:       0,
             rel:            0,
