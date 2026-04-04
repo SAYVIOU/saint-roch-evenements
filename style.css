@@ -582,8 +582,9 @@
                 touch-action: manipulation;
             }
             .carousel-nav:hover { background: rgba(61,40,16,0.92); }
-            .carousel-prev { left: 0.3rem; }
-            .carousel-next { right: 0.3rem; }
+            /* 9% = juste au-delà du peek (7.5%) des cartes à 85% */
+            .carousel-prev { left: 9%; }
+            .carousel-next { right: 9%; }
         }
 
         /* ── Indication de défilement (carrousels mobile) ── */
