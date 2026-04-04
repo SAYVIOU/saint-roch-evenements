@@ -682,27 +682,31 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelect
 //           relâcher pour confirmer (sans double-ouverture)
 // ══════════════════════════════════════════
 (function () {
-    let tdDs = null, tdX = 0, tdY = 0, tdDrag = false, tdBlock = false;
+    let tdDs = null, tdX = 0, tdY = 0, tdDrag = false, tdBlock = false, tdTouched = false;
 
     // ── touchstart : mémorise la date et position ──
     document.addEventListener('touchstart', function (e) {
         const el = e.target.closest('[data-ds]');
         const grid = document.getElementById('cal-grid');
         if (!el || !grid || !grid.contains(el)) return;
-        tdDs   = el.dataset.ds;
-        tdX    = e.touches[0].clientX;
-        tdY    = e.touches[0].clientY;
-        tdDrag = false;
+        tdDs      = el.dataset.ds;
+        tdX       = e.touches[0].clientX;
+        tdY       = e.touches[0].clientY;
+        tdDrag    = false;
+        tdTouched = true; // touch commencé sur un jour du calendrier
     }, { passive: true });
 
     // ── touchmove : si bougé > 8px sur une date libre → mode drag ──
     document.addEventListener('touchmove', function (e) {
         if (!tdDs) return;
-        const t  = e.touches[0];
-        const dx = Math.abs(t.clientX - tdX);
-        const dy = Math.abs(t.clientY - tdY);
+        const t   = e.touches[0];
+        const adx = Math.abs(t.clientX - tdX);
+        const dy  = Math.abs(t.clientY - tdY);
 
-        if (!tdDrag && (dx > 8 || dy > 8)) {
+        if (!tdDrag && (adx > 8 || dy > 8)) {
+            // Scroll vertical → annuler sans déclencher de clic
+            if (dy > adx) { tdDs = null; return; }
+
             const ds = tdDs;
             if (!dates.taken.includes(ds) && !dates.option.includes(ds)) {
                 tdDrag = true;
@@ -721,12 +725,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelect
 
     // ── touchend : confirme le drag OU exécute le tap ──
     document.addEventListener('touchend', function (e) {
+        // Toujours bloquer le click synthétique si un touch a commencé sur un jour
+        if (tdTouched) {
+            tdTouched = false;
+            tdBlock   = true;
+            setTimeout(() => { tdBlock = false; }, 600);
+        }
         if (!tdDs) return;
         const startDs = tdDs;
         tdDs = null;
-        // Bloquer le click synthétique qui suit (300ms)
-        tdBlock = true;
-        setTimeout(() => { tdBlock = false; }, 600);
 
         if (tdDrag) {
             tdDrag = false;
