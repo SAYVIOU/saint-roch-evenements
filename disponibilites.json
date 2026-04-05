@@ -6,7 +6,9 @@
     "2026-05-16",
     "2026-05-17",
     "2026-05-23",
-    "2026-05-24"
+    "2026-05-24",
+    "2026-05-30",
+    "2026-05-31"
   ],
   "option": [],
   "reservations": {
@@ -45,6 +47,17 @@
       "email": "sabrinalerouge@yahoo.fr",
       "notes": "Mariage",
       "dateEnd": "2026-05-24"
+    },
+    "2026-05-31": {
+      "rangeRef": "2026-05-30"
+    },
+    "2026-05-30": {
+      "nom": "Vuillmenot",
+      "prenom": "Me",
+      "tel": "+33 6 85 09 08 06",
+      "email": "",
+      "notes": "À réglé en chèque 1000€ prendra la location du brasero.",
+      "dateEnd": "2026-05-31"
     }
   }
 }
