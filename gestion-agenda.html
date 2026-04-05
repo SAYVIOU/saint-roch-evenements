@@ -531,7 +531,9 @@ async function loadAndShow() {
         }
         const data = await res.json();
         _lastSha = data.sha;
-        const parsed = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
+        const _raw = atob(data.content.replace(/\n/g,''));
+        const _bytes = Uint8Array.from(_raw, c => c.charCodeAt(0));
+        const parsed = JSON.parse(new TextDecoder().decode(_bytes));
         dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
     } catch(e) {
         dates = { taken: [], option: [], reservations: {} };
@@ -563,7 +565,9 @@ function startPolling() {
 
             // Fichier modifié depuis un autre appareil → recharger
             _lastSha = data.sha;
-            const parsed = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
+            const _raw2 = atob(data.content.replace(/\n/g,''));
+            const _bytes2 = Uint8Array.from(_raw2, c => c.charCodeAt(0));
+            const parsed = JSON.parse(new TextDecoder().decode(_bytes2));
             dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
             renderCalendar();
             renderResaList();
