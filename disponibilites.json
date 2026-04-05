@@ -15,7 +15,9 @@
     "2026-06-13",
     "2026-06-14",
     "2026-06-20",
-    "2026-06-21"
+    "2026-06-21",
+    "2026-06-27",
+    "2026-06-28"
   ],
   "option": [],
   "reservations": {
@@ -101,6 +103,17 @@
       "email": "",
       "notes": "Anniversaire rien n’est encore vu",
       "dateEnd": "2026-06-21"
+    },
+    "2026-06-28": {
+      "rangeRef": "2026-06-27"
+    },
+    "2026-06-27": {
+      "nom": "Plaine",
+      "prenom": "David",
+      "tel": "+33 6 87 72 34 42",
+      "email": "plaine.david@gmail.com",
+      "notes": "Réglé 390€ par virement",
+      "dateEnd": "2026-06-28"
     }
   }
 }
