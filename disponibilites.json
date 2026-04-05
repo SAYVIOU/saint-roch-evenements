@@ -26,7 +26,9 @@
     "2026-08-22",
     "2026-08-23",
     "2026-08-29",
-    "2026-08-30"
+    "2026-08-30",
+    "2026-10-17",
+    "2026-10-18"
   ],
   "option": [],
   "reservations": {
@@ -174,6 +176,17 @@
       "email": "",
       "notes": "Anniversaire de son mari 70 ans\nPrend  un buffet un brunch et les draps\nVoir le devis dans les message\nÀ réglé 390€ en esp",
       "dateEnd": "2026-08-30"
+    },
+    "2026-10-18": {
+      "rangeRef": "2026-10-17"
+    },
+    "2026-10-17": {
+      "nom": "Poirier",
+      "prenom": "Mr",
+      "tel": "+33 6 26 41 50 30",
+      "email": "",
+      "notes": "18 ans de leur fils \nBrasero environ 95 invités \n390€ réglé en ch",
+      "dateEnd": "2026-10-18"
     }
   }
 }
