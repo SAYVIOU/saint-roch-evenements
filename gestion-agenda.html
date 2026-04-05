@@ -405,6 +405,10 @@
             <span class="badge" id="fiche-badge">Réservé</span>
         </div>
 
+        <div class="form-row-2" id="f-dates-row" style="display:none">
+            <div class="field"><label>Date de début</label><input type="date" id="f-date-start"></div>
+            <div class="field"><label>Date de fin</label><input type="date" id="f-date-end"></div>
+        </div>
         <div class="form-row-2">
             <div class="field"><label>Nom *</label><input type="text" id="f-nom" placeholder="Dupont"></div>
             <div class="field"><label>Prénom</label><input type="text" id="f-prenom" placeholder="Marie"></div>
@@ -802,6 +806,11 @@ function openFiche(ds, isEdit, range) {
     document.getElementById('f-email').value  = resa.email  || '';
     document.getElementById('f-notes').value  = resa.notes  || '';
     if (isEdit) {
+        // Champs dates modifiables
+        document.getElementById('f-date-start').value = ds;
+        document.getElementById('f-date-end').value   = resa.dateEnd || ds;
+        document.getElementById('f-dates-row').style.display = 'grid';
+
         const isOption = dates.option.includes(ds) || dates.option.includes((dates.reservations[ds] || {}).rangeRef || ds);
         const btn = document.getElementById('btn-toggle-status');
         if (isOption) {
@@ -817,6 +826,7 @@ function openFiche(ds, isEdit, range) {
         }
         document.getElementById('fiche-danger').style.display = 'flex';
     } else {
+        document.getElementById('f-dates-row').style.display = 'none';
         document.getElementById('fiche-danger').style.display = 'none';
     }
     document.getElementById('fiche-overlay').classList.add('open');
@@ -859,14 +869,57 @@ function saveFiche() {
     // Réinitialiser la bordure si tout est ok
     document.getElementById('f-nom').style.borderColor    = '';
     document.getElementById('f-prenom').style.borderColor = '';
-    dates.reservations[ficheDate] = {
-        nom,
-        prenom,
-        tel:      document.getElementById('f-tel').value.trim(),
-        email:    document.getElementById('f-email').value.trim(),
-        notes:    document.getElementById('f-notes').value.trim(),
-        dateEnd:  ficheRange.length > 1 ? ficheRange[ficheRange.length-1] : undefined,
-    };
+
+    const tel   = document.getElementById('f-tel').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const notes = document.getElementById('f-notes').value.trim();
+
+    if (ficheIsEdit) {
+        // En mode modification : gérer le changement de dates
+        const newStart = document.getElementById('f-date-start').value;
+        const newEnd   = document.getElementById('f-date-end').value || newStart;
+
+        if (newStart > newEnd) {
+            alert('La date de fin doit être après la date de début.');
+            return;
+        }
+
+        const oldRange = getAllRangeDates(ficheDate);
+        const newRange = getDatesInRange(newStart, newEnd);
+        const isOption = dates.option.includes(ficheDate);
+
+        // Vérifier les conflits sur les nouvelles dates (hors ancienne plage)
+        const conflicts = newRange.filter(d => !oldRange.includes(d) && (dates.taken.includes(d) || dates.option.includes(d)));
+        if (conflicts.length > 0) {
+            alert('Certaines dates de cette plage sont déjà réservées.');
+            return;
+        }
+
+        // Supprimer l'ancienne plage
+        oldRange.forEach(d => {
+            dates.taken  = dates.taken.filter(x => x !== d);
+            dates.option = dates.option.filter(x => x !== d);
+            delete dates.reservations[d];
+        });
+
+        // Créer la nouvelle plage
+        newRange.forEach((d, i) => {
+            if (isOption) dates.option.push(d); else dates.taken.push(d);
+            if (i > 0) dates.reservations[d] = { rangeRef: newStart };
+        });
+
+        dates.reservations[newStart] = {
+            nom, prenom, tel, email, notes,
+            dateEnd: newRange.length > 1 ? newRange[newRange.length - 1] : undefined,
+        };
+    } else {
+        // Nouvelle réservation
+        dates.reservations[ficheDate] = {
+            nom, prenom, tel, email, notes,
+            dateEnd: ficheRange.length > 1 ? ficheRange[ficheRange.length - 1] : undefined,
+        };
+    }
+
     closeFiche(); renderCalendar(); renderResaList();
 }
 
