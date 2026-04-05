@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Saint-Roch-Événements — Écouchés-les-Vallées</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=12">
     <!-- API YouTube IFrame — doit être chargée AVANT script.js -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -202,25 +202,105 @@
 <section id="couchages">
     <div class="container">
         <h2 class="section-title">Couchages</h2>
-        <div class="section-subtitle">Gîte &amp; Dortoirs — Repos Simple &amp; Convivial</div>
+        <div class="section-subtitle">Repos simple &amp; convivial — Oreillers fournis</div>
         <div class="divider"><span>✦</span></div>
-        <div class="couch-photos">
-            <div class="couch-photo-wrap">
-                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="Dortoir lits superposés" onclick="openLightbox(this.src, 'couchages')">
-                <div class="label">Dortoir</div>
-            </div>
-            <div class="couch-photo-wrap">
-                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Chambre mansardée" onclick="openLightbox(this.src, 'couchages')">
-                <div class="label">Chambre Mansardée</div>
-            </div>
-            <div class="couch-photo-wrap">
-                <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Chambre fleurie" onclick="openLightbox(this.src, 'couchages')">
-                <div class="label">Chambre Gîte</div>
-            </div>
-        </div>
+
+        <p class="couch-intro">Notre domaine propose un total de 23 couchages répartis dans trois espaces distincts. Chaque espace est pensé pour offrir un repos simple et convivial à vos invités le temps de votre événement.</p>
+
         <div class="couch-total">
             <div class="big">23</div>
             <p>Couchages au total — 3 espaces distincts</p>
+        </div>
+
+        <div class="couch-spaces">
+
+            <!-- L'Annexe -->
+            <div class="couch-space">
+                <div class="couch-space-photo">
+                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="L'Annexe" onclick="openLightbox(this.src, 'couchages')">
+                </div>
+                <div class="couch-space-body">
+                    <div class="couch-space-header">
+                        <span class="couch-emoji">🛏️</span>
+                        <div>
+                            <h3 class="couch-space-name">L'Annexe</h3>
+                            <div class="couch-space-cap">9 couchages</div>
+                        </div>
+                    </div>
+                    <p class="couch-space-desc">Espace attenant à la salle de réception avec salle de bain privative (douche, lavabo et toilettes).</p>
+                    <div class="couch-detail-title">Composition des lits</div>
+                    <ul class="couch-list">
+                        <li>1 lit superposé simple <span class="couch-dim">→ 2 couchages simples</span></li>
+                        <li>1 lit double + 1 lit simple au-dessus <span class="couch-dim">→ 3 couchages</span></li>
+                        <li>2 lits doubles superposés <span class="couch-dim">→ 4 couchages</span></li>
+                    </ul>
+                    <div class="couch-detail-title">Détail des draps</div>
+                    <ul class="couch-list couch-list-sm">
+                        <li>3 lits simples — 90 × 190 cm</li>
+                        <li>3 lits doubles — 140 × 190 cm</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Le Refuge -->
+            <div class="couch-space">
+                <div class="couch-space-photo">
+                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Le Refuge" onclick="openLightbox(this.src, 'couchages')">
+                </div>
+                <div class="couch-space-body">
+                    <div class="couch-space-header">
+                        <span class="couch-emoji">🪜</span>
+                        <div>
+                            <h3 class="couch-space-name">Le Refuge</h3>
+                            <div class="couch-space-cap">5 couchages</div>
+                        </div>
+                    </div>
+                    <p class="couch-space-desc">Pièce située à l'étage de la salle des fêtes. Les sanitaires (douche, lavabo et toilettes) sont situés au rez-de-chaussée.</p>
+                    <div class="couch-detail-title">Composition des lits</div>
+                    <ul class="couch-list">
+                        <li>3 lits simples — 90 × 190 cm</li>
+                        <li>1 lit double — 140 × 190 cm</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Le Gîte -->
+            <div class="couch-space couch-space-gite">
+                <div class="couch-space-photo">
+                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Le Gîte" onclick="openLightbox(this.src, 'couchages')">
+                </div>
+                <div class="couch-space-body">
+                    <div class="couch-space-header">
+                        <span class="couch-emoji">🏡</span>
+                        <div>
+                            <h3 class="couch-space-name">Le Gîte</h3>
+                            <div class="couch-space-cap">9 couchages</div>
+                        </div>
+                    </div>
+                    <p class="couch-space-desc">Maison totalement indépendante, séparée de la salle des fêtes. Dispose de sa propre salle de bain, toilettes et cuisine équipée.</p>
+                    <div class="couch-detail-title">Composition — À l'étage</div>
+                    <ul class="couch-list">
+                        <li>Chambre 1 <span class="couch-dim">(3 couchages)</span> — 1 grand lit 180×190 + 1 lit simple 90×190</li>
+                        <li>Chambre 2 <span class="couch-dim">(3 couchages)</span> — 1 grand lit 180×190 + 1 lit simple 90×190</li>
+                        <li>Palier <span class="couch-dim">(1 couchage)</span> — 1 lit simple 90×190</li>
+                    </ul>
+                    <div class="couch-detail-title">Composition — Rez-de-chaussée</div>
+                    <ul class="couch-list">
+                        <li>Salon <span class="couch-dim">(2 couchages)</span> — 1 canapé-lit double 140×190</li>
+                    </ul>
+                    <div class="couch-detail-title">Détail des draps</div>
+                    <ul class="couch-list couch-list-sm">
+                        <li>Lits simples — 90 × 190 cm</li>
+                        <li>Lits doubles &amp; canapé-lit — 140 × 190 cm</li>
+                        <li>Grands lits doubles — 180 × 190 cm</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="couch-linge-note">
+            <strong>Important :</strong> Le linge de lit n'est pas fourni dans le prix de base. Veuillez prévoir vos propres draps et serviettes selon les dimensions indiquées, ou prendre le service de draps et serviettes en option.
         </div>
     </div>
 </section>
