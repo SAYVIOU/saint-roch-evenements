@@ -213,6 +213,17 @@
         #f-dates-row .field { margin-bottom: 0; }
         #f-dates-row label { font-size: 0.6rem; margin-bottom: 0.2rem; }
         #f-dates-row input { -webkit-appearance: none; appearance: none; padding: 0.3rem 0.5rem; font-size: 0.82rem !important; height: 2rem; max-height: 2rem; line-height: 1.4; }
+        .f-type-row { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
+        .btn-type {
+            flex: 1; padding: 0.55rem 0.5rem; border-radius: 6px; border: 2px solid;
+            font-family: 'Raleway', sans-serif; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-type-salle { border-color: var(--sage-dark); color: var(--sage-dark); background: transparent; }
+        .btn-type-salle.active { background: var(--sage-dark); color: #fff; }
+        .btn-type-gite  { border-color: #3a7bd5; color: #3a7bd5; background: transparent; }
+        .btn-type-gite.active  { background: #3a7bd5; color: #fff; }
+
         .fiche-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; flex-wrap: wrap; }
         .btn-fiche-save {
             flex: 1; padding: 0.75rem; background: var(--sage-dark); color: var(--beige);
@@ -301,6 +312,10 @@
         .resa-contact a { text-decoration: none; color: inherit; }
         .resa-notes { font-size: 0.78rem; color: #999; font-style: italic; flex: 1; min-width: 80px;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+        .resa-type-badge { display: inline-block; padding: 0.18rem 0.45rem; border-radius: 3px;
+            font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; flex-shrink: 0; }
+        .resa-type-badge.salle { background: rgba(107,125,90,0.15); color: var(--sage-dark); }
+        .resa-type-badge.gite  { background: rgba(58,123,213,0.15); color: #3a7bd5; }
         .resa-status { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 3px;
             font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; flex-shrink: 0; }
         .resa-status.taken  { background: rgba(192,57,43,0.15); color: var(--taken); }
@@ -315,8 +330,9 @@
             .btn-edit-row { display: none; }
             .resa-card { cursor: pointer; }
             .resa-card:active { background: #f5f0e8; }
-            .resa-contact { order: 3; }
-            .resa-status  { order: 4; margin-left: auto; }
+            .resa-contact    { order: 3; }
+            .resa-type-badge { order: 4; }
+            .resa-status     { order: 5; margin-left: auto; }
             .resa-notes   {
                 order: 5;
                 flex-basis: 100%;
@@ -426,6 +442,10 @@
         <div class="form-row-2" id="f-dates-row" style="display:none">
             <div class="field"><label>Date de début</label><input type="date" id="f-date-start"></div>
             <div class="field"><label>Date de fin</label><input type="date" id="f-date-end"></div>
+        </div>
+        <div class="f-type-row">
+            <button type="button" class="btn-type btn-type-salle" id="btn-type-salle" onclick="selectType('salle')">🏛 Salle des fêtes</button>
+            <button type="button" class="btn-type btn-type-gite"  id="btn-type-gite"  onclick="selectType('gite')">🏡 Gîtes</button>
         </div>
         <div class="form-row-2">
             <div class="field"><label>Nom *</label><input type="text" id="f-nom" placeholder="Dupont"></div>
@@ -842,6 +862,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') cancelSelect
 let ficheRange  = []; // dates de la plage en cours
 let ficheIsEdit = false; // true = modification, false = nouvelle réservation
 
+function selectType(type) {
+    document.getElementById('btn-type-salle').classList.toggle('active', type === 'salle');
+    document.getElementById('btn-type-gite').classList.toggle('active',  type === 'gite');
+}
+
 function openFiche(ds, isEdit, range) {
     ficheDate   = ds;
     ficheRange  = range || [ds];
@@ -862,6 +887,7 @@ function openFiche(ds, isEdit, range) {
     document.getElementById('f-tel').value    = resa.tel    || '';
     document.getElementById('f-email').value  = resa.email  || '';
     document.getElementById('f-notes').value  = resa.notes  || '';
+    selectType(resa.type || 'salle');
     if (isEdit) {
         // Champs dates modifiables
         document.getElementById('f-date-start').value = ds;
@@ -930,6 +956,7 @@ function saveFiche() {
     const tel   = document.getElementById('f-tel').value.trim();
     const email = document.getElementById('f-email').value.trim();
     const notes = document.getElementById('f-notes').value.trim();
+    const type  = document.getElementById('btn-type-gite').classList.contains('active') ? 'gite' : 'salle';
 
     if (ficheIsEdit) {
         // En mode modification : gérer le changement de dates
@@ -966,13 +993,13 @@ function saveFiche() {
         });
 
         dates.reservations[newStart] = {
-            nom, prenom, tel, email, notes,
+            nom, prenom, tel, email, notes, type,
             dateEnd: newRange.length > 1 ? newRange[newRange.length - 1] : undefined,
         };
     } else {
         // Nouvelle réservation
         dates.reservations[ficheDate] = {
-            nom, prenom, tel, email, notes,
+            nom, prenom, tel, email, notes, type,
             dateEnd: ficheRange.length > 1 ? ficheRange[ficheRange.length - 1] : undefined,
         };
     }
@@ -1156,6 +1183,9 @@ function renderResaList() {
         const contact = [r.tel, r.email].filter(Boolean).join(' · ') || '<em style="color:#bbb">—</em>';
         const notes   = r.notes || '';
         const label   = status === 'taken' ? 'Réservé' : 'En attente';
+        const typeBadge = r.type === 'gite'
+            ? '<span class="resa-type-badge gite">Gîtes</span>'
+            : '<span class="resa-type-badge salle">Salle des fêtes</span>';
 
         let dateDisplay;
         if (r.dateEnd && r.dateEnd !== d) {
@@ -1172,6 +1202,7 @@ function renderResaList() {
                 <div class="resa-date">${dateDisplay}</div>
                 <div class="resa-name">${nom}</div>
                 <div class="resa-contact">${contact}</div>
+                ${typeBadge}
                 <span class="resa-status ${status}">${label}</span>
                 <button class="btn-edit-row" onclick="openFiche('${d}', true, getAllRangeDates('${d}'))">✏️ Modifier</button>
             </div>
