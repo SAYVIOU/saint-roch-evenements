@@ -510,7 +510,7 @@ function moveModal(dir) {
         .then(r => r.ok ? r.json() : null)
         .then(data => {
             if (data && data.content) {
-                return JSON.parse(atob(data.content.replace(/\n/g, '')));
+                return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
             }
             return fetch('disponibilites.json?t=' + Date.now()).then(r2 => r2.json());
         })

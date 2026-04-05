@@ -314,6 +314,19 @@
             .btn-edit-row { display: none; }
             .resa-card { cursor: pointer; }
             .resa-card:active { background: #f5f0e8; }
+            .resa-contact { order: 3; }
+            .resa-status  { order: 4; margin-left: auto; }
+            .resa-notes   {
+                order: 5;
+                flex-basis: 100%;
+                max-width: 100%;
+                white-space: normal;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                margin-top: 0.1rem;
+            }
         }
     </style>
 </head>
@@ -518,7 +531,7 @@ async function loadAndShow() {
         }
         const data = await res.json();
         _lastSha = data.sha;
-        const parsed = JSON.parse(atob(data.content.replace(/\n/g,'')));
+        const parsed = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
         dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
     } catch(e) {
         dates = { taken: [], option: [], reservations: {} };
@@ -550,7 +563,7 @@ function startPolling() {
 
             // Fichier modifié depuis un autre appareil → recharger
             _lastSha = data.sha;
-            const parsed = JSON.parse(atob(data.content.replace(/\n/g, '')));
+            const parsed = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
             dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
             renderCalendar();
             renderResaList();
@@ -1154,7 +1167,6 @@ function renderResaList() {
                 <div class="resa-date">${dateDisplay}</div>
                 <div class="resa-name">${nom}</div>
                 <div class="resa-contact">${contact}</div>
-                <div class="resa-notes" title="${notes}">${notes || ''}</div>
                 <span class="resa-status ${status}">${label}</span>
                 <button class="btn-edit-row" onclick="openFiche('${d}', true, getAllRangeDates('${d}'))">✏️ Modifier</button>
             </div>
