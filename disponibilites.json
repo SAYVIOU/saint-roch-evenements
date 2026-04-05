@@ -1,20 +1,41 @@
 {
   "taken": [
+    "2026-04-05",
+    "2026-04-06",
+    "2026-04-07",
+    "2026-05-01",
     "2026-05-02",
     "2026-05-03"
   ],
   "option": [],
   "reservations": {
-    "2026-05-03": {
-      "rangeRef": "2026-05-02"
-    },
     "2026-05-02": {
+      "rangeRef": "2026-05-01"
+    },
+    "2026-05-03": {
+      "rangeRef": "2026-05-01"
+    },
+    "2026-05-01": {
       "nom": "Maman",
       "prenom": "Romain",
       "tel": "+33 6 86 33 81 81",
       "email": "",
       "notes": "Du vendredi 1er au 3 mai reste 2 nuits 3 jours sans traiteur sans linge 1300â¬ car maman de Romain.",
       "dateEnd": "2026-05-03"
+    },
+    "2026-04-06": {
+      "rangeRef": "2026-04-05"
+    },
+    "2026-04-07": {
+      "rangeRef": "2026-04-05"
+    },
+    "2026-04-05": {
+      "nom": "biot",
+      "prenom": "Delphine",
+      "tel": "0768371664",
+      "email": "",
+      "notes": "",
+      "dateEnd": "2026-04-07"
     }
   }
 }
