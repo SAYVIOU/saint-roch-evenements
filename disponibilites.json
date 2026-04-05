@@ -24,7 +24,9 @@
     "2026-08-15",
     "2026-08-16",
     "2026-08-22",
-    "2026-08-23"
+    "2026-08-23",
+    "2026-08-29",
+    "2026-08-30"
   ],
   "option": [],
   "reservations": {
@@ -161,6 +163,17 @@
       "email": "",
       "notes": "Anniversaire et retraite \nInvités environ 80\nTraiteur plat+dessert",
       "dateEnd": "2026-08-23"
+    },
+    "2026-08-30": {
+      "rangeRef": "2026-08-29"
+    },
+    "2026-08-29": {
+      "nom": "Laurent",
+      "prenom": "Joelle",
+      "tel": "",
+      "email": "",
+      "notes": "Anniversaire de son mari 70 ans\nPrend  un buffet un brunch et les draps\nVoir le devis dans les message\nÀ réglé 390€ en esp",
+      "dateEnd": "2026-08-30"
     }
   }
 }
