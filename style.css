@@ -484,14 +484,15 @@
         .dispo-day.today { font-weight: 700; outline: 2px solid var(--sage); outline-offset: -2px; }
         .dispo-day.past { color: #ccc; }
         .dispo-day.free { background: rgba(107,127,89,0.12); color: var(--sage-dark); }
-        .dispo-day.option { background: rgba(210,170,80,0.25); color: #8a6a00; }
+        .dispo-day.option { background: rgba(160,60,40,0.18); color: #8c2a1a; font-weight: 600; }
         .dispo-day.taken { background: rgba(160,60,40,0.18); color: #8c2a1a; font-weight: 600; }
+        .dispo-day.gite  { background: rgba(58,123,213,0.12) !important; color: #3a7bd5 !important; font-weight: 600; outline: 2px solid #3a7bd5; outline-offset: -2px; }
         .dispo-legend { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
         .leg-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--text-light); }
         .leg-dot { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
         .leg-free   { background: rgba(107,127,89,0.25); }
-        .leg-option { background: rgba(210,170,80,0.35); }
         .leg-taken  { background: rgba(160,60,40,0.25); }
+        .leg-gite   { background: rgba(58,123,213,0.2); outline: 2px solid #3a7bd5; outline-offset: -1px; }
         .dispo-note { text-align: center; margin-top: 1.8rem; font-size: 0.88rem; color: var(--text-light); }
         .dispo-note a { color: var(--sage-dark); }
 

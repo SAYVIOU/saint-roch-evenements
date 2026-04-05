@@ -459,6 +459,7 @@ function moveModal(dir) {
     let offset = 0;
     let takenSet  = new Set();
     let optionSet = new Set();
+    let giteSet   = new Set();
     const JOURS = ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'];
 
     function pad(n) { return String(n).padStart(2, '0'); }
@@ -480,8 +481,9 @@ function moveModal(dir) {
             const dateStr = `${year}-${pad(month + 1)}-${pad(d)}`;
             let cls = 'dispo-day';
             if (dateStr < todayStr)         cls += ' past';
-            else if (takenSet.has(dateStr)) cls += ' taken';
-            else if (optionSet.has(dateStr))cls += ' option';
+            else if (takenSet.has(dateStr) || optionSet.has(dateStr)) {
+                cls += giteSet.has(dateStr) ? ' gite' : ' taken';
+            }
             else                            cls += ' free';
             if (dateStr === todayStr) cls += ' today';
             html += `<div class="${cls}">${d}</div>`;
@@ -518,6 +520,14 @@ function moveModal(dir) {
         .then(data => {
             takenSet  = new Set(data.taken  || []);
             optionSet = new Set(data.option || []);
+            const reservations = data.reservations || {};
+            giteSet = new Set(
+                [...takenSet, ...optionSet].filter(d => {
+                    const r = reservations[d] || {};
+                    const main = r.rangeRef ? (reservations[r.rangeRef] || {}) : r;
+                    return main.type === 'gite';
+                })
+            );
         })
         .catch(() => {}) // silencieux si le fichier est absent
         .finally(() => { render(); });
