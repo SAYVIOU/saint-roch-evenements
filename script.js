@@ -540,7 +540,3 @@ function moveModal(dir) {
         render();
     });
 })();
-
-function toggleCouch(el) {
-    el.classList.toggle('open');
-}

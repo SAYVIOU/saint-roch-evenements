@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Saint-Roch-Événements — Écouchés-les-Vallées</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=13">
+    <link rel="stylesheet" href="style.css?v=14">
     <!-- API YouTube IFrame — doit être chargée AVANT script.js -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -212,91 +212,44 @@
             <p>Couchages au total — 3 espaces distincts</p>
         </div>
 
-        <div class="couch-spaces">
+        <div class="couch-grid">
 
             <!-- L'Annexe -->
-            <div class="couch-space" onclick="toggleCouch(this)">
-                <div class="couch-space-photo">
-                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="L'Annexe" onclick="event.stopPropagation(); openLightbox(this.src, 'couchages')">
+            <div class="tr-card tr-clickable" onclick="openModal('modal-annexe')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="L'Annexe">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>🛏️ L'Annexe</h3>
+                    <div class="price">9 couchages</div>
                 </div>
-                <div class="couch-space-body">
-                    <div class="couch-space-header">
-                        <span class="couch-emoji">🛏️</span>
-                        <div>
-                            <h3 class="couch-space-name">L'Annexe</h3>
-                            <div class="couch-space-cap">9 couchages</div>
-                        </div>
-                        <span class="couch-chevron">›</span>
-                    </div>
-                    <p class="couch-space-desc">Espace attenant à la salle de réception avec salle de bain privative (douche, lavabo et toilettes).</p>
-                    <div class="couch-detail-title">Composition des lits</div>
-                    <ul class="couch-list">
-                        <li>1 lit superposé simple <span class="couch-dim">→ 2 couchages simples</span></li>
-                        <li>1 lit double + 1 lit simple au-dessus <span class="couch-dim">→ 3 couchages</span></li>
-                        <li>2 lits doubles superposés <span class="couch-dim">→ 4 couchages</span></li>
-                    </ul>
-                    <div class="couch-detail-title">Détail des draps</div>
-                    <ul class="couch-list couch-list-sm">
-                        <li>3 lits simples — 90 × 190 cm</li>
-                        <li>3 lits doubles — 140 × 190 cm</li>
-                    </ul>
+                <div class="tr-body">
+                    <p class="desc">Espace attenant à la salle de réception avec salle de bain privative.</p>
                 </div>
             </div>
 
             <!-- Le Refuge -->
-            <div class="couch-space" onclick="toggleCouch(this)">
-                <div class="couch-space-photo">
-                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Le Refuge" onclick="event.stopPropagation(); openLightbox(this.src, 'couchages')">
+            <div class="tr-card tr-clickable" onclick="openModal('modal-refuge')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Le Refuge">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>🪜 Le Refuge</h3>
+                    <div class="price">5 couchages</div>
                 </div>
-                <div class="couch-space-body">
-                    <div class="couch-space-header">
-                        <span class="couch-emoji">🪜</span>
-                        <div>
-                            <h3 class="couch-space-name">Le Refuge</h3>
-                            <div class="couch-space-cap">5 couchages</div>
-                        </div>
-                        <span class="couch-chevron">›</span>
-                    </div>
-                    <p class="couch-space-desc">Pièce située à l'étage de la salle des fêtes. Les sanitaires (douche, lavabo et toilettes) sont situés au rez-de-chaussée.</p>
-                    <div class="couch-detail-title">Composition des lits</div>
-                    <ul class="couch-list">
-                        <li>3 lits simples — 90 × 190 cm</li>
-                        <li>1 lit double — 140 × 190 cm</li>
-                    </ul>
+                <div class="tr-body">
+                    <p class="desc">Pièce à l'étage de la salle des fêtes. Sanitaires au rez-de-chaussée.</p>
                 </div>
             </div>
 
             <!-- Le Gîte -->
-            <div class="couch-space couch-space-gite" onclick="toggleCouch(this)">
-                <div class="couch-space-photo">
-                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Le Gîte" onclick="event.stopPropagation(); openLightbox(this.src, 'couchages')">
+            <div class="tr-card tr-clickable" onclick="openModal('modal-gite-couch')">
+                <img class="tr-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Le Gîte">
+                <div class="tr-hint">Cliquer pour voir les détails</div>
+                <div class="tr-head">
+                    <h3>🏡 Le Gîte</h3>
+                    <div class="price">9 couchages</div>
                 </div>
-                <div class="couch-space-body">
-                    <div class="couch-space-header">
-                        <span class="couch-emoji">🏡</span>
-                        <div>
-                            <h3 class="couch-space-name">Le Gîte</h3>
-                            <div class="couch-space-cap">9 couchages</div>
-                        </div>
-                        <span class="couch-chevron">›</span>
-                    </div>
-                    <p class="couch-space-desc">Maison totalement indépendante, séparée de la salle des fêtes. Dispose de sa propre salle de bain, toilettes et cuisine équipée.</p>
-                    <div class="couch-detail-title">Composition — À l'étage</div>
-                    <ul class="couch-list">
-                        <li>Chambre 1 <span class="couch-dim">(3 couchages)</span> — 1 grand lit 180×190 + 1 lit simple 90×190</li>
-                        <li>Chambre 2 <span class="couch-dim">(3 couchages)</span> — 1 grand lit 180×190 + 1 lit simple 90×190</li>
-                        <li>Palier <span class="couch-dim">(1 couchage)</span> — 1 lit simple 90×190</li>
-                    </ul>
-                    <div class="couch-detail-title">Composition — Rez-de-chaussée</div>
-                    <ul class="couch-list">
-                        <li>Salon <span class="couch-dim">(2 couchages)</span> — 1 canapé-lit double 140×190</li>
-                    </ul>
-                    <div class="couch-detail-title">Détail des draps</div>
-                    <ul class="couch-list couch-list-sm">
-                        <li>Lits simples — 90 × 190 cm</li>
-                        <li>Lits doubles &amp; canapé-lit — 140 × 190 cm</li>
-                        <li>Grands lits doubles — 180 × 190 cm</li>
-                    </ul>
+                <div class="tr-body">
+                    <p class="desc">Maison indépendante avec sa propre cuisine, salle de bain et toilettes.</p>
                 </div>
             </div>
 
@@ -1106,6 +1059,81 @@
             <div class="inv-options-note">
                 <strong>📦 Options complémentaires (tarif sur demande) :</strong> nappes, housses de chaises et serviettes en tissu.
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODALES COUCHAGES -->
+<div class="tr-modal" id="modal-annexe" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="L'Annexe">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>🛏️ L'Annexe</h2>
+                <div class="tr-modal-price">9 couchages</div>
+            </div>
+            <p class="tr-modal-desc">Espace attenant à la salle de réception avec salle de bain privative (douche, lavabo et toilettes).</p>
+            <div class="couch-detail-title">Composition des lits</div>
+            <ul class="tr-modal-list">
+                <li>1 lit superposé simple <span class="couch-dim">→ 2 couchages simples</span></li>
+                <li>1 lit double + 1 lit simple au-dessus <span class="couch-dim">→ 3 couchages</span></li>
+                <li>2 lits doubles superposés <span class="couch-dim">→ 4 couchages</span></li>
+            </ul>
+            <div class="couch-detail-title">Détail des draps</div>
+            <ul class="tr-modal-list">
+                <li>3 lits simples — 90 × 190 cm</li>
+                <li>3 lits doubles — 140 × 190 cm</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="tr-modal" id="modal-refuge" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Le Refuge">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>🪜 Le Refuge</h2>
+                <div class="tr-modal-price">5 couchages</div>
+            </div>
+            <p class="tr-modal-desc">Pièce située à l'étage de la salle des fêtes. Les sanitaires (douche, lavabo et toilettes) sont situés au rez-de-chaussée.</p>
+            <div class="couch-detail-title">Composition des lits</div>
+            <ul class="tr-modal-list">
+                <li>3 lits simples — 90 × 190 cm</li>
+                <li>1 lit double — 140 × 190 cm</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="tr-modal" id="modal-gite-couch" onclick="closeModalOutside(event)">
+    <div class="tr-modal-inner">
+        <button class="tr-modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+        <img class="tr-modal-photo" src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Le Gîte">
+        <div class="tr-modal-content">
+            <div class="tr-modal-header">
+                <h2>🏡 Le Gîte</h2>
+                <div class="tr-modal-price">9 couchages</div>
+            </div>
+            <p class="tr-modal-desc">Maison totalement indépendante, séparée de la salle des fêtes. Dispose de sa propre salle de bain, toilettes et cuisine équipée.</p>
+            <div class="couch-detail-title">Composition — À l'étage</div>
+            <ul class="tr-modal-list">
+                <li>Chambre 1 (3 couchages) — 1 grand lit 180×190 + 1 lit simple 90×190</li>
+                <li>Chambre 2 (3 couchages) — 1 grand lit 180×190 + 1 lit simple 90×190</li>
+                <li>Palier (1 couchage) — 1 lit simple 90×190</li>
+            </ul>
+            <div class="couch-detail-title">Composition — Rez-de-chaussée</div>
+            <ul class="tr-modal-list">
+                <li>Salon (2 couchages) — 1 canapé-lit double 140×190</li>
+            </ul>
+            <div class="couch-detail-title">Détail des draps</div>
+            <ul class="tr-modal-list">
+                <li>Lits simples — 90 × 190 cm</li>
+                <li>Lits doubles &amp; canapé-lit — 140 × 190 cm</li>
+                <li>Grands lits doubles — 180 × 190 cm</li>
+            </ul>
         </div>
     </div>
 </div>

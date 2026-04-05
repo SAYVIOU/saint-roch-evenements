@@ -258,38 +258,13 @@
         .couch-total .big { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; line-height: 1; }
         .couch-total p { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.4rem; }
         .couch-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--text-light); max-width: 720px; margin: 0 auto 2rem; text-align: center; line-height: 1.7; }
-        .couch-spaces { display: flex; flex-direction: column; gap: 2rem; }
-        .couch-space { display: grid; grid-template-columns: 260px 1fr; gap: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 24px rgba(92,61,30,0.10); background: var(--white); }
-        .couch-space-gite { border: 2px solid rgba(58,123,213,0.3); }
-        .couch-space-photo { overflow: hidden; }
-        .couch-space-photo img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.4s; display: block; }
-        .couch-space-photo img:hover { transform: scale(1.05); }
-        .couch-space-body { padding: 1.5rem 1.8rem; }
-        .couch-space-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
-        .couch-emoji { font-size: 1.6rem; line-height: 1; }
-        .couch-space-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--brown); margin: 0; }
-        .couch-space-cap { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-top: 0.1rem; }
-        .couch-space-desc { font-size: 0.88rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.6; }
-        .couch-detail-title { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin: 0.9rem 0 0.35rem; }
-        .couch-list { list-style: none; padding: 0; margin: 0; }
-        .couch-list li { font-size: 0.85rem; color: var(--text); padding: 0.2rem 0 0.2rem 1rem; position: relative; line-height: 1.5; }
-        .couch-list li::before { content: '–'; position: absolute; left: 0; color: var(--gold); }
-        .couch-list-sm li { font-size: 0.8rem; color: var(--text-light); }
-        .couch-dim { color: var(--text-light); font-size: 0.8rem; }
+        .couch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .couch-detail-title { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin: 1rem 0 0.4rem; }
+        .couch-dim { color: var(--text-light); font-size: 0.85rem; }
         .couch-linge-note { margin-top: 2rem; padding: 1rem 1.4rem; background: rgba(212,160,23,0.1); border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; font-size: 0.85rem; color: var(--text); line-height: 1.6; }
         .couch-linge-note strong { color: var(--brown); }
-        /* Accordéon couchages */
-        .couch-space { cursor: pointer; }
-        .couch-space-desc, .couch-detail-title, .couch-list { display: none; }
-        .couch-space.open .couch-space-desc { display: block; }
-        .couch-space.open .couch-detail-title { display: block; }
-        .couch-space.open .couch-list { display: block; }
-        .couch-chevron { margin-left: auto; font-size: 1.3rem; color: var(--gold); transition: transform 0.25s; line-height: 1; flex-shrink: 0; }
-        .couch-space.open .couch-chevron { transform: rotate(90deg); }
-        @media (max-width: 700px) {
-            .couch-space { grid-template-columns: 1fr; }
-            .couch-space-photo { max-height: 200px; }
-        }
+        @media (max-width: 900px) { .couch-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .couch-grid { grid-template-columns: 1fr; } }
 
         /* ═══════════ TRAITEUR ═══════════ */
         .traiteur-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--text-light); max-width: 680px; margin: 0 auto 3rem; text-align: center; }
