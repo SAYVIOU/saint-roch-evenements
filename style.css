@@ -269,7 +269,6 @@
         .couch-linge-note strong { color: var(--brown); }
         @media (max-width: 900px) { .couch-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 700px) {
-            .couch-arrow { display: flex; align-items: center; justify-content: center; }
             .couch-grid {
                 display: flex !important;
                 overflow-x: auto;
