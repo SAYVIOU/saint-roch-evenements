@@ -6,7 +6,9 @@
     "2026-04-08",
     "2026-04-09",
     "2026-04-10",
-    "2026-04-11"
+    "2026-04-11",
+    "2026-05-02",
+    "2026-05-03"
   ],
   "option": [],
   "reservations": {
@@ -35,6 +37,17 @@
       "email": "matmerchier@gmail.com",
       "notes": "",
       "dateEnd": "2026-04-11"
+    },
+    "2026-05-03": {
+      "rangeRef": "2026-05-02"
+    },
+    "2026-05-02": {
+      "nom": "Maman",
+      "prenom": "Romain",
+      "tel": "+33 6 86 33 81 81",
+      "email": "",
+      "notes": "Du vendredi 1er au 3 mai reste 2 nuits 3 jours sans traiteur sans linge 1300€ car maman de Romain.",
+      "dateEnd": "2026-05-03"
     }
   }
 }
