@@ -22,7 +22,9 @@
     "2026-07-05",
     "2026-07-11",
     "2026-08-15",
-    "2026-08-16"
+    "2026-08-16",
+    "2026-08-22",
+    "2026-08-23"
   ],
   "option": [],
   "reservations": {
@@ -148,6 +150,17 @@
       "email": "Lydie.lepeltier@orange.fr",
       "notes": "Événement retraite +60 ans \nEnviron 60 week-end + couchages \nChèque 400€ fait\n0665218590",
       "dateEnd": "2026-08-16"
+    },
+    "2026-08-23": {
+      "rangeRef": "2026-08-22"
+    },
+    "2026-08-22": {
+      "nom": "Corbet",
+      "prenom": "Sylvie",
+      "tel": "+33 7 69 58 02 47",
+      "email": "",
+      "notes": "Anniversaire et retraite \nInvités environ 80\nTraiteur plat+dessert",
+      "dateEnd": "2026-08-23"
     }
   }
 }
