@@ -268,28 +268,7 @@
         .couch-linge-note { margin-top: 2rem; padding: 1rem 1.4rem; background: rgba(212,160,23,0.1); border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; font-size: 0.85rem; color: var(--text); line-height: 1.6; }
         .couch-linge-note strong { color: var(--brown); }
         @media (max-width: 900px) { .couch-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 700px) {
-            .couch-grid {
-                display: flex !important;
-                overflow-x: auto;
-                overflow-y: hidden;
-                scroll-snap-type: x mandatory;
-                scroll-padding-inline-start: 9vw;
-                scroll-behavior: smooth;
-                overscroll-behavior-x: none;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                gap: 1rem;
-                padding: 0 9vw;
-                margin: 0 -2rem 1.2rem;
-            }
-            .couch-grid::-webkit-scrollbar { display: none; }
-            .couch-grid .tr-card {
-                flex: 0 0 82vw;
-                scroll-snap-align: start;
-                scroll-snap-stop: always;
-            }
-        }
+        @media (max-width: 600px) { .couch-grid { grid-template-columns: 1fr; } }
 
         /* ═══════════ TRAITEUR ═══════════ */
         .traiteur-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--text-light); max-width: 680px; margin: 0 auto 3rem; text-align: center; }
