@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Saint-Roch-Événements — Écouchés-les-Vallées</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=13">
     <!-- API YouTube IFrame — doit être chargée AVANT script.js -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -215,9 +215,9 @@
         <div class="couch-spaces">
 
             <!-- L'Annexe -->
-            <div class="couch-space">
+            <div class="couch-space" onclick="toggleCouch(this)">
                 <div class="couch-space-photo">
-                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="L'Annexe" onclick="openLightbox(this.src, 'couchages')">
+                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (11).jpeg" alt="L'Annexe" onclick="event.stopPropagation(); openLightbox(this.src, 'couchages')">
                 </div>
                 <div class="couch-space-body">
                     <div class="couch-space-header">
@@ -226,6 +226,7 @@
                             <h3 class="couch-space-name">L'Annexe</h3>
                             <div class="couch-space-cap">9 couchages</div>
                         </div>
+                        <span class="couch-chevron">›</span>
                     </div>
                     <p class="couch-space-desc">Espace attenant à la salle de réception avec salle de bain privative (douche, lavabo et toilettes).</p>
                     <div class="couch-detail-title">Composition des lits</div>
@@ -243,9 +244,9 @@
             </div>
 
             <!-- Le Refuge -->
-            <div class="couch-space">
+            <div class="couch-space" onclick="toggleCouch(this)">
                 <div class="couch-space-photo">
-                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Le Refuge" onclick="openLightbox(this.src, 'couchages')">
+                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (10).jpeg" alt="Le Refuge" onclick="event.stopPropagation(); openLightbox(this.src, 'couchages')">
                 </div>
                 <div class="couch-space-body">
                     <div class="couch-space-header">
@@ -254,6 +255,7 @@
                             <h3 class="couch-space-name">Le Refuge</h3>
                             <div class="couch-space-cap">5 couchages</div>
                         </div>
+                        <span class="couch-chevron">›</span>
                     </div>
                     <p class="couch-space-desc">Pièce située à l'étage de la salle des fêtes. Les sanitaires (douche, lavabo et toilettes) sont situés au rez-de-chaussée.</p>
                     <div class="couch-detail-title">Composition des lits</div>
@@ -265,9 +267,9 @@
             </div>
 
             <!-- Le Gîte -->
-            <div class="couch-space couch-space-gite">
+            <div class="couch-space couch-space-gite" onclick="toggleCouch(this)">
                 <div class="couch-space-photo">
-                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Le Gîte" onclick="openLightbox(this.src, 'couchages')">
+                    <img src="images/WhatsApp Image 2026-03-31 at 21.49.45 (20).jpeg" alt="Le Gîte" onclick="event.stopPropagation(); openLightbox(this.src, 'couchages')">
                 </div>
                 <div class="couch-space-body">
                     <div class="couch-space-header">
@@ -276,6 +278,7 @@
                             <h3 class="couch-space-name">Le Gîte</h3>
                             <div class="couch-space-cap">9 couchages</div>
                         </div>
+                        <span class="couch-chevron">›</span>
                     </div>
                     <p class="couch-space-desc">Maison totalement indépendante, séparée de la salle des fêtes. Dispose de sa propre salle de bain, toilettes et cuisine équipée.</p>
                     <div class="couch-detail-title">Composition — À l'étage</div>
@@ -1107,6 +1110,6 @@
     </div>
 </div>
 
-<script src="script.js?v=10"></script>
+<script src="script.js?v=11"></script>
 </body>
 </html>

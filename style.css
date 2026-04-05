@@ -278,6 +278,14 @@
         .couch-dim { color: var(--text-light); font-size: 0.8rem; }
         .couch-linge-note { margin-top: 2rem; padding: 1rem 1.4rem; background: rgba(212,160,23,0.1); border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; font-size: 0.85rem; color: var(--text); line-height: 1.6; }
         .couch-linge-note strong { color: var(--brown); }
+        /* Accordéon couchages */
+        .couch-space { cursor: pointer; }
+        .couch-space-desc, .couch-detail-title, .couch-list { display: none; }
+        .couch-space.open .couch-space-desc { display: block; }
+        .couch-space.open .couch-detail-title { display: block; }
+        .couch-space.open .couch-list { display: block; }
+        .couch-chevron { margin-left: auto; font-size: 1.3rem; color: var(--gold); transition: transform 0.25s; line-height: 1; flex-shrink: 0; }
+        .couch-space.open .couch-chevron { transform: rotate(90deg); }
         @media (max-width: 700px) {
             .couch-space { grid-template-columns: 1fr; }
             .couch-space-photo { max-height: 200px; }
