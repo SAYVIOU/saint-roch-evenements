@@ -9,6 +9,7 @@
     "2026-05-24",
     "2026-05-30",
     "2026-05-31",
+    "2026-06-05",
     "2026-06-06",
     "2026-06-07"
   ],
@@ -22,7 +23,7 @@
       "prenom": "Romain",
       "tel": "+33 6 86 33 81 81",
       "email": "",
-      "notes": "Du vendredi 1er au 3 mai reste 2 nuits 3 jours sans traiteur sans linge 1300€ car maman de Romain.",
+      "notes": "Du vendredi 1er au 3 mai reste 2 nuits 3 jours sans traiteur sans linge 1300â¬ car maman de Romain.",
       "dateEnd": "2026-05-03"
     },
     "2026-05-16": {
@@ -36,7 +37,7 @@
       "prenom": "Annick",
       "tel": "+33 6 83 38 14 09",
       "email": "annicksellos@gmail.com",
-      "notes": "3 jours 2 nuits 540€ réglé en ch",
+      "notes": "3 jours 2 nuits 540â¬ rÃ©glÃ© en ch",
       "dateEnd": "2026-05-17"
     },
     "2026-05-24": {
@@ -58,18 +59,21 @@
       "prenom": "Me",
       "tel": "+33 6 85 09 08 06",
       "email": "",
-      "notes": "À réglé en chèque 1000€ prendra la location du brasero.",
+      "notes": "Ã rÃ©glÃ© en chÃ¨que 1000â¬ prendra la location du brasero.",
       "dateEnd": "2026-05-31"
     },
-    "2026-06-07": {
-      "rangeRef": "2026-06-06"
-    },
     "2026-06-06": {
+      "rangeRef": "2026-06-05"
+    },
+    "2026-06-07": {
+      "rangeRef": "2026-06-05"
+    },
+    "2026-06-05": {
       "nom": "Planchais",
       "prenom": "Yannis",
       "tel": "+33 7 77 89 00 98",
       "email": "yaniss.caumartin@gmail.com",
-      "notes": "Anniversaire 40 ans avec quelques couchages le vendredi soir une vingtaine \nPrendra la location du brasero.\nUne quarantaine d’invités.\n390€ en virement.",
+      "notes": "Anniversaire 40 ans avec quelques couchages le vendredi soir une vingtaine \nPrendra la location du brasero.\nUne quarantaine dâinvitÃ©s.\n390â¬ en virement.",
       "dateEnd": "2026-06-07"
     }
   }
