@@ -445,6 +445,8 @@ const _p = 'U1JFMjAyNiFhZ2VuZGE=';
 // ══════════════════════════════════════════
 let dates = { taken: [], option: [], reservations: {} };
 let calOffset = 0;
+let _lastSha   = null; // SHA du fichier pour détecter les changements externes
+let _isSaving  = false; // évite le rechargement pendant une sauvegarde en cours
 let ficheDate = null; // date en cours d'édition
 const today = new Date();
 const todayStr = d2s(today);
@@ -511,6 +513,7 @@ async function loadAndShow() {
             throw new Error();
         }
         const data = await res.json();
+        _lastSha = data.sha;
         const parsed = JSON.parse(atob(data.content.replace(/\n/g,'')));
         dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
     } catch(e) {
@@ -519,6 +522,36 @@ async function loadAndShow() {
     renderCalendar();
     renderResaList();
     show('editor');
+    startPolling();
+}
+
+// ══════════════════════════════════════════
+//  SYNCHRONISATION AUTOMATIQUE (polling)
+//  Vérifie toutes les 15s si le fichier a
+//  changé sur GitHub (via le SHA).
+// ══════════════════════════════════════════
+function startPolling() {
+    setInterval(async () => {
+        const token = localStorage.getItem('sre_gh_token');
+        if (!token || _isSaving) return;
+        // Fiche ouverte → ne pas écraser les données en cours d'édition
+        if (document.getElementById('fiche-overlay').classList.contains('open')) return;
+
+        try {
+            const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}?t=${Date.now()}`,
+                { headers: { 'Authorization': `token ${token}` }, cache: 'no-store' });
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data.sha === _lastSha) return; // rien de nouveau
+
+            // Fichier modifié depuis un autre appareil → recharger
+            _lastSha = data.sha;
+            const parsed = JSON.parse(atob(data.content.replace(/\n/g, '')));
+            dates = { taken: parsed.taken || [], option: parsed.option || [], reservations: parsed.reservations || {} };
+            renderCalendar();
+            renderResaList();
+        } catch(e) {}
+    }, 15000);
 }
 
 // ══════════════════════════════════════════
@@ -528,7 +561,7 @@ async function saveChanges() {
     const btn = document.getElementById('btn-save');
     const status = document.getElementById('save-status');
     const token = localStorage.getItem('sre_gh_token');
-    btn.disabled = true;
+    btn.disabled = true; _isSaving = true;
     status.style.display = 'inline'; status.className = 'save-status saving'; status.textContent = '⏳ Enregistrement…';
     try {
         const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,
@@ -568,12 +601,14 @@ async function saveChanges() {
             }
             throw new Error();
         }
+        const putData = await putRes.json();
+        if (putData.content && putData.content.sha) _lastSha = putData.content.sha;
         status.className = 'save-status ok'; status.textContent = '✅ Publié sur le site !';
         setTimeout(() => { status.style.display = 'none'; }, 4000);
     } catch(e) {
         status.className = 'save-status err'; status.textContent = '❌ Erreur réseau. Vérifiez votre connexion.';
     }
-    btn.disabled = false;
+    btn.disabled = false; _isSaving = false;
 }
 
 // ══════════════════════════════════════════
