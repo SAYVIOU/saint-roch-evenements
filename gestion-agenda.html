@@ -445,7 +445,7 @@
         </div>
         <div class="f-type-row">
             <button type="button" class="btn-type btn-type-salle" id="btn-type-salle" onclick="selectType('salle')">🏛 Salle des fêtes</button>
-            <button type="button" class="btn-type btn-type-gite"  id="btn-type-gite"  onclick="selectType('gite')">🏡 Gîtes</button>
+            <button type="button" class="btn-type btn-type-gite"  id="btn-type-gite"  onclick="selectType('gite')">🏡 Gîte</button>
         </div>
         <div class="form-row-2">
             <div class="field"><label>Nom *</label><input type="text" id="f-nom" placeholder="Dupont"></div>
@@ -1184,7 +1184,7 @@ function renderResaList() {
         const notes   = r.notes || '';
         const label   = status === 'taken' ? 'Réservé' : 'En attente';
         const typeBadge = r.type === 'gite'
-            ? '<span class="resa-type-badge gite">Gîtes</span>'
+            ? '<span class="resa-type-badge gite">Gîte</span>'
             : '<span class="resa-type-badge salle">Salle des fêtes</span>';
 
         let dateDisplay;
