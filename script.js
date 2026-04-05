@@ -501,10 +501,19 @@ function moveModal(dir) {
         container.innerHTML = html;
     }
 
-    // Charger les dates depuis GitHub Raw (mise à jour immédiate, sans délai de déploiement)
-    const _DISPO_URL = 'https://raw.githubusercontent.com/SAYVIOU/saint-roch-evenements/main/disponibilites.json';
-    fetch(_DISPO_URL + '?t=' + Date.now(), { cache: 'no-store' })
-        .then(r => r.ok ? r.json() : fetch('disponibilites.json?t=' + Date.now()).then(r2 => r2.json()))
+    // Charger les dates via l'API GitHub (pas de cache CDN, mise à jour instantanée)
+    const _API_URL = 'https://api.github.com/repos/SAYVIOU/saint-roch-evenements/contents/disponibilites.json';
+    fetch(_API_URL + '?t=' + Date.now(), {
+        headers: { 'Accept': 'application/vnd.github.v3+json' },
+        cache: 'no-store'
+    })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+            if (data && data.content) {
+                return JSON.parse(atob(data.content.replace(/\n/g, '')));
+            }
+            return fetch('disponibilites.json?t=' + Date.now()).then(r2 => r2.json());
+        })
         .then(data => {
             takenSet  = new Set(data.taken  || []);
             optionSet = new Set(data.option || []);
