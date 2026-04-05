@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Saint-Roch-Événements — Écouchés-les-Vallées</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=15">
     <!-- API YouTube IFrame — doit être chargée AVANT script.js -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -212,7 +212,10 @@
             <p>Couchages au total — 3 espaces distincts</p>
         </div>
 
-        <div class="couch-grid">
+        <p class="swipe-hint">← Glissez pour voir tous les espaces →</p>
+        <div class="couch-grid-wrap">
+        <button class="couch-arrow couch-arrow-prev" aria-label="Précédent">‹</button>
+        <div class="couch-grid" id="couch-grid">
 
             <!-- L'Annexe -->
             <div class="tr-card tr-clickable" onclick="openModal('modal-annexe')">
@@ -253,6 +256,8 @@
                 </div>
             </div>
 
+        </div>
+        <button class="couch-arrow couch-arrow-next" aria-label="Suivant">›</button>
         </div>
 
         <div class="couch-linge-note">
