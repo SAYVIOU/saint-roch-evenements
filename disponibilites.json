@@ -8,7 +8,9 @@
     "2026-05-23",
     "2026-05-24",
     "2026-05-30",
-    "2026-05-31"
+    "2026-05-31",
+    "2026-06-06",
+    "2026-06-07"
   ],
   "option": [],
   "reservations": {
@@ -58,6 +60,17 @@
       "email": "",
       "notes": "À réglé en chèque 1000€ prendra la location du brasero.",
       "dateEnd": "2026-05-31"
+    },
+    "2026-06-07": {
+      "rangeRef": "2026-06-06"
+    },
+    "2026-06-06": {
+      "nom": "Planchais",
+      "prenom": "Yannis",
+      "tel": "+33 7 77 89 00 98",
+      "email": "yaniss.caumartin@gmail.com",
+      "notes": "Anniversaire 40 ans avec quelques couchages le vendredi soir une vingtaine \nPrendra la location du brasero.\nUne quarantaine d’invités.\n390€ en virement.",
+      "dateEnd": "2026-06-07"
     }
   }
 }
