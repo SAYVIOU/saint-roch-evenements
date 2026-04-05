@@ -853,7 +853,13 @@
         @media (max-width: 600px) {
             .modal-nav-prev { left: 0.2rem; }
             .modal-nav-next { right: 0.2rem; }
-            .modal-nav-btn { width: 38px; height: 38px; font-size: 1.6rem; }
+            .modal-nav-btn {
+                width: 38px; height: 38px; font-size: 1.6rem;
+                color: var(--brown);
+                background: rgba(255,255,255,0.92);
+                border: 1px solid rgba(92,61,30,0.18);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            }
         }
 
         /* ── Points de navigation (dots) ── */
