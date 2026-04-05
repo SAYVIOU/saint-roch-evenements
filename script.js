@@ -211,8 +211,9 @@ document.addEventListener('keydown', e => {
 
 // Groupes de modales navigables
 const MODAL_GROUPS = {
-    traiteur: ['modal-vin','modal-champetre','modal-tradition','modal-brasero','modal-brunch','modal-affineur'],
-    tarifs:   ['modal-tarif-jour','modal-tarif-2j','modal-tarif-we']
+    traiteur:  ['modal-vin','modal-champetre','modal-tradition','modal-brasero','modal-brunch','modal-affineur'],
+    tarifs:    ['modal-tarif-jour','modal-tarif-2j','modal-tarif-we'],
+    couchages: ['modal-annexe','modal-refuge','modal-gite-couch']
 };
 
 let currentModalId = null;
