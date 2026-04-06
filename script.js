@@ -312,23 +312,6 @@ function moveModal(dir) {
 })();
 
 
-/* ─────────────────────────────────────────
-   5. CARROUSEL COUCHAGES — flèches + swipe
-───────────────────────────────────────── */
-(function () {
-    var grid = document.getElementById('couch-grid');
-    if (!grid) return;
-    function cardWidth() {
-        var card = grid.querySelector('.tr-card');
-        return card ? card.offsetWidth + parseInt(getComputedStyle(grid).gap || 16) : 300;
-    }
-    document.querySelector('.couch-arrow-prev').addEventListener('click', function () {
-        grid.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
-    });
-    document.querySelector('.couch-arrow-next').addEventListener('click', function () {
-        grid.scrollBy({ left: cardWidth(), behavior: 'smooth' });
-    });
-})();
 
 
 /* ─────────────────────────────────────────
